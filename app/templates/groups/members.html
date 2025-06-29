@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}管理群組成員: {{ group.groupname }} - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-people"></i> 管理群組成員: {{ group.groupname }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="needs-validation" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.members.label(class="form-label") }}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
+                                    <h6 class="text-muted mb-3">可用用戶</h6>
+                                    <div id="available-users">
+                                        {% for choice_value, choice_label in form.members.choices %}
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="members" value="{{ choice_value }}" 
+                                                   id="user_{{ choice_value }}"
+                                                   {% if choice_value in form.members.data %}checked{% endif %}>
+                                            <label class="form-check-label" for="user_{{ choice_value }}">
+                                                {{ choice_label }}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                        {% if not form.members.choices %}
+                                        <div class="text-muted text-center py-3">
+                                            <i class="bi bi-info-circle"></i>
+                                            目前沒有可用的用戶
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
+                                    <h6 class="text-muted mb-3">目前成員 <span id="current-count" class="badge bg-primary">{{ group.members|length }}</span></h6>
+                                    <div id="current-members">
+                                        {% for membership in group.members %}
+                                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+                                            <span>
+                                                <i class="bi bi-person-fill text-primary"></i>
+                                                {{ membership.user.username }}
+                                                <small class="text-muted">(UID: {{ membership.user.uid }})</small>
+                                            </span>
+                                            <small class="text-muted">
+                                                {{ membership.created_at.strftime('%m/%d') }}
+                                            </small>
+                                        </div>
+                                        {% endfor %}
+                                        
+                                        {% if not group.members %}
+                                        <div class="text-muted text-center py-3">
+                                            <i class="bi bi-person-x"></i>
+                                            目前沒有成員
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% for error in form.members.errors %}
+                            <div class="text-danger small mt-2">{{ error }}</div>
+                        {% endfor %}
+                        
+                        <div class="form-text mt-2">
+                            <i class="bi bi-info-circle"></i>
+                            選擇要加入此群組的用戶。取消選擇將從群組中移除用戶。
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="select-all">
+                                    <i class="bi bi-check-all"></i> 全選
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" id="clear-all">
+                                    <i class="bi bi-x-lg"></i> 清除
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <span class="text-muted small">
+                                    已選擇 <span id="selected-count">{{ form.members.data|length }}</span> 個用戶
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('groups.detail', id=group.id) }}" class="btn btn-secondary">取消</a>
+                        <a href="{{ url_for('groups.list') }}" class="btn btn-outline-secondary">返回列表</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 群組資訊</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled small">
+                    <li><strong>群組名稱:</strong> {{ group.groupname }}</li>
+                    <li><strong>GID:</strong> {{ group.gid }}</li>
+                    <li><strong>描述:</strong> {{ group.description or '無描述' }}</li>
+                    <li><strong>目前成員數:</strong> {{ group.members|length }}</li>
+                    <li><strong>建立時間:</strong> {{ group.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-shield-check"></i> 權限說明</h5>
+            </div>
+            <div class="card-body">
+                {% if group.groupname == 'admins' %}
+                <div class="alert alert-danger">
+                    <strong>管理員群組</strong><br>
+                    擁有所有目錄的完整權限
+                </div>
+                {% elif group.groupname == 'users' %}
+                <div class="alert alert-info">
+                    <strong>一般用戶群組</strong><br>
+                    受限的目錄權限，依設定而定
+                </div>
+                {% else %}
+                <div class="alert alert-secondary">
+                    <strong>自定義群組</strong><br>
+                    權限依目錄設定而定
+                </div>
+                {% endif %}
+                
+                <small class="text-muted">
+                    群組權限可在「目錄權限」頁面中設定
+                </small>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-exclamation-triangle"></i> 注意事項</h5>
+            </div>
+            <div class="card-body">
+                <ul class="small">
+                    <li><strong>同步更新:</strong> 成員變更會立即同步到 ProFTPD 配置</li>
+                    <li><strong>權限生效:</strong> 變更後會自動重新載入 FTP 服務</li>
+                    <li><strong>登入影響:</strong> 移除成員可能影響正在進行的 FTP 連線</li>
+                    <li><strong>批量操作:</strong> 可同時新增或移除多個成員</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-gear"></i> 其他操作</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('groups.edit', id=group.id) }}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-pencil"></i> 編輯群組
+                    </a>
+                    <a href="{{ url_for('users.list') }}" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-person-plus"></i> 管理用戶
+                    </a>
+                    <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-shield-lock"></i> 目錄權限
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('input[name="members"]');
+    const selectAllBtn = document.getElementById('select-all');
+    const clearAllBtn = document.getElementById('clear-all');
+    const selectedCount = document.getElementById('selected-count');
+    
+    // 更新選擇計數
+    function updateSelectedCount() {
+        const checkedCount = document.querySelectorAll('input[name="members"]:checked').length;
+        selectedCount.textContent = checkedCount;
+    }
+    
+    // 監聽所有核取方塊的變更
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedCount);
+    });
+    
+    // 全選功能
+    selectAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+        updateSelectedCount();
+    });
+    
+    // 清除功能
+    clearAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        updateSelectedCount();
+    });
+    
+    // 初始化計數
+    updateSelectedCount();
+    
+    // 表單提交確認
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const checkedCount = document.querySelectorAll('input[name="members"]:checked').length;
+        const currentCount = {{ group.members|length }};
+        
+        if (checkedCount === 0 && currentCount > 0) {
+            if (!confirm('確定要移除所有成員嗎？')) {
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        if (checkedCount !== currentCount) {
+            const addCount = Math.max(0, checkedCount - currentCount);
+            const removeCount = Math.max(0, currentCount - checkedCount);
+            let message = '確定要執行以下變更嗎？\n';
+            
+            if (addCount > 0) {
+                message += `新增 ${addCount} 個成員\n`;
+            }
+            if (removeCount > 0) {
+                message += `移除 ${removeCount} 個成員\n`;
+            }
+            
+            if (!confirm(message)) {
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

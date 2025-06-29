@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+
+{% block title %}配置管理 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-file-earmark-code"></i> 配置管理</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回設定首頁
+        </a>
+    </div>
+</div>
+
+<!-- 配置檔狀態 -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>
+                    {% if config_status.main_config_exists %}
+                    <i class="bi bi-check-circle"></i>
+                    {% else %}
+                    <i class="bi bi-x-circle"></i>
+                    {% endif %}
+                </h3>
+                <small>主配置檔</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>{{ config_status.include_files|length }}</h3>
+                <small>Include 檔案</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>{{ "%.1f"|format(config_status.main_config_size / 1024) }} KB</h3>
+                <small>配置檔大小</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 配置檔操作 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-gear"></i> 配置檔操作</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {{ config_form.hidden_tag() }}
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>配置檔生成說明:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>重新生成 ProFTPD 主配置檔</li>
+                            <li>根據目前資料庫設定產生用戶、群組配置</li>
+                            <li>更新目錄權限設定</li>
+                            <li>套用系統設定參數</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        {{ config_form.reload_service(class="form-check-input") }}
+                        {{ config_form.reload_service.label(class="form-check-label") }}
+                        {% if config_form.reload_service.description %}
+                        <div class="form-text">{{ config_form.reload_service.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="d-grid">
+                        {{ config_form.generate_config(class="btn btn-primary btn-lg") }}
+                    </div>
+                    
+                    <div class="d-grid mt-2">
+                        <button type="button" class="btn btn-outline-info" onclick="previewConfig()">
+                            <i class="bi bi-eye"></i> 預覽配置
+                        </button>
+                    </div>
+                    
+                    <div class="d-grid mt-2">
+                        <button type="button" class="btn btn-outline-secondary" onclick="validateConfig()">
+                            <i class="bi bi-check2-square"></i> 驗證配置
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 配置檔詳細資訊 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-list-ul"></i> 配置檔詳細資訊</h5>
+    </div>
+    <div class="card-body">
+        {% if config_status.main_config_exists %}
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>主配置檔</th>
+                    <td><code>{{ config_status.main_config_path }}</code></td>
+                    <td>{{ "%.1f"|format(config_status.main_config_size / 1024) }} KB</td>
+                    <td>{{ config_status.main_config_modified.strftime('%Y-%m-%d %H:%M:%S') if config_status.main_config_modified else 'N/A' }}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="viewConfigFile('main')">
+                            <i class="bi bi-eye"></i> 檢視
+                        </button>
+                    </td>
+                </tr>
+                
+                {% for include_file in config_status.include_files %}
+                <tr>
+                    <td>Include 檔案</td>
+                    <td><code>{{ include_file.name }}</code></td>
+                    <td>{{ "%.1f"|format(include_file.size / 1024) }} KB</td>
+                    <td>{{ include_file.modified.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary btn-sm" onclick="viewConfigFile('{{ include_file.name }}')">
+                            <i class="bi bi-eye"></i> 檢視
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+            <i class="bi bi-file-earmark-x fs-1 text-muted"></i>
+            <p class="text-muted mt-2">主配置檔不存在</p>
+            <p class="text-muted">請點擊「重新生成配置檔」來建立配置檔</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 配置檔模板 -->
+<div class="card">
+    <div class="card-header">
+        <h5><i class="bi bi-file-earmark-text"></i> 配置檔模板</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">系統使用以下模板結構來生成 ProFTPD 配置檔：</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h6>主配置檔 (proftpd.conf)</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        基本伺服器設定
+                        <span class="badge bg-primary rounded-pill">核心</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        安全設定
+                        <span class="badge bg-warning rounded-pill">安全</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        日誌設定
+                        <span class="badge bg-info rounded-pill">日誌</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Include 指令
+                        <span class="badge bg-secondary rounded-pill">模組</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-6">
+                <h6>Include 檔案</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        users.conf
+                        <span class="badge bg-success rounded-pill">用戶</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        groups.conf
+                        <span class="badge bg-success rounded-pill">群組</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        directories.conf
+                        <span class="badge bg-success rounded-pill">權限</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        virtual.conf
+                        <span class="badge bg-success rounded-pill">虛擬用戶</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 配置檔預覽模態框 -->
+<div class="modal fade" id="configPreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">配置檔預覽</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <ul class="nav nav-tabs" id="configTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main" type="button">
+                                主配置檔
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button">
+                                用戶配置
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="directories-tab" data-bs-toggle="tab" data-bs-target="#directories" type="button">
+                                目錄權限
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="configTabsContent">
+                    <div class="tab-pane fade show active" id="main" role="tabpanel">
+                        <pre id="main-config-content" class="bg-light p-3" style="max-height: 500px; overflow-y: auto;"></pre>
+                    </div>
+                    <div class="tab-pane fade" id="users" role="tabpanel">
+                        <pre id="users-config-content" class="bg-light p-3" style="max-height: 500px; overflow-y: auto;"></pre>
+                    </div>
+                    <div class="tab-pane fade" id="directories" role="tabpanel">
+                        <pre id="directories-config-content" class="bg-light p-3" style="max-height: 500px; overflow-y: auto;"></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary" onclick="downloadConfig()">
+                    <i class="bi bi-download"></i> 下載配置
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 配置檔檢視模態框 -->
+<div class="modal fade" id="configViewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="config-view-title">配置檔檢視</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="config-view-content" class="bg-light p-3" style="max-height: 500px; overflow-y: auto;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let configPreviewModal;
+let configViewModal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    configPreviewModal = new bootstrap.Modal(document.getElementById('configPreviewModal'));
+    configViewModal = new bootstrap.Modal(document.getElementById('configViewModal'));
+});
+
+function previewConfig() {
+    fetch('{{ url_for("config.preview") }}?format=json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('main-config-content').textContent = data.main_config || '無主配置檔內容';
+            document.getElementById('users-config-content').textContent = data.users_config || '無用戶配置內容';
+            document.getElementById('directories-config-content').textContent = data.directories_config || '無目錄權限配置';
+            configPreviewModal.show();
+        })
+        .catch(error => {
+            console.error('配置預覽失敗:', error);
+            showToast('配置預覽失敗: ' + error.message, 'error');
+        });
+}
+
+function validateConfig() {
+    fetch('{{ url_for("config.validate") }}?format=json', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token() }}'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.valid) {
+                showToast('配置檔驗證通過: ' + data.message, 'success');
+            } else {
+                showToast('配置檔驗證失敗: ' + (data.error || data.message), 'error');
+            }
+        })
+        .catch(error => {
+            console.error('配置驗證失敗:', error);
+            showToast('配置驗證失敗: ' + error.message, 'error');
+        });
+}
+
+function viewConfigFile(filename) {
+    document.getElementById('config-view-title').textContent = `配置檔檢視 - ${filename}`;
+    document.getElementById('config-view-content').textContent = '載入中...';
+    configViewModal.show();
+    
+    fetch(`{{ url_for("config.view") }}?file=${filename}`)
+        .then(response => response.text())
+        .then(content => {
+            document.getElementById('config-view-content').textContent = content;
+        })
+        .catch(error => {
+            console.error('配置檔載入失敗:', error);
+            document.getElementById('config-view-content').textContent = '配置檔載入失敗';
+        });
+}
+
+function downloadConfig() {
+    window.open('{{ url_for("config.download") }}', '_blank');
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}目錄管理 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-folder"></i> FTP 目錄管理</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('permissions.create_directory') }}" class="btn btn-primary">
+            <i class="bi bi-folder-plus"></i> 新增目錄
+        </a>
+        <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> 返回權限管理
+        </a>
+    </div>
+</div>
+
+<!-- 目錄列表 -->
+<div class="card">
+    <div class="card-header">
+        <h5>目錄列表 (共 {{ directories|length }} 個目錄)</h5>
+    </div>
+    <div class="card-body">
+        {% if directories %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>目錄名稱</th>
+                        <th>路徑</th>
+                        <th>描述</th>
+                        <th>狀態</th>
+                        <th>權限設定數量</th>
+                        <th>創建時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for directory in directories %}
+                    <tr>
+                        <td>
+                            <strong>{{ directory.name }}</strong>
+                        </td>
+                        <td>
+                            <code>{{ directory.path }}</code>
+                        </td>
+                        <td>
+                            {% if directory.description %}
+                            {{ directory.description[:100] }}
+                            {% if directory.description|length > 100 %}...{% endif %}
+                            {% else %}
+                            <span class="text-muted">無描述</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if directory.is_active %}
+                            <span class="badge bg-success">啟用</span>
+                            {% else %}
+                            <span class="badge bg-danger">停用</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">{{ directory.permissions|length }}</span>
+                        </td>
+                        <td>{{ directory.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('permissions.edit_directory', id=directory.id) }}" 
+                                   class="btn btn-outline-primary" title="編輯">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{{ url_for('permissions.list') }}?directory_filter={{ directory.id }}" 
+                                   class="btn btn-outline-info" title="查看權限">
+                                    <i class="bi bi-shield-lock"></i>
+                                </a>
+                                {% if directory.permissions|length == 0 %}
+                                <button type="button" class="btn btn-outline-danger" 
+                                        onclick="showDeleteModal({{ directory.id }}, '{{ directory.name }}', '{{ directory.path }}')" title="刪除">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                {% else %}
+                                <button class="btn btn-outline-danger" disabled title="有權限設定，無法刪除">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-4">
+            <i class="bi bi-folder fs-1 text-muted"></i>
+            <p class="text-muted mt-2">尚未建立任何目錄</p>
+            <a href="{{ url_for('permissions.create_directory') }}" class="btn btn-primary">
+                <i class="bi bi-folder-plus"></i> 立即新增目錄
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 目錄說明 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-info-circle"></i> 目錄管理說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>目錄用途</h6>
+                <ul class="small">
+                    <li><strong>根目錄</strong>: FTP 伺服器的基礎目錄</li>
+                    <li><strong>用戶目錄</strong>: 個別用戶的專屬目錄</li>
+                    <li><strong>共享目錄</strong>: 多用戶共享的目錄</li>
+                    <li><strong>專案目錄</strong>: 特定專案使用的目錄</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>路徑建議</h6>
+                <ul class="small">
+                    <li>基礎路徑: <code>/backup/ftpdata</code></li>
+                    <li>用戶目錄: <code>/backup/ftpdata/username</code></li>
+                    <li>專案目錄: <code>/backup/ftpdata/project_name</code></li>
+                    <li>部門目錄: <code>/backup/ftpdata/department</code></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="alert alert-warning mt-3">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>注意事項:</strong>
+            <ul class="mb-0 mt-1">
+                <li>刪除目錄前請確保沒有相關權限設定</li>
+                <li>停用目錄會影響現有的權限設定</li>
+                <li>目錄路徑應該實際存在於檔案系統中</li>
+                <li>路徑變更可能需要手動調整 ProFTPD 配置</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 目錄權限概覽 -->
+{% if directories %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-bar-chart"></i> 權限設定概覽</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% for directory in directories %}
+            {% if directory.permissions %}
+            <div class="col-md-6 mb-3">
+                <div class="border rounded p-3">
+                    <h6>{{ directory.name }}</h6>
+                    <small class="text-muted">{{ directory.path }}</small>
+                    
+                    <div class="mt-2">
+                        {% set user_perms = directory.permissions | selectattr('user') | list %}
+                        {% set group_perms = directory.permissions | selectattr('group') | list %}
+                        
+                        {% if user_perms %}
+                        <div class="mb-1">
+                            <strong>用戶權限 ({{ user_perms|length }}):</strong>
+                            {% for perm in user_perms[:3] %}
+                            <span class="badge bg-primary">{{ perm.user.username }}</span>
+                            {% endfor %}
+                            {% if user_perms|length > 3 %}
+                            <span class="text-muted">... +{{ user_perms|length - 3 }}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if group_perms %}
+                        <div class="mb-1">
+                            <strong>群組權限 ({{ group_perms|length }}):</strong>
+                            {% for perm in group_perms[:3] %}
+                            <span class="badge bg-secondary">{{ perm.group.groupname }}</span>
+                            {% endfor %}
+                            {% if group_perms|length > 3 %}
+                            <span class="text-muted">... +{{ group_perms|length - 3 }}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <a href="{{ url_for('permissions.list') }}?directory_filter={{ directory.id }}" 
+                       class="btn btn-outline-info btn-sm mt-2">
+                        <i class="bi bi-eye"></i> 查看詳情
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        {% if directories and not (directories | selectattr('permissions') | list) %}
+        <div class="text-center py-3">
+            <p class="text-muted">所有目錄都尚未設定權限</p>
+            <a href="{{ url_for('permissions.create') }}" class="btn btn-outline-primary">
+                <i class="bi bi-plus-circle"></i> 開始設定權限
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<!-- 刪除目錄確認 Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                    確認刪除目錄
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>您即將刪除目錄：<strong id="directoryName"></strong></p>
+                <p>路徑：<code id="directoryPath"></code></p>
+                
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>注意：</strong>此操作無法復原！
+                </div>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="deletePhysicalDir" name="delete_physical_dir">
+                    <label class="form-check-label" for="deletePhysicalDir">
+                        同時刪除實體目錄（包含所有檔案）
+                    </label>
+                    <div class="form-text">
+                        警告：勾選此選項將永久刪除檔案系統中的實體目錄及其所有內容
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                    <i class="bi bi-trash"></i> 確認刪除
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 隱藏的刪除表單 -->
+<form id="deleteForm" method="POST" style="display: none;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="hidden" name="delete_physical_dir" id="deletePhysicalDirInput" value="false"/>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentDirectoryId = null;
+
+function showDeleteModal(id, name, path) {
+    currentDirectoryId = id;
+    document.getElementById('directoryName').textContent = name;
+    document.getElementById('directoryPath').textContent = path;
+    document.getElementById('deletePhysicalDir').checked = false;
+    
+    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    modal.show();
+}
+
+function confirmDelete() {
+    if (currentDirectoryId) {
+        const deletePhysical = document.getElementById('deletePhysicalDir').checked;
+        const form = document.getElementById('deleteForm');
+        
+        form.action = `/permissions/directories/${currentDirectoryId}/delete`;
+        document.getElementById('deletePhysicalDirInput').value = deletePhysical ? 'true' : 'false';
+        
+        form.submit();
+    }
+}
+</script>
+{% endblock %}

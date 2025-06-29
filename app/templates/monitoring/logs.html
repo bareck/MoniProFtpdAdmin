@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}日誌監控 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-file-text"></i> ProFTPD 日誌監控</h1>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary" onclick="refreshLogs()">
+            <i class="bi bi-arrow-clockwise"></i> 重新整理
+        </button>
+        <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回監控中心
+        </a>
+    </div>
+</div>
+
+<!-- 日誌類型和設定 -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                <label for="type" class="form-label">日誌類型</label>
+                <select name="type" id="type" class="form-select">
+                    <option value="main" {% if log_type == 'main' %}selected{% endif %}>系統日誌 (/var/log/proftpd/proftpd.log)</option>
+                    <option value="access" {% if log_type == 'access' %}selected{% endif %}>存取日誌 (/var/log/proftpd/access.log)</option>
+                    <option value="auth" {% if log_type == 'auth' %}selected{% endif %}>認證日誌 (/var/log/proftpd/auth.log)</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="lines" class="form-label">顯示行數</label>
+                <select name="lines" id="lines" class="form-select">
+                    <option value="50" {% if lines == 50 %}selected{% endif %}>50 行</option>
+                    <option value="100" {% if lines == 100 %}selected{% endif %}>100 行</option>
+                    <option value="200" {% if lines == 200 %}selected{% endif %}>200 行</option>
+                    <option value="500" {% if lines == 500 %}selected{% endif %}>500 行</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">
+                    <i class="bi bi-search"></i> 查詢
+                </button>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="autoRefresh">
+                    <label class="form-check-label" for="autoRefresh">自動重新整理</label>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 日誌統計 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 id="total-logs">{{ logs|length }}</h3>
+                <small>日誌條目</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3 id="success-count">-</h3>
+                <small>成功操作</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3 id="warning-count">-</h3>
+                <small>警告</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body text-center">
+                <h3 id="error-count">-</h3>
+                <small>錯誤</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 日誌內容 -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-list"></i> {{ log_type|title }} 日誌內容</h5>
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-outline-secondary" onclick="exportLogs()">
+                <i class="bi bi-download"></i> 匯出
+            </button>
+            <button type="button" class="btn btn-outline-secondary" onclick="clearLogDisplay()">
+                <i class="bi bi-trash"></i> 清空顯示
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div id="log-container" style="max-height: 600px; overflow-y: auto;">
+            {% if logs %}
+            <table class="table table-sm table-hover mb-0">
+                <thead class="table-dark sticky-top">
+                    <tr>
+                        <th style="width: 150px;">時間</th>
+                        {% if log_type == 'access' %}
+                        <th>客戶端 IP</th>
+                        <th>指令</th>
+                        <th>狀態碼</th>
+                        <th>位元組</th>
+                        {% else %}
+                        <th>訊息</th>
+                        {% endif %}
+                        <th style="width: 50px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="log-tbody">
+                    {% for log in logs %}
+                    <tr class="log-entry">
+                        <td>
+                            <small class="text-muted">{{ log.timestamp }}</small>
+                        </td>
+                        {% if log_type == 'access' %}
+                        <td>{{ log.client_ip or '-' }}</td>
+                        <td>
+                            <code class="small">{{ log.command or '-' }}</code>
+                        </td>
+                        <td>
+                            {% if log.status_code %}
+                                {% set status = log.status_code|int %}
+                                {% if status >= 200 and status < 300 %}
+                                <span class="badge bg-success">{{ log.status_code }}</span>
+                                {% elif status >= 400 and status < 500 %}
+                                <span class="badge bg-warning">{{ log.status_code }}</span>
+                                {% elif status >= 500 %}
+                                <span class="badge bg-danger">{{ log.status_code }}</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ log.status_code }}</span>
+                                {% endif %}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>{{ log.bytes or '-' }}</td>
+                        {% else %}
+                        <td>
+                            <span class="font-monospace small">{{ log.message }}</span>
+                        </td>
+                        {% endif %}
+                        <td>
+                            <button type="button" class="btn btn-outline-info btn-sm" 
+                                    onclick="showLogDetail('{{ log.raw|replace("'", "\\'") }}')" 
+                                    title="詳細資訊">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-file-text fs-1 text-muted"></i>
+                <p class="text-muted mt-2">沒有找到日誌記錄</p>
+                <p class="text-muted">請檢查日誌檔案路徑或權限設定</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- 日誌詳細資訊模態框 -->
+<div class="modal fade" id="logDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">日誌詳細資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="log-detail-content" class="bg-light p-3" style="white-space: pre-wrap;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary" onclick="copyLogDetail()">複製</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 日誌說明 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-info-circle"></i> 日誌格式說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <h6>存取日誌 (access.log)</h6>
+                <ul class="small">
+                    <li><strong>客戶端 IP</strong>: 連線來源位址</li>
+                    <li><strong>指令</strong>: FTP 指令 (GET, PUT, LIST 等)</li>
+                    <li><strong>狀態碼</strong>: HTTP 風格的狀態碼</li>
+                    <li><strong>位元組</strong>: 傳輸的資料量</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6>認證日誌 (auth.log)</h6>
+                <ul class="small">
+                    <li><strong>登入成功/失敗</strong>: 用戶認證結果</li>
+                    <li><strong>用戶名稱</strong>: 嘗試登入的用戶</li>
+                    <li><strong>認證方法</strong>: 使用的認證方式</li>
+                    <li><strong>來源 IP</strong>: 登入嘗試的來源</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6>狀態碼說明</h6>
+                <ul class="small">
+                    <li><span class="badge bg-success">2xx</span> 成功</li>
+                    <li><span class="badge bg-warning">4xx</span> 客戶端錯誤</li>
+                    <li><span class="badge bg-danger">5xx</span> 伺服器錯誤</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let autoRefreshInterval;
+let logDetailModal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    logDetailModal = new bootstrap.Modal(document.getElementById('logDetailModal'));
+    
+    // 計算日誌統計
+    calculateLogStats();
+    
+    // 自動重新整理開關
+    const autoRefreshSwitch = document.getElementById('autoRefresh');
+    autoRefreshSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            startAutoRefresh();
+        } else {
+            stopAutoRefresh();
+        }
+    });
+});
+
+function startAutoRefresh() {
+    autoRefreshInterval = setInterval(refreshLogs, 30000); // 每30秒更新
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+    }
+}
+
+function refreshLogs() {
+    // 重新載入頁面以獲取最新日誌
+    const urlParams = new URLSearchParams(window.location.search);
+    window.location.reload();
+}
+
+function calculateLogStats() {
+    const logRows = document.querySelectorAll('.log-entry');
+    let successCount = 0;
+    let warningCount = 0;
+    let errorCount = 0;
+    
+    logRows.forEach(function(row) {
+        const statusBadge = row.querySelector('.badge');
+        if (statusBadge) {
+            if (statusBadge.classList.contains('bg-success')) {
+                successCount++;
+            } else if (statusBadge.classList.contains('bg-warning')) {
+                warningCount++;
+            } else if (statusBadge.classList.contains('bg-danger')) {
+                errorCount++;
+            }
+        }
+    });
+    
+    document.getElementById('success-count').textContent = successCount;
+    document.getElementById('warning-count').textContent = warningCount;
+    document.getElementById('error-count').textContent = errorCount;
+}
+
+function showLogDetail(rawLog) {
+    document.getElementById('log-detail-content').textContent = rawLog;
+    logDetailModal.show();
+}
+
+function copyLogDetail() {
+    const content = document.getElementById('log-detail-content').textContent;
+    navigator.clipboard.writeText(content).then(function() {
+        showToast('日誌內容已複製到剪貼簿');
+    }).catch(function() {
+        showToast('複製失敗', 'error');
+    });
+}
+
+function exportLogs() {
+    const logType = document.getElementById('type').value;
+    const lines = document.getElementById('lines').value;
+    
+    // 構建導出 URL
+    const exportUrl = `{{ url_for('monitoring.logs') }}?type=${logType}&lines=${lines}&export=1`;
+    window.open(exportUrl, '_blank');
+}
+
+function clearLogDisplay() {
+    if (confirm('確定要清空日誌顯示嗎？這不會刪除實際的日誌檔案。')) {
+        document.getElementById('log-tbody').innerHTML = '';
+        document.getElementById('total-logs').textContent = '0';
+        document.getElementById('success-count').textContent = '0';
+        document.getElementById('warning-count').textContent = '0';
+        document.getElementById('error-count').textContent = '0';
+    }
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+
+// 頁面離開時清理定時器
+window.addEventListener('beforeunload', function() {
+    stopAutoRefresh();
+});
+</script>
+{% endblock %}

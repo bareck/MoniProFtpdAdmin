@@ -1,0 +1,470 @@
+{% extends "base.html" %}
+
+{% block title %}監控中心 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-graph-up"></i> 監控中心</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('monitoring.connections') }}" class="btn btn-outline-primary">
+            <i class="bi bi-wifi"></i> 連線監控
+        </a>
+        <a href="{{ url_for('monitoring.logs') }}" class="btn btn-outline-info">
+            <i class="bi bi-file-text"></i> 日誌監控
+        </a>
+        <a href="{{ url_for('monitoring.statistics') }}" class="btn btn-outline-success">
+            <i class="bi bi-bar-chart"></i> 統計報表
+        </a>
+        <a href="{{ url_for('monitoring.system') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-cpu"></i> 系統監控
+        </a>
+    </div>
+</div>
+
+<!-- 系統概覽 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <a href="{{ url_for('users.list') }}" class="text-decoration-none">
+            <div class="card bg-primary text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>FTP 用戶</h5>
+                            <h3>{{ stats.active_users }}/{{ stats.total_users }}</h3>
+                            <small>啟用/總數</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-people fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('monitoring.connections') }}" class="text-decoration-none">
+            <div class="card bg-success text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>FTP 連線</h5>
+                            <h3 id="connection-count">-</h3>
+                            <small>目前連線數</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-wifi fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('monitoring.system') }}" class="text-decoration-none">
+            <div class="card bg-info text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>CPU 使用率</h5>
+                            <h3 id="cpu-usage">{{ "%.1f"|format(system_info.cpu_percent) }}%</h3>
+                            <small>{{ system_info.cpu_count }} 核心</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-cpu fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('monitoring.system') }}" class="text-decoration-none">
+            <div class="card bg-warning text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>記憶體使用率</h5>
+                            <h3 id="memory-usage">{{ "%.1f"|format(system_info.memory_percent) }}%</h3>
+                            <small>{{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-memory fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- 服務狀態和磁碟使用量 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-server"></i> ProFTPD 服務狀態</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>服務狀態:</strong>
+                        {% if service_status.status == 'active' %}
+                        <span class="badge bg-success">運行中</span>
+                        {% else %}
+                        <span class="badge bg-danger">已停止</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        <strong>進程 PID:</strong>
+                        <span class="text-muted">{{ service_status.pid or 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <strong>啟動時間:</strong>
+                        <span class="text-muted">{{ service_status.since or 'N/A' }}</span>
+                    </div>
+                </div>
+                
+                {% if service_status.status != 'active' %}
+                <div class="alert alert-danger mt-3">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    ProFTPD 服務未運行，請檢查服務狀態或聯繫系統管理員。
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-hdd"></i> 磁碟使用量</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>FTP 根目錄:</strong>
+                    <code>{{ disk_usage.path }}</code>
+                </div>
+                
+                <div class="progress mb-2">
+                    <div class="progress-bar {% if disk_usage.percent > 90 %}bg-danger{% elif disk_usage.percent > 75 %}bg-warning{% else %}bg-success{% endif %}" 
+                         style="width: {{ disk_usage.percent }}%">
+                        {{ "%.1f"|format(disk_usage.percent) }}%
+                    </div>
+                </div>
+                
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>{{ "%.1f"|format(disk_usage.used / 1024**3) }} GB</strong>
+                            <br><small class="text-muted">已使用</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>{{ "%.1f"|format(disk_usage.free / 1024**3) }} GB</strong>
+                            <br><small class="text-muted">可用</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>{{ "%.1f"|format(disk_usage.total / 1024**3) }} GB</strong>
+                            <br><small class="text-muted">總容量</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 系統資源使用量 -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-speedometer2"></i> 系統資源使用量</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <h6>CPU 使用率</h6>
+                            <div class="progress mx-auto" style="width: 120px; height: 120px; border-radius: 50%; position: relative;">
+                                <div class="progress-bar bg-info" style="width: {{ system_info.cpu_percent }}%; height: 100%; border-radius: 50%;"></div>
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <strong>{{ "%.1f"|format(system_info.cpu_percent) }}%</strong>
+                                </div>
+                            </div>
+                            <small class="text-muted">{{ system_info.cpu_count }} 核心處理器</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <h6>記憶體使用率</h6>
+                            <div class="progress mx-auto" style="width: 120px; height: 120px; border-radius: 50%; position: relative;">
+                                <div class="progress-bar bg-warning" style="width: {{ system_info.memory_percent }}%; height: 100%; border-radius: 50%;"></div>
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <strong>{{ "%.1f"|format(system_info.memory_percent) }}%</strong>
+                                </div>
+                            </div>
+                            <small class="text-muted">{{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB 總記憶體</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <h6>系統負載</h6>
+                            <div class="border rounded p-3">
+                                <div><strong>1分鐘:</strong> {{ "%.2f"|format(system_info.load_average[0]) }}</div>
+                                <div><strong>5分鐘:</strong> {{ "%.2f"|format(system_info.load_average[1]) }}</div>
+                                <div><strong>15分鐘:</strong> {{ "%.2f"|format(system_info.load_average[2]) }}</div>
+                            </div>
+                            <small class="text-muted">系統運行時間: {{ system_info.uptime.days }}天</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ProFTPD 日誌區塊 -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-file-text"></i> ProFTPD 即時日誌</h5>
+        <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-outline-primary" onclick="switchLogType('main')" id="btn-main" title="/var/log/proftpd/proftpd.log">系統日誌</button>
+            <button type="button" class="btn btn-outline-info" onclick="switchLogType('access')" id="btn-access" title="/var/log/proftpd/access.log">存取日誌</button>
+            <button type="button" class="btn btn-outline-warning" onclick="switchLogType('auth')" id="btn-auth" title="/var/log/proftpd/auth.log">認證日誌</button>
+            <a href="{{ url_for('monitoring.logs') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-right"></i> 更多
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="log-content" class="border rounded p-3" style="height: 300px; overflow-y: auto; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 0.875rem;">
+            <div class="text-center text-muted">
+                <i class="bi bi-arrow-clockwise spinner-border spinner-border-sm"></i>
+                載入日誌中...
+            </div>
+        </div>
+        <div class="mt-2 d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+                最後更新: <span id="log-updated">-</span> | 
+                日誌類型: <span id="current-log-type">系統日誌</span>
+            </small>
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-outline-secondary" onclick="refreshLogs()">
+                    <i class="bi bi-arrow-clockwise"></i> 重新整理
+                </button>
+                <button type="button" class="btn btn-outline-secondary" onclick="clearLogDisplay()">
+                    <i class="bi bi-x"></i> 清除
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 最近活動 -->
+<div class="card">
+    <div class="card-header">
+        <h5><i class="bi bi-clock-history"></i> 最近管理活動</h5>
+    </div>
+    <div class="card-body">
+        {% if recent_activities %}
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>時間</th>
+                        <th>操作</th>
+                        <th>描述</th>
+                        <th>管理員</th>
+                        <th>IP 地址</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in recent_activities %}
+                    <tr>
+                        <td>{{ activity.created_at.strftime('%m-%d %H:%M') }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ activity.action }}</span>
+                        </td>
+                        <td>{{ activity.description or '-' }}</td>
+                        <td>{{ activity.admin_user.username if activity.admin_user else 'System' }}</td>
+                        <td>{{ activity.ip_address or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+            <i class="bi bi-clock-history fs-1 text-muted"></i>
+            <p class="text-muted mt-2">尚無管理活動記錄</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.card-hover {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+a.text-decoration-none:hover .card-hover {
+    text-decoration: none;
+}
+
+a.text-decoration-none:hover .card-hover * {
+    color: inherit !important;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 設定頁面為監控頁面
+document.body.classList.add('monitoring-page');
+
+// 即時更新數據
+function updateStats() {
+    fetch('{{ url_for("monitoring.api_current_stats") }}')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('connection-count').textContent = data.connections;
+            document.getElementById('cpu-usage').textContent = data.cpu_usage.toFixed(1) + '%';
+            document.getElementById('memory-usage').textContent = data.memory_usage.toFixed(1) + '%';
+        })
+        .catch(error => {
+            console.error('更新統計失敗:', error);
+        });
+}
+
+// ProFTPD 日誌功能
+let currentLogType = 'main';
+
+function switchLogType(logType) {
+    currentLogType = logType;
+    
+    // 更新按鈕狀態
+    document.querySelectorAll('[id^="btn-"]').forEach(btn => {
+        btn.classList.remove('btn-primary', 'btn-info', 'btn-warning');
+        btn.classList.add('btn-outline-primary', 'btn-outline-info', 'btn-outline-warning');
+    });
+    
+    const activeBtn = document.getElementById('btn-' + logType);
+    if (activeBtn) {
+        activeBtn.classList.remove('btn-outline-primary', 'btn-outline-info', 'btn-outline-warning');
+        if (logType === 'main') {
+            activeBtn.classList.add('btn-primary');
+        } else if (logType === 'access') {
+            activeBtn.classList.add('btn-info');
+        } else if (logType === 'auth') {
+            activeBtn.classList.add('btn-warning');
+        }
+    }
+    
+    // 更新日誌類型顯示
+    const logTypeNames = {
+        'main': '系統日誌 (/var/log/proftpd/proftpd.log)',
+        'access': '存取日誌 (/var/log/proftpd/access.log)',
+        'auth': '認證日誌 (/var/log/proftpd/auth.log)'
+    };
+    document.getElementById('current-log-type').textContent = logTypeNames[logType];
+    
+    // 載入對應日誌
+    loadLogs();
+}
+
+function loadLogs() {
+    const logContent = document.getElementById('log-content');
+    logContent.innerHTML = '<div class="text-center text-muted"><i class="bi bi-arrow-clockwise spinner-border spinner-border-sm"></i> 載入中...</div>';
+    
+    fetch(`{{ url_for("monitoring.api_logs") }}?type=${currentLogType}&lines=20`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.lines && data.lines.length > 0) {
+                // 日誌已經在後端按最新在上的順序返回，直接顯示
+                logContent.innerHTML = '<pre style="margin: 0; font-size: 0.8rem; line-height: 1.3; white-space: pre-wrap;">' + 
+                    data.lines.join('\n') + '</pre>';
+                
+                // 自動滾動到頂部（最新的日誌）
+                setTimeout(() => {
+                    logContent.scrollTop = 0;
+                }, 50);
+            } else {
+                logContent.innerHTML = '<div class="text-center text-muted">暫無日誌資料</div>';
+            }
+            
+            // 更新時間
+            document.getElementById('log-updated').textContent = new Date().toLocaleTimeString();
+        })
+        .catch(error => {
+            console.error('載入日誌失敗:', error);
+            logContent.innerHTML = '<div class="text-center text-danger">載入日誌失敗: ' + error.message + '</div>';
+        });
+}
+
+function refreshLogs() {
+    loadLogs();
+}
+
+function clearLogDisplay() {
+    document.getElementById('log-content').innerHTML = '<div class="text-center text-muted">日誌已清除</div>';
+}
+
+// 頁面載入完成後開始更新
+document.addEventListener('DOMContentLoaded', function() {
+    // 立即更新一次
+    updateStats();
+    
+    // 載入預設日誌
+    switchLogType('main');
+    
+    // 每30秒更新一次統計
+    setInterval(updateStats, 30000);
+    
+    // 每15秒更新一次日誌
+    setInterval(loadLogs, 15000);
+});
+
+// 修復圓形進度條顯示（簡化版本）
+document.addEventListener('DOMContentLoaded', function() {
+    // 由於 Bootstrap 不直接支援圓形進度條，這裡使用簡化的矩形進度條
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(function(bar) {
+        const parent = bar.parentElement;
+        if (parent.style.borderRadius === '50%') {
+            // 移除圓形樣式，使用標準進度條
+            parent.style.borderRadius = '';
+            parent.style.width = '100%';
+            parent.style.height = '20px';
+            
+            const valueDiv = parent.querySelector('.position-absolute');
+            if (valueDiv) {
+                valueDiv.className = 'text-end pe-2';
+                valueDiv.style.lineHeight = '20px';
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

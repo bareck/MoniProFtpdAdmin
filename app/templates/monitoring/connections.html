@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block title %}FTP 連線監控 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-wifi"></i> FTP 連線監控</h1>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary" onclick="refreshConnections()">
+            <i class="bi bi-arrow-clockwise"></i> 重新整理
+        </button>
+        <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回監控中心
+        </a>
+    </div>
+</div>
+
+<!-- 連線統計 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 id="total-connections">{{ stats.total }}</h3>
+                <small>總連線數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3 id="unique-users">{{ stats.unique_users }}</h3>
+                <small>連線用戶數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3 id="unique-ips">{{ stats.unique_ips }}</h3>
+                <small>來源 IP 數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3 id="last-update">-</h3>
+                <small>最後更新</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 即時連線列表 -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-list"></i> 即時連線列表</h5>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="autoRefresh" checked>
+            <label class="form-check-label" for="autoRefresh">自動重新整理</label>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="connections-container">
+            {% if connections %}
+            <div class="table-responsive">
+                <table class="table table-hover" id="connections-table">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>用戶名</th>
+                            <th>客戶端 IP</th>
+                            <th>狀態</th>
+                            <th>連線時間</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for conn in connections %}
+                        <tr>
+                            <td><code>{{ conn.pid }}</code></td>
+                            <td>
+                                {% if conn.user != 'unknown' %}
+                                <span class="badge bg-primary">{{ conn.user }}</span>
+                                {% else %}
+                                <span class="text-muted">{{ conn.user }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ conn.client_ip }}</td>
+                            <td>
+                                <span class="badge bg-success">{{ conn.status }}</span>
+                            </td>
+                            <td>{{ conn.connect_time.strftime('%H:%M:%S') if conn.connect_time else 'N/A' }}</td>
+                            <td>
+                                {% if conn.pid != 'unknown' %}
+                                <button type="button" class="btn btn-outline-danger btn-sm" 
+                                        onclick="disconnectUser('{{ conn.pid }}')"
+                                        title="中斷連線">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-4">
+                <i class="bi bi-wifi-off fs-1 text-muted"></i>
+                <p class="text-muted mt-2">目前沒有 FTP 連線</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- 連線統計圖表 -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-person-fill"></i> 用戶連線分布</h5>
+            </div>
+            <div class="card-body">
+                {% if stats.by_user %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>用戶名</th>
+                                <th>連線數</th>
+                                <th>比例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user, count in stats.by_user.items() %}
+                            <tr>
+                                <td>{{ user }}</td>
+                                <td>{{ count }}</td>
+                                <td>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar bg-primary" 
+                                             style="width: {{ (count / stats.total * 100) if stats.total > 0 else 0 }}%">
+                                            {{ "%.1f"|format((count / stats.total * 100) if stats.total > 0 else 0) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">無連線數據</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-geo-alt-fill"></i> IP 位址分布</h5>
+            </div>
+            <div class="card-body">
+                {% if stats.by_ip %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>IP 位址</th>
+                                <th>連線數</th>
+                                <th>比例</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ip, count in stats.by_ip.items() %}
+                            <tr>
+                                <td><code>{{ ip }}</code></td>
+                                <td>{{ count }}</td>
+                                <td>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar bg-info" 
+                                             style="width: {{ (count / stats.total * 100) if stats.total > 0 else 0 }}%">
+                                            {{ "%.1f"|format((count / stats.total * 100) if stats.total > 0 else 0) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">無連線數據</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 連線歷史 (模擬數據) -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-graph-up"></i> 連線趨勢 (最近24小時)</h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>功能開發中:</strong> 連線歷史圖表功能正在開發中，將從 ProFTPD 日誌中解析歷史連線數據。
+        </div>
+        
+        <!-- 這裡將來可以添加圖表庫如 Chart.js -->
+        <div style="height: 200px; background-color: #f8f9fa; border: 2px dashed #dee2e6; 
+                    display: flex; align-items: center; justify-content: center;">
+            <span class="text-muted">連線趨勢圖表區域</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let autoRefreshInterval;
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateLastRefreshTime();
+    
+    // 自動重新整理開關
+    const autoRefreshSwitch = document.getElementById('autoRefresh');
+    autoRefreshSwitch.addEventListener('change', function() {
+        if (this.checked) {
+            startAutoRefresh();
+        } else {
+            stopAutoRefresh();
+        }
+    });
+    
+    // 預設開啟自動重新整理
+    if (autoRefreshSwitch.checked) {
+        startAutoRefresh();
+    }
+});
+
+function startAutoRefresh() {
+    autoRefreshInterval = setInterval(refreshConnections, 10000); // 每10秒更新
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+    }
+}
+
+function refreshConnections() {
+    fetch('{{ url_for("monitoring.api_connections") }}')
+        .then(response => response.json())
+        .then(data => {
+            updateConnectionsTable(data.connections);
+            updateConnectionsStats(data);
+            updateLastRefreshTime();
+        })
+        .catch(error => {
+            console.error('重新整理連線失敗:', error);
+            showToast('重新整理連線失敗', 'error');
+        });
+}
+
+function updateConnectionsTable(connections) {
+    const container = document.getElementById('connections-container');
+    
+    if (connections.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <i class="bi bi-wifi-off fs-1 text-muted"></i>
+                <p class="text-muted mt-2">目前沒有 FTP 連線</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let tableHTML = `
+        <div class="table-responsive">
+            <table class="table table-hover" id="connections-table">
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>用戶名</th>
+                        <th>客戶端 IP</th>
+                        <th>狀態</th>
+                        <th>連線時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    connections.forEach(function(conn) {
+        const connectTime = conn.connect_time ? new Date(conn.connect_time).toLocaleTimeString() : 'N/A';
+        const userBadge = conn.user !== 'unknown' ? 
+            `<span class="badge bg-primary">${conn.user}</span>` : 
+            `<span class="text-muted">${conn.user}</span>`;
+        const disconnectBtn = conn.pid !== 'unknown' ? 
+            `<button type="button" class="btn btn-outline-danger btn-sm" 
+                     onclick="disconnectUser('${conn.pid}')" title="中斷連線">
+                <i class="bi bi-x-circle"></i>
+             </button>` : '';
+        
+        tableHTML += `
+            <tr>
+                <td><code>${conn.pid}</code></td>
+                <td>${userBadge}</td>
+                <td>${conn.client_ip}</td>
+                <td><span class="badge bg-success">${conn.status}</span></td>
+                <td>${connectTime}</td>
+                <td>${disconnectBtn}</td>
+            </tr>
+        `;
+    });
+    
+    tableHTML += `
+                </tbody>
+            </table>
+        </div>
+    `;
+    
+    container.innerHTML = tableHTML;
+}
+
+function updateConnectionsStats(data) {
+    document.getElementById('total-connections').textContent = data.count;
+    
+    // 計算統計數據
+    const uniqueUsers = new Set();
+    const uniqueIPs = new Set();
+    
+    data.connections.forEach(function(conn) {
+        if (conn.user !== 'unknown') {
+            uniqueUsers.add(conn.user);
+        }
+        uniqueIPs.add(conn.client_ip);
+    });
+    
+    document.getElementById('unique-users').textContent = uniqueUsers.size;
+    document.getElementById('unique-ips').textContent = uniqueIPs.size;
+}
+
+function updateLastRefreshTime() {
+    const now = new Date();
+    document.getElementById('last-update').textContent = now.toLocaleTimeString();
+}
+
+function disconnectUser(pid) {
+    if (confirm('確定要中斷此連線嗎？')) {
+        // 這裡應該調用後端 API 來中斷連線
+        showToast('連線中斷功能正在開發中', 'info');
+    }
+}
+
+function showToast(message, type = 'success') {
+    // 簡單的 toast 通知
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // 自動移除
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+
+// 頁面離開時清理定時器
+window.addEventListener('beforeunload', function() {
+    stopAutoRefresh();
+});
+</script>
+{% endblock %}

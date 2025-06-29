@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+
+{% block title %}統計報表 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-bar-chart"></i> FTP 統計報表</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('monitoring.statistics', period='1d') }}" 
+           class="btn btn-outline-secondary {% if period == '1d' %}active{% endif %}">1天</a>
+        <a href="{{ url_for('monitoring.statistics', period='7d') }}" 
+           class="btn btn-outline-secondary {% if period == '7d' %}active{% endif %}">7天</a>
+        <a href="{{ url_for('monitoring.statistics', period='30d') }}" 
+           class="btn btn-outline-secondary {% if period == '30d' %}active{% endif %}">30天</a>
+        <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回監控中心
+        </a>
+    </div>
+</div>
+
+<!-- 統計概覽 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>{{ user_stats.login_count }}</h3>
+                <small>總登入次數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>{{ transfer_stats.upload_count + transfer_stats.download_count }}</h3>
+                <small>檔案傳輸次數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>{{ "%.1f"|format(transfer_stats.total_bytes / 1024**3) }} GB</h3>
+                <small>總傳輸量</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3>{{ user_stats.error_count }}</h3>
+                <small>錯誤次數</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 用戶活動統計 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-person-fill"></i> 最活躍用戶 ({{ period }})</h5>
+            </div>
+            <div class="card-body">
+                {% if user_stats.most_active_users %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>用戶名</th>
+                                <th>登入次數</th>
+                                <th>上傳檔案</th>
+                                <th>下載檔案</th>
+                                <th>傳輸量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in user_stats.most_active_users %}
+                            <tr>
+                                <td><span class="badge bg-primary">{{ user.username }}</span></td>
+                                <td>{{ user.login_count }}</td>
+                                <td>{{ user.upload_count }}</td>
+                                <td>{{ user.download_count }}</td>
+                                <td>{{ "%.1f"|format(user.total_bytes / 1024**2) }} MB</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="bi bi-person-x fs-2 text-muted"></i>
+                    <p class="text-muted mt-2">暫無用戶活動數據</p>
+                    <small class="text-muted">數據將從 ProFTPD 日誌中解析生成</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-clock-fill"></i> 活動時間分布</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>功能開發中:</strong> 活動時間分布圖表正在開發中
+                </div>
+                
+                <!-- 簡化的時間分布顯示 -->
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>0-8時</strong>
+                            <div class="progress mt-1">
+                                <div class="progress-bar bg-info" style="width: 15%">15%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>8-16時</strong>
+                            <div class="progress mt-1">
+                                <div class="progress-bar bg-success" style="width: 60%">60%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="border rounded p-2">
+                            <strong>16-24時</strong>
+                            <div class="progress mt-1">
+                                <div class="progress-bar bg-warning" style="width: 25%">25%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 目錄使用統計 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-folder-fill"></i> 目錄使用統計</h5>
+    </div>
+    <div class="card-body">
+        {% if directory_stats %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>目錄名稱</th>
+                        <th>路徑</th>
+                        <th>檔案數量</th>
+                        <th>使用空間</th>
+                        <th>權限設定</th>
+                        <th>使用率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dir in directory_stats %}
+                    <tr>
+                        <td><strong>{{ dir.name }}</strong></td>
+                        <td><code>{{ dir.path }}</code></td>
+                        <td>{{ "{:,}".format(dir.file_count) }}</td>
+                        <td>{{ "%.1f"|format(dir.size / 1024**2) }} MB</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ dir.permissions_count }}</span>
+                        </td>
+                        <td>
+                            {% set usage_percent = (dir.size / (10 * 1024**3) * 100) if dir.size else 0 %}
+                            <div class="progress" style="width: 100px;">
+                                <div class="progress-bar {% if usage_percent > 80 %}bg-danger{% elif usage_percent > 60 %}bg-warning{% else %}bg-success{% endif %}" 
+                                     style="width: {{ usage_percent if usage_percent <= 100 else 100 }}%">
+                                    {{ "%.1f"|format(usage_percent) }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+            <i class="bi bi-folder-x fs-2 text-muted"></i>
+            <p class="text-muted mt-2">暫無目錄統計數據</p>
+            <a href="{{ url_for('permissions.directories') }}" class="btn btn-outline-primary">
+                <i class="bi bi-folder-plus"></i> 管理目錄
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 傳輸統計 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-arrow-up-down"></i> 傳輸統計</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center mb-3">
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <h4 class="text-primary">{{ transfer_stats.upload_count }}</h4>
+                            <small class="text-muted">上傳次數</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded p-3">
+                            <h4 class="text-info">{{ transfer_stats.download_count }}</h4>
+                            <small class="text-muted">下載次數</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <h6>平均傳輸速度</h6>
+                    <h4>{{ "%.1f"|format(transfer_stats.avg_speed / 1024) }} KB/s</h4>
+                </div>
+                
+                {% if transfer_stats.upload_count > 0 or transfer_stats.download_count > 0 %}
+                <div class="progress mt-3">
+                    {% set total_transfers = transfer_stats.upload_count + transfer_stats.download_count %}
+                    {% set upload_percent = (transfer_stats.upload_count / total_transfers * 100) if total_transfers > 0 else 0 %}
+                    <div class="progress-bar bg-primary" style="width: {{ upload_percent }}%" title="上傳比例"></div>
+                    <div class="progress-bar bg-info" style="width: {{ 100 - upload_percent }}%" title="下載比例"></div>
+                </div>
+                <div class="d-flex justify-content-between mt-1">
+                    <small class="text-muted">上傳 {{ "%.1f"|format(upload_percent) }}%</small>
+                    <small class="text-muted">下載 {{ "%.1f"|format(100 - upload_percent) }}%</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-graph-up"></i> 傳輸趨勢</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>功能開發中:</strong> 傳輸趨勢圖表正在開發中
+                </div>
+                
+                <!-- 傳輸趨勢圖表預留空間 -->
+                <div style="height: 200px; background-color: #f8f9fa; border: 2px dashed #dee2e6; 
+                            display: flex; align-items: center; justify-content: center;">
+                    <span class="text-muted">傳輸趨勢圖表區域</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 報表匯出 -->
+<div class="card">
+    <div class="card-header">
+        <h5><i class="bi bi-download"></i> 報表匯出</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <p class="text-muted">
+                    匯出統計報表為不同格式，方便進一步分析或存檔。報表包含用戶活動、目錄使用量、傳輸統計等資訊。
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-outline-primary" onclick="exportReport('csv')">
+                        <i class="bi bi-file-earmark-spreadsheet"></i> CSV
+                    </button>
+                    <button type="button" class="btn btn-outline-info" onclick="exportReport('json')">
+                        <i class="bi bi-file-earmark-code"></i> JSON
+                    </button>
+                    <button type="button" class="btn btn-outline-success" onclick="exportReport('pdf')">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function exportReport(format) {
+    const period = '{{ period }}';
+    
+    // 構建匯出數據
+    const reportData = {
+        period: period,
+        timestamp: new Date().toISOString(),
+        user_stats: {{ user_stats|tojson }},
+        directory_stats: {{ directory_stats|tojson }},
+        transfer_stats: {{ transfer_stats|tojson }}
+    };
+    
+    if (format === 'csv') {
+        exportToCSV(reportData);
+    } else if (format === 'json') {
+        exportToJSON(reportData);
+    } else if (format === 'pdf') {
+        showToast('PDF 匯出功能正在開發中', 'info');
+    }
+}
+
+function exportToCSV(data) {
+    // 目錄統計 CSV
+    let csvContent = "目錄統計\n";
+    csvContent += "目錄名稱,路徑,檔案數量,使用空間(MB),權限設定數量\n";
+    
+    data.directory_stats.forEach(function(dir) {
+        csvContent += `"${dir.name}","${dir.path}",${dir.file_count},${(dir.size / 1024**2).toFixed(1)},${dir.permissions_count}\n`;
+    });
+    
+    csvContent += "\n傳輸統計\n";
+    csvContent += "上傳次數,下載次數,總傳輸量(GB),平均速度(KB/s)\n";
+    csvContent += `${data.transfer_stats.upload_count},${data.transfer_stats.download_count},${(data.transfer_stats.total_bytes / 1024**3).toFixed(1)},${(data.transfer_stats.avg_speed / 1024).toFixed(1)}\n`;
+    
+    downloadFile(csvContent, `proftpd_stats_${data.period}_${formatDate(new Date())}.csv`, 'text/csv');
+}
+
+function exportToJSON(data) {
+    const jsonContent = JSON.stringify(data, null, 2);
+    downloadFile(jsonContent, `proftpd_stats_${data.period}_${formatDate(new Date())}.json`, 'application/json');
+}
+
+function downloadFile(content, filename, contentType) {
+    const blob = new Blob([content], { type: contentType });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    URL.revokeObjectURL(url);
+    showToast(`報表已匯出: ${filename}`);
+}
+
+function formatDate(date) {
+    return date.toISOString().split('T')[0];
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block title %}系統設定 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-gear"></i> 系統設定</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('settings.system_settings') }}" class="btn btn-outline-primary">
+            <i class="bi bi-sliders"></i> 系統設定
+        </a>
+        <a href="{{ url_for('settings.config_management') }}" class="btn btn-outline-info">
+            <i class="bi bi-file-earmark-code"></i> 配置管理
+        </a>
+        <a href="{{ url_for('settings.backup_restore') }}" class="btn btn-outline-success">
+            <i class="bi bi-hdd"></i> 備份還原
+        </a>
+        <a href="{{ url_for('settings.admin_management') }}" class="btn btn-outline-warning">
+            <i class="bi bi-person-gear"></i> 管理員設定
+        </a>
+    </div>
+</div>
+
+<!-- 系統狀態概覽 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>{{ settings.get('ftp_max_clients', '50') }}</h3>
+                <small>最大連線數</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>
+                    {% if settings.get('log_access_enabled', 'true') == 'true' %}
+                    <i class="bi bi-check-circle"></i>
+                    {% else %}
+                    <i class="bi bi-x-circle"></i>
+                    {% endif %}
+                </h3>
+                <small>存取日誌</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>
+                    {% if settings.get('system_backup_enabled', 'true') == 'true' %}
+                    <i class="bi bi-check-circle"></i>
+                    {% else %}
+                    <i class="bi bi-x-circle"></i>
+                    {% endif %}
+                </h3>
+                <small>自動備份</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3>
+                    {% if settings.get('system_maintenance_mode', 'false') == 'true' %}
+                    <i class="bi bi-exclamation-triangle"></i>
+                    {% else %}
+                    <i class="bi bi-check-circle"></i>
+                    {% endif %}
+                </h3>
+                <small>系統狀態</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 快速設定 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-lightning"></i> 快速設定</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>維護模式</strong>
+                            <br><small class="text-muted">暫時停止 FTP 服務</small>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="maintenanceMode" 
+                                   {% if settings.get('system_maintenance_mode', 'false') == 'true' %}checked{% endif %}
+                                   onchange="toggleMaintenanceMode(this.checked)">
+                        </div>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>SSL/TLS 要求</strong>
+                            <br><small class="text-muted">強制使用加密連線</small>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="requireSSL"
+                                   {% if settings.get('security_require_ssl', 'false') == 'true' %}checked{% endif %}
+                                   onchange="toggleSSLRequirement(this.checked)">
+                        </div>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>存取日誌</strong>
+                            <br><small class="text-muted">記錄所有 FTP 活動</small>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="accessLog"
+                                   {% if settings.get('log_access_enabled', 'true') == 'true' %}checked{% endif %}
+                                   onchange="toggleAccessLog(this.checked)">
+                        </div>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>自動備份</strong>
+                            <br><small class="text-muted">定期備份系統資料</small>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="autoBackup"
+                                   {% if settings.get('system_backup_enabled', 'true') == 'true' %}checked{% endif %}
+                                   onchange="toggleAutoBackup(this.checked)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 目前設定摘要</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <td><strong>伺服器名稱:</strong></td>
+                        <td>{{ settings.get('ftp_server_name', 'ProFTPD Server') }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>最大連線數:</strong></td>
+                        <td>{{ settings.get('ftp_max_clients', '50') }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>每 IP 連線數:</strong></td>
+                        <td>{{ settings.get('ftp_max_per_ip', '5') }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>被動埠範圍:</strong></td>
+                        <td>{{ settings.get('ftp_passive_ports', '60000-65000') }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>日誌等級:</strong></td>
+                        <td>{{ settings.get('log_level', 'info').title() }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>登入嘗試限制:</strong></td>
+                        <td>{{ settings.get('security_login_attempts', '5') }} 次</td>
+                    </tr>
+                    <tr>
+                        <td><strong>備份頻率:</strong></td>
+                        <td>
+                            {% set interval = settings.get('system_backup_interval', 'weekly') %}
+                            {% if interval == 'daily' %}每日
+                            {% elif interval == 'weekly' %}每週
+                            {% elif interval == 'monthly' %}每月
+                            {% else %}{{ interval }}{% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 管理功能 -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-tools"></i> 管理功能</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <a href="{{ url_for('settings.system_settings') }}" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-sliders d-block fs-2 mb-2"></i>
+                                系統設定
+                                <br><small>調整 FTP 伺服器參數</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <a href="{{ url_for('settings.config_management') }}" class="btn btn-outline-info btn-lg">
+                                <i class="bi bi-file-earmark-code d-block fs-2 mb-2"></i>
+                                配置管理
+                                <br><small>生成和管理配置檔</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <a href="{{ url_for('settings.backup_restore') }}" class="btn btn-outline-success btn-lg">
+                                <i class="bi bi-hdd d-block fs-2 mb-2"></i>
+                                備份還原
+                                <br><small>建立和管理系統備份</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-grid">
+                            <a href="{{ url_for('settings.admin_management') }}" class="btn btn-outline-warning btn-lg">
+                                <i class="bi bi-person-gear d-block fs-2 mb-2"></i>
+                                管理員設定
+                                <br><small>變更管理員帳號資訊</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 快速設定切換功能
+function toggleMaintenanceMode(enabled) {
+    updateQuickSetting('system_maintenance_mode', enabled ? 'true' : 'false');
+}
+
+function toggleSSLRequirement(enabled) {
+    updateQuickSetting('security_require_ssl', enabled ? 'true' : 'false');
+}
+
+function toggleAccessLog(enabled) {
+    updateQuickSetting('log_access_enabled', enabled ? 'true' : 'false');
+}
+
+function toggleAutoBackup(enabled) {
+    updateQuickSetting('system_backup_enabled', enabled ? 'true' : 'false');
+}
+
+function updateQuickSetting(key, value) {
+    fetch('{{ url_for("settings.api_quick_setting") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            key: key,
+            value: value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast('設定已更新', 'success');
+        } else {
+            showToast('設定更新失敗: ' + data.error, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('快速設定更新失敗:', error);
+        showToast('設定更新失敗', 'error');
+    });
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

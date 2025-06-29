@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}配置預覽 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-eye"></i> ProFTPD 配置預覽</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('config.download') }}" class="btn btn-outline-primary">
+            <i class="bi bi-download"></i> 下載配置
+        </a>
+        <a href="{{ url_for('config.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-file-text"></i> dynamic.conf 配置內容</h5>
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-outline-secondary" onclick="copyToClipboard()">
+                <i class="bi bi-clipboard"></i> 複製
+            </button>
+            <button type="button" class="btn btn-outline-secondary" onclick="toggleLineNumbers()">
+                <i class="bi bi-list-ol"></i> 行號
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <pre id="config-content" class="mb-0 p-3" style="background-color: #f8f9fa; max-height: 600px; overflow-y: auto;"><code>{{ config_content }}</code></pre>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-info-circle"></i> 配置說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>配置結構</h6>
+                <ul class="small">
+                    <li><strong>Directory 區塊</strong>: 每個目錄一個配置區塊</li>
+                    <li><strong>Limit 區塊</strong>: 按權限類型分組的限制設定</li>
+                    <li><strong>AllowUser/AllowGroup</strong>: 允許的用戶和群組</li>
+                    <li><strong>DenyAll</strong>: 預設拒絕所有其他存取</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>權限對應</h6>
+                <ul class="small">
+                    <li><strong>讀取權限</strong>: READ, CWD, PWD, LIST, NLST, STAT, MLSD</li>
+                    <li><strong>寫入權限</strong>: STOR, STOU, APPE</li>
+                    <li><strong>刪除權限</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-3">
+            <i class="bi bi-lightbulb"></i>
+            <strong>使用說明:</strong> 此配置檔應該在主 proftpd.conf 中使用 <code>Include /etc/proftpd/dynamic.conf</code> 指令包含。
+        </div>
+    </div>
+</div>
+
+<!-- 配置統計 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-bar-chart"></i> 配置統計</h5>
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h4 id="directory-count" class="text-primary">0</h4>
+                    <small class="text-muted">目錄數量</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h4 id="user-permission-count" class="text-info">0</h4>
+                    <small class="text-muted">用戶權限</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h4 id="group-permission-count" class="text-warning">0</h4>
+                    <small class="text-muted">群組權限</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h4 id="line-count" class="text-secondary">0</h4>
+                    <small class="text-muted">配置行數</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    analyzeConfig();
+});
+
+function copyToClipboard() {
+    const configContent = document.getElementById('config-content').textContent;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(configContent).then(function() {
+            showToast('配置內容已複製到剪貼簿');
+        }).catch(function() {
+            fallbackCopyToClipboard(configContent);
+        });
+    } else {
+        fallbackCopyToClipboard(configContent);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showToast('配置內容已複製到剪貼簿');
+    } catch (err) {
+        showToast('複製失敗，請手動選擇並複製', 'error');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+function toggleLineNumbers() {
+    const configContent = document.getElementById('config-content');
+    const lines = configContent.textContent.split('\n');
+    
+    if (configContent.dataset.showLineNumbers === 'true') {
+        // 移除行號
+        configContent.innerHTML = '<code>' + configContent.textContent.replace(/^\s*\d+\s+/gm, '') + '</code>';
+        configContent.dataset.showLineNumbers = 'false';
+    } else {
+        // 添加行號
+        const numberedLines = lines.map((line, index) => {
+            return (index + 1).toString().padStart(3, ' ') + '  ' + line;
+        }).join('\n');
+        configContent.innerHTML = '<code>' + numberedLines + '</code>';
+        configContent.dataset.showLineNumbers = 'true';
+    }
+}
+
+function analyzeConfig() {
+    const configContent = document.getElementById('config-content').textContent;
+    const lines = configContent.split('\n');
+    
+    // 計算統計資料
+    const directoryCount = (configContent.match(/<Directory /g) || []).length;
+    const userPermissionCount = (configContent.match(/AllowUser /g) || []).length;
+    const groupPermissionCount = (configContent.match(/AllowGroup /g) || []).length;
+    const lineCount = lines.filter(line => line.trim() !== '').length;
+    
+    // 更新統計顯示
+    document.getElementById('directory-count').textContent = directoryCount;
+    document.getElementById('user-permission-count').textContent = userPermissionCount;
+    document.getElementById('group-permission-count').textContent = groupPermissionCount;
+    document.getElementById('line-count').textContent = lineCount;
+}
+
+function showToast(message, type = 'success') {
+    // 簡單的 toast 通知
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // 自動移除
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

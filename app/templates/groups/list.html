@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}群組管理 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-collection"></i> FTP 群組管理</h1>
+    <a href="{{ url_for('groups.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> 新增群組
+    </a>
+</div>
+
+<!-- 搜尋 -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-8">
+                {{ search_form.search.label(class="form-label") }}
+                {{ search_form.search(class="form-control", value=request.args.get('search', '')) }}
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-search"></i> 搜尋
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 群組列表 -->
+<div class="card">
+    <div class="card-header">
+        <h5>群組列表 (共 {{ groups.total }} 個群組)</h5>
+    </div>
+    <div class="card-body">
+        {% if groups.items %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>群組名稱</th>
+                        <th>GID</th>
+                        <th>描述</th>
+                        <th>成員數量</th>
+                        <th>創建時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups.items %}
+                    <tr>
+                        <td>
+                            <strong>{{ group.groupname }}</strong>
+                            {% if group.gid == 5000 %}
+                            <span class="badge bg-danger ms-2">管理員</span>
+                            {% elif group.gid == 5001 %}
+                            <span class="badge bg-info ms-2">一般用戶</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ group.gid }}</td>
+                        <td>
+                            {% if group.description %}
+                            {{ group.description[:100] }}
+                            {% if group.description|length > 100 %}...{% endif %}
+                            {% else %}
+                            <span class="text-muted">無描述</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">{{ group.members|length }}</span>
+                        </td>
+                        <td>{{ group.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('groups.detail', id=group.id) }}" 
+                                   class="btn btn-outline-info" title="詳情">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{{ url_for('groups.edit', id=group.id) }}" 
+                                   class="btn btn-outline-primary" title="編輯">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{{ url_for('groups.manage_members', id=group.id) }}" 
+                                   class="btn btn-outline-secondary" title="成員">
+                                    <i class="bi bi-people"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 分頁 -->
+        {% if groups.pages > 1 %}
+        <nav aria-label="群組分頁">
+            <ul class="pagination justify-content-center">
+                {% if groups.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('groups.list', page=groups.prev_num, **request.args) }}">上一頁</a>
+                </li>
+                {% endif %}
+                
+                {% for page_num in groups.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num != groups.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('groups.list', page=page_num, **request.args) }}">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if groups.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('groups.list', page=groups.next_num, **request.args) }}">下一頁</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <div class="text-center py-4">
+            <i class="bi bi-collection fs-1 text-muted"></i>
+            <p class="text-muted mt-2">尚未建立任何群組</p>
+            <a href="{{ url_for('groups.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> 立即新增群組
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 預設群組說明 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-info-circle"></i> 預設群組說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6><span class="badge bg-danger">admins (GID: 5000)</span></h6>
+                <ul class="small">
+                    <li>系統管理員群組</li>
+                    <li>擁有完整的檔案和目錄權限</li>
+                    <li>可以存取所有 FTP 目錄</li>
+                    <li>可以執行所有 FTP 操作</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6><span class="badge bg-info">users (GID: 5001)</span></h6>
+                <ul class="small">
+                    <li>一般用戶群組</li>
+                    <li>受限的檔案權限</li>
+                    <li>存取權限依目錄設定而定</li>
+                    <li>通常無法刪除檔案或建立目錄</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

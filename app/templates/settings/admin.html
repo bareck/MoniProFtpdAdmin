@@ -1,0 +1,387 @@
+{% extends "base.html" %}
+
+{% block title %}管理員設定 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-person-gear"></i> 管理員設定</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回設定首頁
+        </a>
+    </div>
+</div>
+
+<!-- 管理員資訊 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-person-circle"></i> 目前管理員資訊</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <td><strong>用戶名稱:</strong></td>
+                        <td>{{ current_user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>電子郵件:</strong></td>
+                        <td>{{ current_user.email or '未設定' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>建立時間:</strong></td>
+                        <td>{{ current_user.created_at.strftime('%Y-%m-%d %H:%M:%S') if current_user.created_at else 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>最後登入:</strong></td>
+                        <td>{{ current_user.last_login.strftime('%Y-%m-%d %H:%M:%S') if current_user.last_login else '首次登入' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>帳號狀態:</strong></td>
+                        <td>
+                            {% if current_user.is_active %}
+                            <span class="badge bg-success">啟用</span>
+                            {% else %}
+                            <span class="badge bg-danger">停用</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-shield-check"></i> 安全設定</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>密碼強度</strong>
+                            <br><small class="text-muted">密碼安全等級評估</small>
+                        </div>
+                        <span class="badge bg-warning">中等</span>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>會話超時</strong>
+                            <br><small class="text-muted">自動登出時間</small>
+                        </div>
+                        <span class="badge bg-info">30 分鐘</span>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>IP 限制</strong>
+                            <br><small class="text-muted">登入 IP 白名單</small>
+                        </div>
+                        <span class="badge bg-secondary">未設定</span>
+                    </div>
+                    
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>雙因子認證</strong>
+                            <br><small class="text-muted">額外安全驗證</small>
+                        </div>
+                        <span class="badge bg-secondary">未啟用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 密碼變更 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-key"></i> 變更密碼</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {{ password_form.hidden_tag() }}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ password_form.current_password.label(class="form-label") }}
+                        {{ password_form.current_password(class="form-control") }}
+                        {% for error in password_form.current_password.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ password_form.new_password.label(class="form-label") }}
+                        {{ password_form.new_password(class="form-control", onkeyup="checkPasswordStrength(this.value)") }}
+                        <div class="progress mt-2" style="height: 5px;">
+                            <div id="password-strength" class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <div id="password-feedback" class="form-text"></div>
+                        {% for error in password_form.new_password.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ password_form.confirm_password.label(class="form-label") }}
+                        {{ password_form.confirm_password(class="form-control", onkeyup="checkPasswordMatch()") }}
+                        <div id="password-match-feedback" class="form-text"></div>
+                        {% for error in password_form.confirm_password.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h6>密碼安全建議</h6>
+                            <ul class="small mb-0">
+                                <li>密碼長度至少 8 個字元</li>
+                                <li>包含大寫字母 (A-Z)</li>
+                                <li>包含小寫字母 (a-z)</li>
+                                <li>包含數字 (0-9)</li>
+                                <li>包含特殊符號 (!@#$%^&*)</li>
+                                <li>避免使用常見密碼或個人資訊</li>
+                                <li>定期更換密碼</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> 取消
+                </a>
+                {{ password_form.change_password(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 登入記錄 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-clock-history"></i> 最近登入記錄</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>登入時間</th>
+                        <th>IP 位址</th>
+                        <th>用戶代理</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ current_user.last_login.strftime('%Y-%m-%d %H:%M:%S') if current_user.last_login else 'N/A' }}</td>
+                        <td>127.0.0.1</td>
+                        <td>Chrome/Firefox</td>
+                        <td><span class="badge bg-success">成功</span></td>
+                    </tr>
+                    <!-- 更多登入記錄可以從資料庫中獲取 -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="text-center py-3 text-muted">
+            <i class="bi bi-info-circle"></i>
+            詳細的登入記錄功能正在開發中
+        </div>
+    </div>
+</div>
+
+<!-- 系統維護 -->
+<div class="card">
+    <div class="card-header">
+        <h5><i class="bi bi-tools"></i> 系統維護操作</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-info" onclick="clearCache()">
+                        <i class="bi bi-trash"></i> 清理系統快取
+                    </button>
+                    <button type="button" class="btn btn-outline-warning" onclick="resetSession()">
+                        <i class="bi bi-arrow-clockwise"></i> 重設會話
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="exportLogs()">
+                        <i class="bi bi-download"></i> 匯出系統日誌
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>注意:</strong> 維護操作可能會影響系統運行，請謹慎使用。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function checkPasswordStrength(password) {
+    const strengthBar = document.getElementById('password-strength');
+    const feedback = document.getElementById('password-feedback');
+    
+    let strength = 0;
+    let messages = [];
+    
+    // 長度檢查
+    if (password.length >= 8) {
+        strength += 20;
+    } else {
+        messages.push('密碼長度不足 8 個字元');
+    }
+    
+    // 大寫字母
+    if (/[A-Z]/.test(password)) {
+        strength += 20;
+    } else {
+        messages.push('缺少大寫字母');
+    }
+    
+    // 小寫字母
+    if (/[a-z]/.test(password)) {
+        strength += 20;
+    } else {
+        messages.push('缺少小寫字母');
+    }
+    
+    // 數字
+    if (/[0-9]/.test(password)) {
+        strength += 20;
+    } else {
+        messages.push('缺少數字');
+    }
+    
+    // 特殊符號
+    if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+        strength += 20;
+    } else {
+        messages.push('缺少特殊符號');
+    }
+    
+    // 更新進度條
+    strengthBar.style.width = strength + '%';
+    
+    if (strength < 40) {
+        strengthBar.className = 'progress-bar bg-danger';
+        feedback.textContent = '密碼強度: 弱 - ' + messages.join(', ');
+        feedback.className = 'form-text text-danger';
+    } else if (strength < 80) {
+        strengthBar.className = 'progress-bar bg-warning';
+        feedback.textContent = '密碼強度: 中等 - ' + messages.join(', ');
+        feedback.className = 'form-text text-warning';
+    } else {
+        strengthBar.className = 'progress-bar bg-success';
+        feedback.textContent = '密碼強度: 強';
+        feedback.className = 'form-text text-success';
+    }
+}
+
+function checkPasswordMatch() {
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const feedback = document.getElementById('password-match-feedback');
+    
+    if (confirmPassword.length === 0) {
+        feedback.textContent = '';
+        return;
+    }
+    
+    if (newPassword === confirmPassword) {
+        feedback.textContent = '密碼確認一致';
+        feedback.className = 'form-text text-success';
+    } else {
+        feedback.textContent = '密碼確認不一致';
+        feedback.className = 'form-text text-danger';
+    }
+}
+
+function clearCache() {
+    if (confirm('確定要清理系統快取嗎？')) {
+        fetch('{{ url_for("settings.api_clear_cache") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast('系統快取已清理', 'success');
+            } else {
+                showToast('清理快取失敗: ' + data.error, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('清理快取失敗:', error);
+            showToast('清理快取失敗', 'error');
+        });
+    }
+}
+
+function resetSession() {
+    if (confirm('確定要重設會話嗎？這將登出所有用戶。')) {
+        fetch('{{ url_for("settings.api_reset_session") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showToast('會話已重設', 'success');
+                setTimeout(() => {
+                    window.location.href = '{{ url_for("auth.login") }}';
+                }, 2000);
+            } else {
+                showToast('重設會話失敗: ' + data.error, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('重設會話失敗:', error);
+            showToast('重設會話失敗', 'error');
+        });
+    }
+}
+
+function exportLogs() {
+    window.open('{{ url_for("settings.api_export_logs") }}', '_blank');
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

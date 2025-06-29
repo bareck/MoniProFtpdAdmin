@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}用戶管理 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-people"></i> FTP 用戶管理</h1>
+    <a href="{{ url_for('users.create') }}" class="btn btn-primary">
+        <i class="bi bi-person-plus"></i> 新增用戶
+    </a>
+</div>
+
+<!-- 搜尋和篩選 -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-4">
+                {{ search_form.search.label(class="form-label") }}
+                {{ search_form.search(class="form-control", value=request.args.get('search', '')) }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.status.label(class="form-label") }}
+                {{ search_form.status(class="form-select") }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.group_filter.label(class="form-label") }}
+                {{ search_form.group_filter(class="form-select") }}
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-search"></i> 搜尋
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 用戶列表 -->
+<div class="card">
+    <div class="card-header">
+        <h5>用戶列表 (共 {{ users.total }} 個用戶)</h5>
+    </div>
+    <div class="card-body">
+        {% if users.items %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>用戶名</th>
+                        <th>UID</th>
+                        <th>家目錄</th>
+                        <th>群組</th>
+                        <th>狀態</th>
+                        <th>創建時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users.items %}
+                    <tr>
+                        <td>
+                            <strong>{{ user.username }}</strong>
+                            {% if user.comment %}
+                            <br><small class="text-muted">{{ user.comment[:50] }}{% if user.comment|length > 50 %}...{% endif %}</small>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.uid }}</td>
+                        <td>
+                            <code>{{ user.home_directory }}</code>
+                        </td>
+                        <td>
+                            {% for group in user.get_groups() %}
+                            <span class="badge bg-secondary">{{ group.groupname }}</span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if user.is_enabled %}
+                            <span class="badge bg-success">啟用</span>
+                            {% else %}
+                            <span class="badge bg-danger">停用</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('users.detail', id=user.id) }}" 
+                                   class="btn btn-outline-info" title="詳情">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{{ url_for('users.edit', id=user.id) }}" 
+                                   class="btn btn-outline-primary" title="編輯">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{{ url_for('users.manage_groups', id=user.id) }}" 
+                                   class="btn btn-outline-secondary" title="群組">
+                                    <i class="bi bi-collection"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 分頁 -->
+        {% if users.pages > 1 %}
+        <nav aria-label="用戶分頁">
+            <ul class="pagination justify-content-center">
+                {% if users.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('users.list', page=users.prev_num, **request.args) }}">上一頁</a>
+                </li>
+                {% endif %}
+                
+                {% for page_num in users.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num != users.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('users.list', page=page_num, **request.args) }}">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if users.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('users.list', page=users.next_num, **request.args) }}">下一頁</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <div class="text-center py-4">
+            <i class="bi bi-person-x fs-1 text-muted"></i>
+            <p class="text-muted mt-2">尚未建立任何用戶</p>
+            <a href="{{ url_for('users.create') }}" class="btn btn-primary">
+                <i class="bi bi-person-plus"></i> 立即新增用戶
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 設定表單的預設值
+document.addEventListener('DOMContentLoaded', function() {
+    // 從 URL 參數設定表單值
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const statusSelect = document.getElementById('status');
+    if (statusSelect && urlParams.get('status')) {
+        statusSelect.value = urlParams.get('status');
+    }
+    
+    const groupSelect = document.getElementById('group_filter');
+    if (groupSelect && urlParams.get('group_filter')) {
+        groupSelect.value = urlParams.get('group_filter');
+    }
+});
+</script>
+{% endblock %}

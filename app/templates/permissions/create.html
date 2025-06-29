@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+
+{% block title %}新增權限設定 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-plus-circle"></i> 新增權限設定</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="needs-validation" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.directory_id.label(class="form-label required") }}
+                        {{ form.directory_id(class="form-select", required=True) }}
+                        <div class="invalid-feedback">請選擇目錄</div>
+                        {% for error in form.directory_id.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.target_type.label(class="form-label required") }}
+                        {{ form.target_type(class="form-select", required=True, id="target_type") }}
+                        {% for error in form.target_type.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- 用戶選擇區域 -->
+                    <div class="mb-3" id="users_section" style="display: none;">
+                        <label class="form-label required">選擇用戶</label>
+                        {{ form.selected_users(style="display: none;") }}
+                        <div id="users_list" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                            <!-- 用戶列表將由 JavaScript 動態載入 -->
+                        </div>
+                        <div class="form-text">選擇一個或多個用戶進行權限設定</div>
+                        {% for error in form.selected_users.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- 群組選擇區域 -->
+                    <div class="mb-3" id="groups_section" style="display: none;">
+                        <label class="form-label required">選擇群組</label>
+                        {{ form.selected_groups(style="display: none;") }}
+                        <div id="groups_list" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
+                            <!-- 群組列表將由 JavaScript 動態載入 -->
+                        </div>
+                        <div class="form-text">選擇一個或多個群組進行權限設定</div>
+                        {% for error in form.selected_groups.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">權限設定</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_read(class="form-check-input") }}
+                                    {{ form.can_read.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許讀取檔案和列出目錄
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_write(class="form-check-input") }}
+                                    {{ form.can_write.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許上傳和修改檔案
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_delete(class="form-check-input") }}
+                                    {{ form.can_delete.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許刪除檔案和目錄操作
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        {{ form.submit(class="btn btn-primary", onclick="return validateForm()") }}
+                        <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 權限設定說明</h5>
+            </div>
+            <div class="card-body">
+                <h6>權限類型</h6>
+                <ul class="small">
+                    <li><strong>讀取權限</strong>: LIST, CWD, PWD, NLST, STAT, MLSD</li>
+                    <li><strong>寫入權限</strong>: STOR, STOU, APPE</li>
+                    <li><strong>刪除權限</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
+                </ul>
+                
+                <h6 class="mt-3">權限目標</h6>
+                <ul class="small">
+                    <li><strong>用戶權限</strong>: 針對特定用戶的權限設定</li>
+                    <li><strong>群組權限</strong>: 針對整個群組的權限設定</li>
+                </ul>
+                
+                <div class="alert alert-warning mt-3">
+                    <small>
+                        <i class="bi bi-exclamation-triangle"></i>
+                        用戶的最終權限是其群組權限與用戶特定權限的聯集
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-lightbulb"></i> 常用權限組合</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-success btn-sm w-100" onclick="setPermissions(true, true, true)">
+                        完整權限 (讀寫刪)
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setPermissions(true, true, false)">
+                        讀寫權限
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-info btn-sm w-100" onclick="setPermissions(true, false, false)">
+                        僅讀取權限
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" onclick="setPermissions(false, false, false)">
+                        無權限
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-check2-square"></i> 批量操作</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectAllTargets()">
+                        <i class="bi bi-check-all"></i> 全選
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearAllTargets()">
+                        <i class="bi bi-x-square"></i> 清除選擇
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let usersData = [];
+let groupsData = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const targetTypeSelect = document.getElementById('target_type');
+    
+    // 目標類型變更時更新目標選項
+    targetTypeSelect.addEventListener('change', function() {
+        updateTargetSections();
+    });
+    
+    // 初始載入
+    loadUsersAndGroups();
+    
+    // 如果頁面載入時已有目標類型選擇（驗證失敗返回時），顯示對應區域
+    setTimeout(function() {
+        if (targetTypeSelect.value) {
+            updateTargetSections();
+        }
+    }, 500); // 延遲確保數據已載入
+});
+
+function loadUsersAndGroups() {
+    let usersLoaded = false;
+    let groupsLoaded = false;
+    
+    // 載入用戶列表
+    fetch(`{{ url_for('permissions.api_targets', target_type='user') }}`)
+        .then(response => response.json())
+        .then(data => {
+            usersData = data;
+            usersLoaded = true;
+            if (groupsLoaded) {
+                updateTargetSections();
+            }
+        })
+        .catch(error => {
+            console.error('載入用戶列表失敗:', error);
+            usersLoaded = true;
+            if (groupsLoaded) {
+                updateTargetSections();
+            }
+        });
+    
+    // 載入群組列表
+    fetch(`{{ url_for('permissions.api_targets', target_type='group') }}`)
+        .then(response => response.json())
+        .then(data => {
+            groupsData = data;
+            groupsLoaded = true;
+            if (usersLoaded) {
+                updateTargetSections();
+            }
+        })
+        .catch(error => {
+            console.error('載入群組列表失敗:', error);
+            groupsLoaded = true;
+            if (usersLoaded) {
+                updateTargetSections();
+            }
+        });
+}
+
+function updateTargetSections() {
+    const targetType = document.getElementById('target_type').value;
+    const usersSection = document.getElementById('users_section');
+    const groupsSection = document.getElementById('groups_section');
+    
+    // 隱藏所有區域
+    usersSection.style.display = 'none';
+    groupsSection.style.display = 'none';
+    
+    if (targetType === 'user') {
+        usersSection.style.display = 'block';
+        renderUsersList();
+    } else if (targetType === 'group') {
+        groupsSection.style.display = 'block';
+        renderGroupsList();
+    }
+}
+
+function renderUsersList() {
+    const container = document.getElementById('users_list');
+    container.innerHTML = '';
+    
+    if (usersData.length === 0) {
+        container.innerHTML = '<div class="text-muted">沒有可用的用戶</div>';
+        return;
+    }
+    
+    usersData.forEach(function(user) {
+        const div = document.createElement('div');
+        div.className = 'form-check';
+        div.innerHTML = `
+            <input class="form-check-input" type="checkbox" value="${user[0]}" id="user_${user[0]}" onchange="updateSelectedUsers()">
+            <label class="form-check-label" for="user_${user[0]}">
+                ${user[1]}
+            </label>
+        `;
+        container.appendChild(div);
+    });
+    
+    // 渲染完成後恢復選擇狀態
+    setTimeout(restoreSelectedUsers, 10);
+}
+
+function renderGroupsList() {
+    const container = document.getElementById('groups_list');
+    container.innerHTML = '';
+    
+    if (groupsData.length === 0) {
+        container.innerHTML = '<div class="text-muted">沒有可用的群組</div>';
+        return;
+    }
+    
+    groupsData.forEach(function(group) {
+        const div = document.createElement('div');
+        div.className = 'form-check';
+        div.innerHTML = `
+            <input class="form-check-input" type="checkbox" value="${group[0]}" id="group_${group[0]}" onchange="updateSelectedGroups()">
+            <label class="form-check-label" for="group_${group[0]}">
+                ${group[1]}
+            </label>
+        `;
+        container.appendChild(div);
+    });
+    
+    // 渲染完成後恢復選擇狀態
+    setTimeout(restoreSelectedGroups, 10);
+}
+
+function updateSelectedUsers() {
+    const checkboxes = document.querySelectorAll('#users_list input[type="checkbox"]:checked');
+    const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+    const value = selectedIds.join(',');
+    document.getElementById('selected_users').value = value;
+    console.log('Updated selected users:', value);
+}
+
+function updateSelectedGroups() {
+    const checkboxes = document.querySelectorAll('#groups_list input[type="checkbox"]:checked');
+    const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+    const value = selectedIds.join(',');
+    document.getElementById('selected_groups').value = value;
+    console.log('Updated selected groups:', value);
+}
+
+function selectAllTargets() {
+    const targetType = document.getElementById('target_type').value;
+    if (targetType === 'user') {
+        const checkboxes = document.querySelectorAll('#users_list input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = true);
+        updateSelectedUsers();
+    } else if (targetType === 'group') {
+        const checkboxes = document.querySelectorAll('#groups_list input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = true);
+        updateSelectedGroups();
+    }
+}
+
+function clearAllTargets() {
+    const targetType = document.getElementById('target_type').value;
+    if (targetType === 'user') {
+        const checkboxes = document.querySelectorAll('#users_list input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+        updateSelectedUsers();
+    } else if (targetType === 'group') {
+        const checkboxes = document.querySelectorAll('#groups_list input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+        updateSelectedGroups();
+    }
+}
+
+function restoreSelectedUsers() {
+    const selectedUsers = document.getElementById('selected_users').value;
+    if (selectedUsers) {
+        const userIds = selectedUsers.split(',');
+        userIds.forEach(function(userId) {
+            const checkbox = document.getElementById('user_' + userId.trim());
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+    }
+}
+
+function restoreSelectedGroups() {
+    const selectedGroups = document.getElementById('selected_groups').value;
+    if (selectedGroups) {
+        const groupIds = selectedGroups.split(',');
+        groupIds.forEach(function(groupId) {
+            const checkbox = document.getElementById('group_' + groupId.trim());
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+    }
+}
+
+function validateForm() {
+    const targetType = document.getElementById('target_type').value;
+    
+    console.log('Validating form...');
+    console.log('Target type:', targetType);
+    
+    if (!targetType) {
+        alert('請選擇權限目標類型');
+        return false;
+    }
+    
+    // 確保選擇的項目已同步到隱藏字段
+    if (targetType === 'user') {
+        updateSelectedUsers();
+        const selectedUsers = document.getElementById('selected_users').value;
+        console.log('Selected users:', selectedUsers);
+        if (!selectedUsers || selectedUsers.trim() === '') {
+            alert('請選擇至少一個用戶');
+            return false;
+        }
+    } else if (targetType === 'group') {
+        updateSelectedGroups();
+        const selectedGroups = document.getElementById('selected_groups').value;
+        console.log('Selected groups:', selectedGroups);
+        if (!selectedGroups || selectedGroups.trim() === '') {
+            alert('請選擇至少一個群組');
+            return false;
+        }
+    }
+    
+    console.log('Form validation passed');
+    return true;
+}
+
+function setPermissions(read, write, deletePermission) {
+    document.getElementById('can_read').checked = read;
+    document.getElementById('can_write').checked = write;
+    document.getElementById('can_delete').checked = deletePermission;
+}
+</script>
+{% endblock %}

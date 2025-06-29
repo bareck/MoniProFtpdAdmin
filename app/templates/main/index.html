@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}儀表板 - ProFTPD 管理系統{% endblock %}
+
+{% block styles %}
+<style>
+.card-hover {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+a.text-decoration-none:hover .card-hover {
+    text-decoration: none;
+}
+
+a.text-decoration-none:hover .card-hover * {
+    color: inherit !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1><i class="bi bi-speedometer2"></i> 儀表板</h1>
+        <p class="text-muted">ProFTPD 虛擬用戶管理系統</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <a href="{{ url_for('users.list') }}" class="text-decoration-none">
+            <div class="card bg-primary text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>總用戶數</h5>
+                            <h3>{{ stats.total_users }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-people fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('users.list') }}" class="text-decoration-none">
+            <div class="card bg-success text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>啟用用戶</h5>
+                            <h3>{{ stats.active_users }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-person-check fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('groups.list') }}" class="text-decoration-none">
+            <div class="card bg-info text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>群組數量</h5>
+                            <h3>{{ stats.total_groups }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-collection fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="col-md-3">
+        <a href="{{ url_for('permissions.directories') }}" class="text-decoration-none">
+            <div class="card bg-warning text-white card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5>目錄數量</h5>
+                            <h3>{{ stats.total_directories }}</h3>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="bi bi-folder fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-clock-history"></i> 最近操作記錄</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_logs %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>時間</th>
+                                <th>操作</th>
+                                <th>描述</th>
+                                <th>管理員</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in recent_logs %}
+                            <tr>
+                                <td>{{ log.created_at.strftime('%m-%d %H:%M') }}</td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ log.action }}</span>
+                                </td>
+                                <td>{{ log.description or '-' }}</td>
+                                <td>{{ log.admin_user.username if log.admin_user else 'System' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">尚無操作記錄</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-hdd"></i> 系統資訊</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <strong>磁碟使用量:</strong><br>
+                    <span class="text-muted">{{ disk_usage }}</span>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>當前管理員:</strong><br>
+                    <span class="text-info">{{ current_user.username }}</span>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>上次登入:</strong><br>
+                    <span class="text-muted">
+                        {% if current_user.last_login %}
+                            {{ current_user.last_login.strftime('%Y-%m-%d %H:%M') }}
+                        {% else %}
+                            首次登入
+                        {% endif %}
+                    </span>
+                </div>
+                
+                <hr>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('users.list') }}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-people"></i> 管理用戶
+                    </a>
+                    <a href="{{ url_for('monitoring.index') }}" class="btn btn-outline-info btn-sm">
+                        <i class="bi bi-graph-up"></i> 查看監控
+                    </a>
+                    <a href="{{ url_for('settings.index') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-gear"></i> 系統設定
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

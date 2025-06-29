@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}新增目錄 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-folder-plus"></i> 新增目錄</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="needs-validation" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label required") }}
+                        {{ form.name(class="form-control", required=True, placeholder="輸入目錄名稱") }}
+                        <div class="invalid-feedback">請輸入目錄名稱</div>
+                        {% for error in form.name.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.path.label(class="form-label required") }}
+                        {{ form.path(class="form-control", required=True, placeholder="/backup/ftpdata/目錄名稱/") }}
+                        <div class="form-text">完整的目錄路徑，建議以 / 結尾</div>
+                        <div class="invalid-feedback">請輸入有效的目錄路徑</div>
+                        {% for error in form.path.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.description.label(class="form-label") }}
+                        {{ form.description(class="form-control", rows="3", placeholder="輸入目錄描述（選填）") }}
+                        <div class="form-text">描述此目錄的用途或特殊說明</div>
+                        {% for error in form.description.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.is_active(class="form-check-input") }}
+                            {{ form.is_active.label(class="form-check-label") }}
+                            <div class="form-text small">
+                                停用的目錄不會出現在權限設定選項中
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.create_physical_dir(class="form-check-input") }}
+                            {{ form.create_physical_dir.label(class="form-check-label") }}
+                            <div class="form-text small">
+                                在檔案系統中建立對應的實體目錄
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('permissions.directories') }}" class="btn btn-secondary">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 目錄設定說明</h5>
+            </div>
+            <div class="card-body">
+                <h6>目錄命名規則</h6>
+                <ul class="small">
+                    <li>目錄名稱應簡潔明確</li>
+                    <li>避免使用特殊字符和空格</li>
+                    <li>推薦使用英文或數字</li>
+                </ul>
+                
+                <h6 class="mt-3">路徑設定</h6>
+                <ul class="small">
+                    <li>必須是完整的絕對路徑</li>
+                    <li>預設基礎路徑：<code>/backup/ftpdata/</code></li>
+                    <li>建議路徑以 <code>/</code> 結尾</li>
+                    <li>可選擇自動建立實體目錄</li>
+                </ul>
+                
+                <h6 class="mt-3">實體目錄建立</h6>
+                <ul class="small">
+                    <li>系統會自動建立對應的檔案系統目錄</li>
+                    <li>目錄權限設為 755 (rwxr-xr-x)</li>
+                    <li>目錄擁有者設為 nobody:nobody</li>
+                    <li>如果目錄已存在，不會覆蓋</li>
+                    <li>建立失敗不會影響資料庫記錄</li>
+                </ul>
+                
+                <div class="alert alert-info mt-3">
+                    <small>
+                        <i class="bi bi-lightbulb"></i>
+                        新增目錄後，需要在權限設定中為用戶和群組分配相應的訪問權限
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-folder-fill"></i> 常用目錄範例</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setDirectoryExample('ALPHASCAN', '/backup/ftpdata/ALPHASCAN/')">
+                        ALPHASCAN 目錄
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setDirectoryExample('IO_DATA', '/backup/ftpdata/IO_DATA/')">
+                        IO_DATA 目錄
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setDirectoryExample('hpcdisplay', '/backup/ftpdata/hpcdisplay/')">
+                        hpcdisplay 目錄
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setDirectoryExample('Menpad_Taipei', '/backup/ftpdata/Menpad_Taipei/')">
+                        Menpad_Taipei 目錄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 表單驗證
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+    
+    // 目錄路徑自動補全
+    const nameField = document.getElementById('name');
+    const pathField = document.getElementById('path');
+    const basePath = '/backup/ftpdata/'; // 固定基礎路徑
+    
+    if (nameField && pathField) {
+        nameField.addEventListener('input', function() {
+            const name = this.value.trim();
+            if (name) {
+                pathField.value = basePath + name + '/';
+            } else {
+                pathField.value = basePath;
+            }
+        });
+    }
+});
+
+function setDirectoryExample(name, path) {
+    document.getElementById('name').value = name;
+    document.getElementById('path').value = path;
+    document.getElementById('description').value = '';
+}
+</script>
+{% endblock %}

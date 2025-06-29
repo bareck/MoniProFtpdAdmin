@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}登入 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4><i class="bi bi-box-arrow-in-right"></i> 管理員登入</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class="form-control") }}
+                        {% for error in form.username.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control") }}
+                        {% for error in form.password.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        {{ form.remember_me(class="form-check-input") }}
+                        {{ form.remember_me.label(class="form-check-label") }}
+                    </div>
+                    
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <small class="text-muted">
+                預設管理員帳號: admin / admin123<br>
+                (首次登入後請更改密碼)
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}

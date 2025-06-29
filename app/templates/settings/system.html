@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block title %}系統設定 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-sliders"></i> 系統設定</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回設定首頁
+        </a>
+    </div>
+</div>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    
+    <!-- FTP 伺服器設定 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5><i class="bi bi-server"></i> FTP 伺服器設定</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.ftp_server_name.label(class="form-label") }}
+                        {{ form.ftp_server_name(class="form-control") }}
+                        {% if form.ftp_server_name.description %}
+                        <div class="form-text">{{ form.ftp_server_name.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.ftp_max_clients.label(class="form-label") }}
+                        {{ form.ftp_max_clients(class="form-control") }}
+                        {% if form.ftp_max_clients.description %}
+                        <div class="form-text">{{ form.ftp_max_clients.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.ftp_max_per_ip.label(class="form-label") }}
+                        {{ form.ftp_max_per_ip(class="form-control") }}
+                        {% if form.ftp_max_per_ip.description %}
+                        <div class="form-text">{{ form.ftp_max_per_ip.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.ftp_passive_ports.label(class="form-label") }}
+                        {{ form.ftp_passive_ports(class="form-control") }}
+                        {% if form.ftp_passive_ports.description %}
+                        <div class="form-text">{{ form.ftp_passive_ports.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.ftp_umask.label(class="form-label") }}
+                        {{ form.ftp_umask(class="form-control") }}
+                        {% if form.ftp_umask.description %}
+                        <div class="form-text">{{ form.ftp_umask.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 日誌設定 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5><i class="bi bi-file-text"></i> 日誌設定</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.log_access_enabled(class="form-check-input") }}
+                            {{ form.log_access_enabled.label(class="form-check-label") }}
+                        </div>
+                        {% if form.log_access_enabled.description %}
+                        <div class="form-text">{{ form.log_access_enabled.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.log_auth_enabled(class="form-check-input") }}
+                            {{ form.log_auth_enabled.label(class="form-check-label") }}
+                        </div>
+                        {% if form.log_auth_enabled.description %}
+                        <div class="form-text">{{ form.log_auth_enabled.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.log_level.label(class="form-label") }}
+                        {{ form.log_level(class="form-select") }}
+                        {% if form.log_level.description %}
+                        <div class="form-text">{{ form.log_level.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.log_rotate_days.label(class="form-label") }}
+                        {{ form.log_rotate_days(class="form-control") }}
+                        {% if form.log_rotate_days.description %}
+                        <div class="form-text">{{ form.log_rotate_days.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 安全設定 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5><i class="bi bi-shield-check"></i> 安全設定</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.security_login_attempts.label(class="form-label") }}
+                        {{ form.security_login_attempts(class="form-control") }}
+                        {% if form.security_login_attempts.description %}
+                        <div class="form-text">{{ form.security_login_attempts.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.security_ban_duration.label(class="form-label") }}
+                        {{ form.security_ban_duration(class="form-control") }}
+                        {% if form.security_ban_duration.description %}
+                        <div class="form-text">{{ form.security_ban_duration.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.security_allow_root(class="form-check-input") }}
+                            {{ form.security_allow_root.label(class="form-check-label") }}
+                        </div>
+                        {% if form.security_allow_root.description %}
+                        <div class="form-text">{{ form.security_allow_root.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.security_require_ssl(class="form-check-input") }}
+                            {{ form.security_require_ssl.label(class="form-check-label") }}
+                        </div>
+                        {% if form.security_require_ssl.description %}
+                        <div class="form-text">{{ form.security_require_ssl.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <strong>注意:</strong> 啟用 SSL/TLS 要求後，所有連線都必須使用加密。請確保已正確設定 SSL 憑證。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 系統設定 -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5><i class="bi bi-gear"></i> 系統設定</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.system_backup_enabled(class="form-check-input") }}
+                            {{ form.system_backup_enabled.label(class="form-check-label") }}
+                        </div>
+                        {% if form.system_backup_enabled.description %}
+                        <div class="form-text">{{ form.system_backup_enabled.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.system_backup_interval.label(class="form-label") }}
+                        {{ form.system_backup_interval(class="form-select") }}
+                        {% if form.system_backup_interval.description %}
+                        <div class="form-text">{{ form.system_backup_interval.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.system_maintenance_mode(class="form-check-input") }}
+                            {{ form.system_maintenance_mode.label(class="form-check-label") }}
+                        </div>
+                        {% if form.system_maintenance_mode.description %}
+                        <div class="form-text">{{ form.system_maintenance_mode.description }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.system_notification_email.label(class="form-label") }}
+                        {{ form.system_notification_email(class="form-control") }}
+                        {% if form.system_notification_email.description %}
+                        <div class="form-text">{{ form.system_notification_email.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form.system_maintenance_mode.data %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <strong>維護模式已啟用:</strong> 目前所有 FTP 連線都會被拒絕。
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 提交按鈕 -->
+    <div class="d-flex justify-content-between">
+        <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+            <i class="bi bi-x-circle"></i> 取消
+        </a>
+        <div>
+            <button type="button" class="btn btn-outline-info me-2" onclick="previewConfig()">
+                <i class="bi bi-eye"></i> 預覽配置
+            </button>
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </div>
+</form>
+
+<!-- 配置預覽模態框 -->
+<div class="modal fade" id="configPreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ProFTPD 配置預覽</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <pre id="config-preview" class="bg-light p-3" style="max-height: 400px; overflow-y: auto;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary" onclick="copyConfig()">複製配置</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let configPreviewModal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    configPreviewModal = new bootstrap.Modal(document.getElementById('configPreviewModal'));
+});
+
+function previewConfig() {
+    // 收集表單數據
+    const formData = new FormData(document.querySelector('form'));
+    
+    // 加入預覽類型參數
+    formData.append('preview_type', 'main');
+    
+    fetch('{{ url_for("config.preview") }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(configText => {
+        document.getElementById('config-preview').textContent = configText;
+        configPreviewModal.show();
+    })
+    .catch(error => {
+        console.error('配置預覽失敗:', error);
+        alert('配置預覽失敗');
+    });
+}
+
+function copyConfig() {
+    const configText = document.getElementById('config-preview').textContent;
+    navigator.clipboard.writeText(configText).then(function() {
+        alert('配置已複製到剪貼簿');
+    }).catch(function() {
+        alert('複製失敗');
+    });
+}
+
+// 表單驗證
+document.querySelector('form').addEventListener('submit', function(e) {
+    const maxClients = parseInt(document.getElementById('ftp_max_clients').value);
+    const maxPerIP = parseInt(document.getElementById('ftp_max_per_ip').value);
+    
+    if (maxPerIP > maxClients) {
+        e.preventDefault();
+        alert('每個 IP 的最大連線數不能超過總最大連線數');
+        return false;
+    }
+    
+    const passivePorts = document.getElementById('ftp_passive_ports').value;
+    if (passivePorts && !passivePorts.match(/^\d+-\d+$/)) {
+        e.preventDefault();
+        alert('被動模式連接埠範圍格式應為: 起始埠-結束埠 (例如: 60000-65000)');
+        return false;
+    }
+});
+</script>
+{% endblock %}

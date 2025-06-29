@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}個人資料 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-person-circle"></i> 個人資料</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>用戶名:</strong></td>
+                                <td>{{ current_user.username }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>電子郵件:</strong></td>
+                                <td>{{ current_user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>帳號狀態:</strong></td>
+                                <td>
+                                    {% if current_user.is_active %}
+                                    <span class="badge bg-success">啟用</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">停用</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>註冊時間:</strong></td>
+                                <td>{{ current_user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>上次登入:</strong></td>
+                                <td>
+                                    {% if current_user.last_login %}
+                                    {{ current_user.last_login.strftime('%Y-%m-%d %H:%M:%S') }}
+                                    {% else %}
+                                    <span class="text-muted">首次登入</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('auth.change_password') }}" class="btn btn-primary">
+                        <i class="bi bi-key"></i> 更改密碼
+                    </a>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> 返回儀表板
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

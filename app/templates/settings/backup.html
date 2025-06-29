@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block title %}備份還原 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-hdd"></i> 備份還原</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回設定首頁
+        </a>
+    </div>
+</div>
+
+<!-- 建立新備份 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-plus-circle"></i> 建立新備份</h5>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {{ backup_form.hidden_tag() }}
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        {{ backup_form.backup_description.label(class="form-label") }}
+                        {{ backup_form.backup_description(class="form-control", rows="3") }}
+                        {% if backup_form.backup_description.description %}
+                        <div class="form-text">{{ backup_form.backup_description.description }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                {{ backup_form.backup_include_logs(class="form-check-input") }}
+                                {{ backup_form.backup_include_logs.label(class="form-check-label") }}
+                            </div>
+                            {% if backup_form.backup_include_logs.description %}
+                            <div class="form-text">{{ backup_form.backup_include_logs.description }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                {{ backup_form.backup_include_data(class="form-check-input") }}
+                                {{ backup_form.backup_include_data.label(class="form-check-label") }}
+                            </div>
+                            {% if backup_form.backup_include_data.description %}
+                            <div class="form-text">{{ backup_form.backup_include_data.description }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <i class="bi bi-info-circle fs-2 text-info mb-2"></i>
+                            <h6>備份內容</h6>
+                            <ul class="list-unstyled small">
+                                <li><i class="bi bi-check text-success"></i> 資料庫檔案</li>
+                                <li><i class="bi bi-check text-success"></i> 配置檔案</li>
+                                <li id="logs-include"><i class="bi bi-x text-muted"></i> 日誌檔案</li>
+                                <li id="data-include"><i class="bi bi-check text-success"></i> 用戶資料</li>
+                            </ul>
+                            
+                            {{ backup_form.create_backup(class="btn btn-primary btn-lg w-100 mt-3") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 現有備份列表 -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="bi bi-archive"></i> 現有備份</h5>
+        <button type="button" class="btn btn-outline-primary btn-sm" onclick="refreshBackupList()">
+            <i class="bi bi-arrow-clockwise"></i> 重新整理
+        </button>
+    </div>
+    <div class="card-body">
+        {% if backup_list %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>備份檔案</th>
+                        <th>建立時間</th>
+                        <th>檔案大小</th>
+                        <th>描述</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="backup-table-body">
+                    {% for backup in backup_list %}
+                    <tr data-backup-id="{{ backup.id }}">
+                        <td>
+                            <code>{{ backup.filename }}</code>
+                        </td>
+                        <td>{{ backup.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ "%.1f"|format(backup.size / 1024**2) }} MB</td>
+                        <td>{{ backup.description }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('settings.download_backup', backup_id=backup.id) }}" 
+                                   class="btn btn-outline-primary" title="下載備份">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                                <button type="button" class="btn btn-outline-info" 
+                                        onclick="showBackupInfo('{{ backup.id }}')" title="檢視資訊">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger" 
+                                        onclick="deleteBackup('{{ backup.id }}')" title="刪除備份">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5" id="no-backups">
+            <i class="bi bi-archive fs-1 text-muted"></i>
+            <p class="text-muted mt-2">目前沒有備份檔案</p>
+            <p class="text-muted">請建立第一個備份以保護您的資料</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 備份資訊模態框 -->
+<div class="modal fade" id="backupInfoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">備份資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="backup-info-content">
+                    <div class="text-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">載入中...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 還原說明 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-question-circle"></i> 備份還原說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>備份內容</h6>
+                <ul>
+                    <li><strong>資料庫檔案:</strong> 包含所有用戶、群組、權限設定</li>
+                    <li><strong>配置檔案:</strong> ProFTPD 主配置檔和相關設定檔</li>
+                    <li><strong>日誌檔案:</strong> 系統運行記錄（可選）</li>
+                    <li><strong>用戶資料:</strong> FTP 用戶的檔案資料（可選）</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>還原步驟</h6>
+                <ol>
+                    <li>下載所需的備份檔案</li>
+                    <li>解壓縮備份檔案到指定位置</li>
+                    <li>停止 ProFTPD 服務</li>
+                    <li>還原資料庫和配置檔案</li>
+                    <li>重新啟動 ProFTPD 服務</li>
+                </ol>
+                
+                <div class="alert alert-warning mt-3">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>注意:</strong> 還原操作會覆蓋現有資料，請謹慎操作。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let backupInfoModal;
+
+document.addEventListener('DOMContentLoaded', function() {
+    backupInfoModal = new bootstrap.Modal(document.getElementById('backupInfoModal'));
+    
+    // 監聽備份選項變更
+    document.getElementById('backup_include_logs').addEventListener('change', updateBackupPreview);
+    document.getElementById('backup_include_data').addEventListener('change', updateBackupPreview);
+    
+    updateBackupPreview();
+});
+
+function updateBackupPreview() {
+    const includeLogsChecked = document.getElementById('backup_include_logs').checked;
+    const includeDataChecked = document.getElementById('backup_include_data').checked;
+    
+    const logsInclude = document.getElementById('logs-include');
+    const dataInclude = document.getElementById('data-include');
+    
+    if (includeLogsChecked) {
+        logsInclude.innerHTML = '<i class="bi bi-check text-success"></i> 日誌檔案';
+    } else {
+        logsInclude.innerHTML = '<i class="bi bi-x text-muted"></i> 日誌檔案';
+    }
+    
+    if (includeDataChecked) {
+        dataInclude.innerHTML = '<i class="bi bi-check text-success"></i> 用戶資料';
+    } else {
+        dataInclude.innerHTML = '<i class="bi bi-x text-muted"></i> 用戶資料';
+    }
+}
+
+function refreshBackupList() {
+    location.reload();
+}
+
+function showBackupInfo(backupId) {
+    document.getElementById('backup-info-content').innerHTML = `
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">載入中...</span>
+            </div>
+        </div>
+    `;
+    
+    backupInfoModal.show();
+    
+    // 模擬載入備份資訊
+    setTimeout(() => {
+        document.getElementById('backup-info-content').innerHTML = `
+            <table class="table table-borderless">
+                <tr>
+                    <td><strong>備份 ID:</strong></td>
+                    <td>${backupId}</td>
+                </tr>
+                <tr>
+                    <td><strong>建立時間:</strong></td>
+                    <td>${new Date().toLocaleString()}</td>
+                </tr>
+                <tr>
+                    <td><strong>建立者:</strong></td>
+                    <td>{{ current_user.username }}</td>
+                </tr>
+                <tr>
+                    <td><strong>包含內容:</strong></td>
+                    <td>
+                        <span class="badge bg-primary me-1">資料庫</span>
+                        <span class="badge bg-secondary me-1">配置檔</span>
+                        <span class="badge bg-info me-1">日誌</span>
+                        <span class="badge bg-success">用戶資料</span>
+                    </td>
+                </tr>
+            </table>
+        `;
+    }, 1000);
+}
+
+function deleteBackup(backupId) {
+    if (confirm('確定要刪除此備份檔案嗎？此操作無法復原。')) {
+        fetch(\`{{ url_for('settings.delete_backup', backup_id='') }}\${backupId}\`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 移除表格行
+                const row = document.querySelector(\`tr[data-backup-id="\${backupId}"]\`);
+                if (row) {
+                    row.remove();
+                }
+                
+                // 檢查是否還有備份
+                const tableBody = document.getElementById('backup-table-body');
+                if (tableBody && tableBody.children.length === 0) {
+                    location.reload();
+                }
+                
+                showToast('備份已刪除', 'success');
+            } else {
+                showToast('刪除備份失敗: ' + data.error, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('刪除備份失敗:', error);
+            showToast('刪除備份失敗', 'error');
+        });
+    }
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = \`alert alert-\${type === 'error' ? 'danger' : type} position-fixed\`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = \`
+        \${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    \`;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

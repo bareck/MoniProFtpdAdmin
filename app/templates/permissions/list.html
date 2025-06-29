@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}權限管理 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-shield-lock"></i> 目錄權限管理</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('permissions.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> 新增權限
+        </a>
+        <a href="{{ url_for('permissions.matrix') }}" class="btn btn-outline-info">
+            <i class="bi bi-grid-3x3"></i> 權限矩陣
+        </a>
+        <a href="{{ url_for('permissions.directories') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-folder"></i> 目錄管理
+        </a>
+    </div>
+</div>
+
+<!-- 搜尋和篩選 -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            {{ search_form.hidden_tag() }}
+            <div class="col-md-3">
+                {{ search_form.directory_filter.label(class="form-label") }}
+                {{ search_form.directory_filter(class="form-select") }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.user_filter.label(class="form-label") }}
+                {{ search_form.user_filter(class="form-select") }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.group_filter.label(class="form-label") }}
+                {{ search_form.group_filter(class="form-select") }}
+            </div>
+            <div class="col-md-3">
+                {{ search_form.permission_type.label(class="form-label") }}
+                {{ search_form.permission_type(class="form-select") }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="bi bi-search"></i> 篩選
+                </button>
+                <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary ms-2">
+                    <i class="bi bi-arrow-clockwise"></i> 重置
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 權限列表 -->
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>權限設定列表 (共 {{ permissions.total }} 個設定)</h5>
+        <button type="button" class="btn btn-outline-success btn-sm" onclick="syncConfig()">
+            <i class="bi bi-arrow-repeat"></i> 同步配置
+        </button>
+    </div>
+    <div class="card-body">
+        {% if permissions.items %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>目錄</th>
+                        <th>目標</th>
+                        <th>類型</th>
+                        <th>讀取</th>
+                        <th>寫入</th>
+                        <th>刪除</th>
+                        <th>設定時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permission in permissions.items %}
+                    <tr>
+                        <td>
+                            <strong>{{ permission.directory.name }}</strong>
+                            <br><small class="text-muted">{{ permission.directory.path }}</small>
+                        </td>
+                        <td>
+                            {% if permission.user %}
+                            <span class="badge bg-primary">{{ permission.user.username }}</span>
+                            <br><small class="text-muted">UID: {{ permission.user.uid }}</small>
+                            {% else %}
+                            <span class="badge bg-secondary">{{ permission.group.groupname }}</span>
+                            <br><small class="text-muted">GID: {{ permission.group.gid }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if permission.user %}
+                            <span class="badge bg-info">用戶</span>
+                            {% else %}
+                            <span class="badge bg-warning">群組</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if permission.can_read %}
+                            <i class="bi bi-check-circle text-success" title="允許讀取"></i>
+                            {% else %}
+                            <i class="bi bi-x-circle text-danger" title="禁止讀取"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if permission.can_write %}
+                            <i class="bi bi-check-circle text-success" title="允許寫入"></i>
+                            {% else %}
+                            <i class="bi bi-x-circle text-danger" title="禁止寫入"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if permission.can_delete %}
+                            <i class="bi bi-check-circle text-success" title="允許刪除"></i>
+                            {% else %}
+                            <i class="bi bi-x-circle text-danger" title="禁止刪除"></i>
+                            {% endif %}
+                        </td>
+                        <td>{{ permission.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{{ url_for('permissions.edit', id=permission.id) }}" 
+                                   class="btn btn-outline-primary" title="編輯">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('permissions.delete', id=permission.id) }}" class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="btn btn-outline-danger" 
+                                            onclick="return confirm('確定要刪除此權限設定嗎？')" title="刪除">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 分頁 -->
+        {% if permissions.pages > 1 %}
+        <nav aria-label="權限分頁">
+            <ul class="pagination justify-content-center">
+                {% if permissions.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.prev_num, **request.args) }}">上一頁</a>
+                </li>
+                {% endif %}
+                
+                {% for page_num in permissions.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num != permissions.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('permissions.list', page=page_num, **request.args) }}">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">…</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if permissions.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.next_num, **request.args) }}">下一頁</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <div class="text-center py-4">
+            <i class="bi bi-shield-lock fs-1 text-muted"></i>
+            <p class="text-muted mt-2">尚未設定任何權限</p>
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{{ url_for('permissions.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> 新增權限設定
+                </a>
+                <a href="{{ url_for('permissions.directories') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-folder"></i> 管理目錄
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 權限說明 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h5><i class="bi bi-info-circle"></i> 權限說明</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <h6><i class="bi bi-eye text-info"></i> 讀取權限</h6>
+                <ul class="small">
+                    <li>LIST - 列出目錄內容</li>
+                    <li>CWD - 變更目錄</li>
+                    <li>PWD - 顯示目前目錄</li>
+                    <li>NLST - 列出檔案名稱</li>
+                    <li>STAT - 顯示檔案狀態</li>
+                    <li>MLSD - 機器列表目錄</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6><i class="bi bi-pencil text-warning"></i> 寫入權限</h6>
+                <ul class="small">
+                    <li>STOR - 儲存檔案</li>
+                    <li>STOU - 儲存唯一檔案</li>
+                    <li>APPE - 附加到檔案</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h6><i class="bi bi-trash text-danger"></i> 刪除權限</h6>
+                <ul class="small">
+                    <li>DELE - 刪除檔案</li>
+                    <li>MKD - 建立目錄</li>
+                    <li>RMD - 移除目錄</li>
+                    <li>RNFR/RNTO - 重新命名</li>
+                    <li>SITE_CHMOD - 更改權限</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 設定表單的預設值
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // 設定篩選表單的值
+    ['directory_filter', 'user_filter', 'group_filter', 'permission_type'].forEach(function(field) {
+        const select = document.getElementById(field);
+        if (select && urlParams.get(field)) {
+            select.value = urlParams.get(field);
+        }
+    });
+});
+
+function syncConfig() {
+    if (confirm('確定要同步配置到 ProFTPD 嗎？')) {
+        fetch('{{ url_for("permissions.sync_config") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        })
+        .catch(error => {
+            console.error('同步失敗:', error);
+            alert('同步失敗，請稍後再試');
+        });
+    }
+}
+</script>
+{% endblock %}

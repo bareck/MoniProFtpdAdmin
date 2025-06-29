@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+
+{% block title %}系統監控 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-cpu"></i> 系統監控</h1>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary" onclick="refreshSystemInfo()">
+            <i class="bi bi-arrow-clockwise"></i> 重新整理
+        </button>
+        <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> 返回監控中心
+        </a>
+    </div>
+</div>
+
+<!-- 系統基本資訊 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 系統資訊</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <td><strong>主機名稱:</strong></td>
+                        <td>{{ system_info.hostname }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>作業系統:</strong></td>
+                        <td>{{ system_info.kernel }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>架構:</strong></td>
+                        <td>{{ system_info.architecture }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Python 版本:</strong></td>
+                        <td>{{ system_info.python_version }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>系統運行時間:</strong></td>
+                        <td>{{ system_info.uptime.days }} 天 {{ system_info.uptime.seconds // 3600 }} 小時</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CPU 核心數:</strong></td>
+                        <td>{{ system_info.cpu_count }} 核心</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-speedometer2"></i> 即時系統狀態</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">CPU 使用率</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" id="cpu-progress" 
+                             style="width: {{ system_info.cpu_percent }}%">
+                            {{ "%.1f"|format(system_info.cpu_percent) }}%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">記憶體使用率</label>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" id="memory-progress"
+                             style="width: {{ system_info.memory_percent }}%">
+                            {{ "%.1f"|format(system_info.memory_percent) }}%
+                        </div>
+                    </div>
+                    <small class="text-muted">
+                        {{ "%.1f"|format(system_info.memory_used / 1024**3) }} GB / 
+                        {{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB
+                    </small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">系統負載平均值</label>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div class="border rounded p-2">
+                                <strong>{{ "%.2f"|format(system_info.load_average[0]) }}</strong>
+                                <br><small class="text-muted">1分鐘</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="border rounded p-2">
+                                <strong>{{ "%.2f"|format(system_info.load_average[1]) }}</strong>
+                                <br><small class="text-muted">5分鐘</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="border rounded p-2">
+                                <strong>{{ "%.2f"|format(system_info.load_average[2]) }}</strong>
+                                <br><small class="text-muted">15分鐘</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 磁碟分割區資訊 -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5><i class="bi bi-hdd"></i> 磁碟分割區</h5>
+    </div>
+    <div class="card-body">
+        {% if system_info.disk_partitions %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>裝置</th>
+                        <th>掛載點</th>
+                        <th>檔案系統</th>
+                        <th>總容量</th>
+                        <th>已使用</th>
+                        <th>可用空間</th>
+                        <th>使用率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for partition in system_info.disk_partitions %}
+                    <tr>
+                        <td><code>{{ partition.device }}</code></td>
+                        <td><code>{{ partition.mountpoint }}</code></td>
+                        <td>{{ partition.fstype }}</td>
+                        <td>{{ "%.1f"|format(partition.total / 1024**3) }} GB</td>
+                        <td>{{ "%.1f"|format(partition.used / 1024**3) }} GB</td>
+                        <td>{{ "%.1f"|format(partition.free / 1024**3) }} GB</td>
+                        <td>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar 
+                                    {% if partition.percent > 90 %}bg-danger
+                                    {% elif partition.percent > 75 %}bg-warning
+                                    {% elif partition.percent > 50 %}bg-info
+                                    {% else %}bg-success{% endif %}"
+                                     style="width: {{ partition.percent }}%">
+                                    {{ "%.1f"|format(partition.percent) }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+            <i class="bi bi-hdd fs-2 text-muted"></i>
+            <p class="text-muted mt-2">無法獲取磁碟分割區資訊</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 服務狀態 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-server"></i> 系統服務狀態</h5>
+            </div>
+            <div class="card-body">
+                {% if services_status %}
+                <div class="list-group list-group-flush">
+                    {% for service, status in services_status.items() %}
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-gear-fill me-2"></i>{{ service }}</span>
+                        {% if status %}
+                        <span class="badge bg-success">運行中</span>
+                        {% else %}
+                        <span class="badge bg-danger">已停止</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">無法獲取服務狀態</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-ethernet"></i> 網路資訊</h5>
+            </div>
+            <div class="card-body">
+                {% if network_info %}
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="text-center border rounded p-2">
+                            <strong>{{ network_info.connections }}</strong>
+                            <br><small class="text-muted">網路連線數</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center border rounded p-2">
+                            <strong>{{ network_info.interfaces|length }}</strong>
+                            <br><small class="text-muted">網路介面</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center border rounded p-2">
+                            <strong>{{ "%.1f"|format(network_info.bytes_sent / 1024**2) }} MB</strong>
+                            <br><small class="text-muted">已傳送</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center border rounded p-2">
+                            <strong>{{ "%.1f"|format(network_info.bytes_recv / 1024**2) }} MB</strong>
+                            <br><small class="text-muted">已接收</small>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p class="text-muted">無法獲取網路資訊</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 網路介面詳細資訊 -->
+{% if network_info and network_info.interfaces %}
+<div class="card">
+    <div class="card-header">
+        <h5><i class="bi bi-router"></i> 網路介面詳細資訊</h5>
+    </div>
+    <div class="card-body">
+        <div class="accordion" id="interfaceAccordion">
+            {% for interface in network_info.interfaces %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ loop.index }}">
+                    <button class="accordion-button collapsed" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                        <i class="bi bi-ethernet me-2"></i>{{ interface.name }}
+                        <span class="badge bg-secondary ms-2">{{ interface.addresses|length }} 位址</span>
+                    </button>
+                </h2>
+                <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" 
+                     data-bs-parent="#interfaceAccordion">
+                    <div class="accordion-body">
+                        {% if interface.addresses %}
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>協定</th>
+                                        <th>位址</th>
+                                        <th>網路遮罩</th>
+                                        <th>廣播位址</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for addr in interface.addresses %}
+                                    <tr>
+                                        <td>{{ addr.family }}</td>
+                                        <td><code>{{ addr.address }}</code></td>
+                                        <td>{{ addr.netmask or '-' }}</td>
+                                        <td>{{ addr.broadcast or '-' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="text-muted">此介面無位址資訊</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 即時更新系統資訊
+function refreshSystemInfo() {
+    fetch('{{ url_for("monitoring.api_system_health") }}')
+        .then(response => response.json())
+        .then(data => {
+            // 更新 CPU 使用率
+            document.getElementById('cpu-progress').style.width = data.cpu_usage + '%';
+            document.getElementById('cpu-progress').textContent = data.cpu_usage.toFixed(1) + '%';
+            
+            // 更新記憶體使用率
+            document.getElementById('memory-progress').style.width = data.memory_usage + '%';
+            document.getElementById('memory-progress').textContent = data.memory_usage.toFixed(1) + '%';
+            
+            showToast('系統資訊已更新');
+        })
+        .catch(error => {
+            console.error('更新系統資訊失敗:', error);
+            showToast('更新系統資訊失敗', 'error');
+        });
+}
+
+// 自動重新整理
+document.addEventListener('DOMContentLoaded', function() {
+    // 每60秒自動更新一次
+    setInterval(refreshSystemInfo, 60000);
+});
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

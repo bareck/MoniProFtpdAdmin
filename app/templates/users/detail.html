@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} - 用戶詳情{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-person"></i> {{ user.username }}</h1>
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> 編輯
+        </a>
+        <a href="{{ url_for('users.manage_groups', id=user.id) }}" class="btn btn-outline-secondary">
+            <i class="bi bi-collection"></i> 管理群組
+        </a>
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <i class="bi bi-trash"></i> 刪除
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 用戶資訊</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>用戶名:</strong></td>
+                                <td><code>{{ user.username }}</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UID:</strong></td>
+                                <td>{{ user.uid }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>預設 GID:</strong></td>
+                                <td>{{ user.gid }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Shell:</strong></td>
+                                <td><code>{{ user.shell }}</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>狀態:</strong></td>
+                                <td>
+                                    {% if user.is_enabled %}
+                                    <span class="badge bg-success">啟用</span>
+                                    <form method="POST" action="{{ url_for('users.toggle_status', id=user.id) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-warning ms-2">停用</button>
+                                    </form>
+                                    {% else %}
+                                    <span class="badge bg-danger">停用</span>
+                                    <form method="POST" action="{{ url_for('users.toggle_status', id=user.id) }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-success ms-2">啟用</button>
+                                    </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>創建時間:</strong></td>
+                                <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>更新時間:</strong></td>
+                                <td>{{ user.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>家目錄:</strong></td>
+                                <td><code>{{ user.home_directory }}</code></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                {% if user.comment %}
+                <div class="mt-3">
+                    <strong>註解:</strong>
+                    <div class="border rounded p-2 bg-light">{{ user.comment }}</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- 權限概覽 -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="bi bi-shield-lock"></i> 權限概覽</h5>
+            </div>
+            <div class="card-body">
+                {% if user.permissions %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>目錄</th>
+                                <th>讀取</th>
+                                <th>寫入</th>
+                                <th>刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for perm in user.permissions %}
+                            <tr>
+                                <td><code>{{ perm.directory.path }}</code></td>
+                                <td>
+                                    {% if perm.can_read %}
+                                    <i class="bi bi-check-circle text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle text-danger"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if perm.can_write %}
+                                    <i class="bi bi-check-circle text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle text-danger"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if perm.can_delete %}
+                                    <i class="bi bi-check-circle text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-circle text-danger"></i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">尚未設定特定目錄權限，將繼承群組權限</p>
+                {% endif %}
+                <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-gear"></i> 管理權限
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <!-- 群組成員資格 -->
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-collection"></i> 群組成員資格</h5>
+            </div>
+            <div class="card-body">
+                {% set groups = user.get_groups() %}
+                {% if groups %}
+                {% for group in groups %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-secondary">{{ group.groupname }} ({{ group.gid }})</span>
+                    <form method="POST" action="{{ url_for('users.remove_from_group', user_id=user.id, group_id=group.id) }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                onclick="return confirm('確定要從此群組中移除用戶嗎？')">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="text-muted">尚未加入任何群組</p>
+                {% endif %}
+                
+                <a href="{{ url_for('users.manage_groups', id=user.id) }}" class="btn btn-outline-primary btn-sm w-100 mt-2">
+                    <i class="bi bi-plus"></i> 管理群組
+                </a>
+            </div>
+        </div>
+        
+        <!-- 快速操作 -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-lightning"></i> 快速操作</h5>
+            </div>
+            <div class="card-body d-grid gap-2">
+                <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pencil"></i> 編輯用戶
+                </a>
+                <a href="{{ url_for('users.manage_groups', id=user.id) }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-collection"></i> 管理群組
+                </a>
+                <a href="{{ url_for('permissions.list') }}?user_id={{ user.id }}" class="btn btn-outline-info btn-sm">
+                    <i class="bi bi-shield-lock"></i> 設定權限
+                </a>
+                <hr>
+                <a href="{{ url_for('users.list') }}" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> 返回列表
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 刪除確認對話框 -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">確認刪除用戶</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>您確定要刪除用戶 <strong>{{ user.username }}</strong> 嗎？</p>
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>警告:</strong> 此操作無法復原，將會：
+                    <ul class="mb-0 mt-2">
+                        <li>刪除用戶帳號</li>
+                        <li>移除所有群組成員資格</li>
+                        <li>清除用戶特定權限設定</li>
+                        <li>更新 ProFTPD 配置檔</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <form method="POST" action="{{ url_for('users.delete', id=user.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-danger">確定刪除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
