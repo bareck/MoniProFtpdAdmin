@@ -55,9 +55,10 @@ def create():
     
     # 設定預設值
     if request.method == 'GET':
+        from ..models import SystemSetting
         form.uid.data = get_next_uid()
         form.gid.data = 5001  # 預設 users 群組
-        base_dir = current_app.config.get('PROFTPD_BASE_DIR', '/backup/ftpdata')
+        base_dir = SystemSetting.get_value('ftp_base_dir', '/backup/ftpdata')
         form.home_directory.data = base_dir
     
     if form.validate_on_submit():

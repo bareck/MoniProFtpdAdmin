@@ -36,7 +36,7 @@
                     <div class="mb-3">
                         {{ form.home_directory.label(class="form-label required") }}
                         {{ form.home_directory(class="form-control", required=True) }}
-                        <div class="form-text">用戶的家目錄路徑</div>
+                        <div class="form-text">用戶的家目錄路徑，預設為系統設定的 FTP 根目錄</div>
                         {% for error in form.home_directory.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -119,8 +119,8 @@
                 
                 <h6 class="mt-3">家目錄建議</h6>
                 <ul class="small">
-                    <li>管理員: <code>/backup/ftpdata</code></li>
-                    <li>一般用戶: <code>/backup/ftpdata/用戶名</code></li>
+                    <li>管理員: <code>{{ form.home_directory.data or '/backup/ftpdata' }}</code></li>
+                    <li>一般用戶: <code>{{ form.home_directory.data or '/backup/ftpdata' }}/用戶名</code></li>
                 </ul>
                 
                 <div class="alert alert-info mt-3">
@@ -183,9 +183,13 @@ document.addEventListener('DOMContentLoaded', function() {
     usernameInput.addEventListener('blur', function() {
         const username = this.value.trim();
         const homeDirInput = document.getElementById('home_directory');
-        const baseDir = '{{ config.PROFTPD_BASE_DIR or "/backup/ftpdata" }}';
         
-        if (username && homeDirInput.value === baseDir) {
+        // 取得當前的家目錄輸入值作為基礎目錄
+        const currentHomeDir = homeDirInput.value.trim();
+        
+        if (username && currentHomeDir && !currentHomeDir.endsWith('/' + username)) {
+            // 如果當前家目錄不是以 /用戶名 結尾，則自動添加
+            const baseDir = currentHomeDir.replace(/\/$/, ''); // 移除末尾斜線
             homeDirInput.value = `${baseDir}/${username}`;
         }
     });
