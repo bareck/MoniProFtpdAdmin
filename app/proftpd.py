@@ -341,6 +341,14 @@ class ProFTPDConfigGenerator:
             '',
         ])
         
+        # DefaultRoot 設定
+        config_lines.extend([
+            '# DefaultRoot 設定 - 限制用戶存取範圍',
+            f'DefaultRoot {self.base_dir} admins',
+            'DefaultRoot ~',
+            '',
+        ])
+        
         # SSL 設定
         if ssl_required:
             config_lines.extend([

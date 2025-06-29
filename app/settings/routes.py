@@ -63,6 +63,7 @@ def system_settings():
             'ftp_max_clients_per_host': str(form.ftp_max_per_ip.data),
             'ftp_passive_ports': form.ftp_passive_ports.data or '',
             'ftp_umask': form.ftp_umask.data or '022',
+            'ftp_base_dir': form.ftp_base_dir.data or '/backup/ftpdata',
             'log_access_enabled': 'true' if form.log_access_enabled.data else 'false',
             'log_auth_enabled': 'true' if form.log_auth_enabled.data else 'false',
             'log_level': form.log_level.data,
@@ -132,6 +133,7 @@ def system_settings():
         form.ftp_max_per_ip.data = int(settings.get('ftp_max_clients_per_host', 5))
         form.ftp_passive_ports.data = settings.get('ftp_passive_ports', '60000-65000')
         form.ftp_umask.data = settings.get('ftp_umask', '022')
+        form.ftp_base_dir.data = settings.get('ftp_base_dir', '/backup/ftpdata')
         form.log_access_enabled.data = settings.get('log_access_enabled', 'true') == 'true'
         form.log_auth_enabled.data = settings.get('log_auth_enabled', 'true') == 'true'
         form.log_level.data = settings.get('log_level', 'info')
@@ -161,6 +163,7 @@ def backup_restore():
                 backup_form.backup_include_data.data
             )
             flash(f'備份已建立: {backup_file}', 'success')
+            return redirect(url_for('settings.backup_restore'))
         except Exception as e:
             flash(f'備份建立失敗: {str(e)}', 'error')
     
@@ -239,6 +242,39 @@ def download_backup(backup_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@bp.route('/api/backup/<backup_id>/info')
+@login_required
+def get_backup_info(backup_id):
+    """獲取備份詳細資訊"""
+    try:
+        backup_dir = current_app.config.get('BACKUP_DIR', '/tmp/backups')
+        info_file = os.path.join(backup_dir, f'{backup_id}_info.json')
+        
+        if os.path.exists(info_file):
+            with open(info_file, 'r', encoding='utf-8') as f:
+                backup_info = json.load(f)
+            return jsonify({'success': True, 'info': backup_info})
+        else:
+            # 如果沒有資訊檔案，返回預設資訊
+            backup_file = os.path.join(backup_dir, f'{backup_id}.tar.gz')
+            if os.path.exists(backup_file):
+                stat = os.stat(backup_file)
+                return jsonify({
+                    'success': True, 
+                    'info': {
+                        'id': backup_id,
+                        'created_at': datetime.fromtimestamp(stat.st_mtime).isoformat(),
+                        'description': '系統備份',
+                        'include_logs': False,
+                        'include_data': False,
+                        'created_by': 'unknown'
+                    }
+                })
+            else:
+                return jsonify({'error': '備份檔案不存在'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @bp.route('/api/backup/<backup_id>/delete', methods=['POST'])
 @login_required
 def delete_backup(backup_id):
@@ -246,10 +282,19 @@ def delete_backup(backup_id):
     try:
         backup_dir = current_app.config.get('BACKUP_DIR', '/tmp/backups')
         backup_file = os.path.join(backup_dir, f'{backup_id}.tar.gz')
+        info_file = os.path.join(backup_dir, f'{backup_id}_info.json')
         
+        deleted_files = []
         if os.path.exists(backup_file):
             os.remove(backup_file)
-            return jsonify({'success': True})
+            deleted_files.append(backup_file)
+        
+        if os.path.exists(info_file):
+            os.remove(info_file)
+            deleted_files.append(info_file)
+        
+        if deleted_files:
+            return jsonify({'success': True, 'deleted_files': deleted_files})
         else:
             return jsonify({'error': '備份檔案不存在'}), 404
     except Exception as e:
@@ -404,7 +449,7 @@ def create_system_backup(description, include_logs=False, include_data=True):
             if os.path.exists(data_dir):
                 shutil.copytree(data_dir, os.path.join(temp_dir, 'data'))
         
-        # 建立備份資訊檔案
+        # 建立備份資訊檔案（儲存在備份目錄中）
         backup_info = {
             'id': backup_id,
             'created_at': datetime.now().isoformat(),
@@ -414,8 +459,14 @@ def create_system_backup(description, include_logs=False, include_data=True):
             'created_by': current_user.username
         }
         
+        # 將備份資訊儲存在壓縮檔內
         with open(os.path.join(temp_dir, 'backup_info.json'), 'w') as f:
             json.dump(backup_info, f, indent=2)
+        
+        # 同時在備份目錄中也儲存一份備份資訊檔案
+        info_file_path = os.path.join(backup_dir, f'{backup_id}_info.json')
+        with open(info_file_path, 'w', encoding='utf-8') as f:
+            json.dump(backup_info, f, indent=2, ensure_ascii=False)
         
         # 建立壓縮檔
         subprocess.run(['tar', '-czf', backup_file, '-C', '/tmp', backup_id], 
@@ -440,13 +491,55 @@ def get_backup_list():
                 file_path = os.path.join(backup_dir, filename)
                 stat = os.stat(file_path)
                 
-                backups.append({
+                # 預設備份資訊
+                backup_info = {
                     'id': backup_id,
                     'filename': filename,
                     'size': stat.st_size,
                     'created_at': datetime.fromtimestamp(stat.st_mtime),
-                    'description': '系統備份'  # 可以從 backup_info.json 中讀取
-                })
+                    'description': '系統備份',
+                    'include_logs': False,
+                    'include_data': False,
+                    'created_by': 'unknown'
+                }
+                
+                # 嘗試讀取備份資訊檔案
+                info_file = os.path.join(backup_dir, f'{backup_id}_info.json')
+                if os.path.exists(info_file):
+                    try:
+                        with open(info_file, 'r', encoding='utf-8') as f:
+                            saved_info = json.load(f)
+                            # 將 created_at 字符串轉換為 datetime 對象
+                            if 'created_at' in saved_info and isinstance(saved_info['created_at'], str):
+                                try:
+                                    # 處理 ISO 格式的日期時間字符串
+                                    datetime_str = saved_info['created_at']
+                                    if 'T' in datetime_str:
+                                        # ISO 格式: 2025-06-30T02:02:57.818600
+                                        if '.' in datetime_str:
+                                            # 有微秒
+                                            saved_info['created_at'] = datetime.fromisoformat(datetime_str)
+                                        else:
+                                            # 沒有微秒
+                                            saved_info['created_at'] = datetime.fromisoformat(datetime_str)
+                                    else:
+                                        # 其他格式，嘗試解析
+                                        saved_info['created_at'] = datetime.fromisoformat(datetime_str.replace('Z', '+00:00'))
+                                except (ValueError, AttributeError) as e:
+                                    # 如果轉換失敗，使用檔案修改時間
+                                    saved_info['created_at'] = backup_info['created_at']
+                            
+                            # 更新備份資訊
+                            backup_info.update(saved_info)
+                            
+                            # 最終確保 created_at 是 datetime 對象
+                            if not isinstance(backup_info['created_at'], datetime):
+                                backup_info['created_at'] = datetime.fromtimestamp(stat.st_mtime)
+                                
+                    except (json.JSONDecodeError, IOError) as e:
+                        pass  # 使用預設值
+                
+                backups.append(backup_info)
     
     return sorted(backups, key=lambda x: x['created_at'], reverse=True)
 

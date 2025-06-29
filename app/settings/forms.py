@@ -26,6 +26,10 @@ class SystemSettingsForm(FlaskForm):
                            validators=[Optional(), Length(0, 10)],
                            description='預設檔案權限遮罩，例如: 022')
     
+    ftp_base_dir = StringField('FTP 根目錄路徑', 
+                              validators=[DataRequired(), Length(1, 200)],
+                              description='FTP 伺服器的根目錄路徑，例如: /backup/ftpdata')
+    
     # 日誌設定
     log_access_enabled = BooleanField('啟用存取日誌', 
                                      description='記錄所有 FTP 存取活動')

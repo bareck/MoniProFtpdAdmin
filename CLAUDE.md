@@ -21,12 +21,8 @@ This is MoniProFtpdAdmin - a web application for managing ProFTPD virtual users,
 
 ### FTP Directory Structure
 Base path: Configurable (default: `/backup/ftpdata/`)
-- `ALPHASCAN/` - alphascan user access
-- `IO_DATA/` - iotpe user access  
-- `hpcdisplay/` - hpcdisplay user access
-- `Menpad_Taipei/` - tpe88, tpe user access
 
-**Note**: FTP base directory should be configurable through web interface settings.
+**Note**: FTP base directory is configurable through web interface settings.
 
 ## Development Commands
 
@@ -180,14 +176,16 @@ The web application must provide:
 - Access logging for administrative actions
 - Optional IP whitelist for admin access
 
-## Known User Accounts
+## User Account Management
 
-### Admin Users (Group: admins, GID: 5000)
-- `jackie` - Full permissions to all directories
-- `tpe` - Full permissions to all directories
+The system supports role-based FTP user management through:
 
-### Regular Users (Group: users, GID: 5001) 
-- `alphascan` - Access to ALPHASCAN directory
-- `iotpe` - Access to IO_DATA directory
-- `hpcdisplay` - Access to hpcdisplay directory
-- `tpe88` - Special user with read access to multiple directories
+### Admin Users (Group: admins)
+- Full permissions to all directories including delete/create operations
+- Access to entire FTP base directory structure
+- Can manage other users and system settings
+
+### Regular Users (Group: users)
+- Restricted access with read/write but limited delete permissions
+- Confined to their designated home directories
+- Subject to directory-specific permission rules

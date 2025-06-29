@@ -64,6 +64,14 @@
                         <div class="form-text">{{ form.ftp_umask.description }}</div>
                         {% endif %}
                     </div>
+                    
+                    <div class="mb-3">
+                        {{ form.ftp_base_dir.label(class="form-label") }}
+                        {{ form.ftp_base_dir(class="form-control") }}
+                        {% if form.ftp_base_dir.description %}
+                        <div class="form-text">{{ form.ftp_base_dir.description }}</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
