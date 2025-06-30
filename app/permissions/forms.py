@@ -18,6 +18,7 @@ class DirectoryForm(FlaskForm):
     ])
     is_active = BooleanField('啟用', default=True)
     create_physical_dir = BooleanField('建立實體目錄', default=True)
+    sync_config = BooleanField('同步所有配置並重新載入', default=True)
     submit = SubmitField('儲存')
     
     def __init__(self, original_directory=None, *args, **kwargs):
@@ -48,6 +49,7 @@ class PermissionForm(FlaskForm):
     can_write = BooleanField('寫入權限 (STOR, STOU, APPE)')
     can_delete = BooleanField('刪除權限 (DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD)')
     
+    sync_config = BooleanField('同步所有配置並重新載入', default=True)
     submit = SubmitField('儲存權限')
     
     def __init__(self, *args, **kwargs):

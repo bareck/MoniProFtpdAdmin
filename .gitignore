@@ -45,6 +45,7 @@ instance/
 
 # IDE
 .vscode/
+.claude/
 .idea/
 *.swp
 *.swo
@@ -81,3 +82,6 @@ proftpd.conf
 
 # PDF documentation (if desired to exclude)
 *.pdf
+
+# Other documentation files
+需求說明.md

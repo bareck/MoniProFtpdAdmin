@@ -117,6 +117,10 @@ def create_directory():
             else:
                 flash('目錄創建成功', 'success')
             
+            # 根據設定決定是否同步配置
+            if form.sync_config.data:
+                sync_all_configs()
+            
             log_action('create_directory', 'directory', directory.id, f'創建目錄: {directory.name}')
             return redirect(url_for('permissions.directories'))
             
@@ -141,6 +145,10 @@ def edit_directory(id):
             directory.is_active = form.is_active.data
             
             db.session.commit()
+            
+            # 根據設定決定是否同步配置
+            if form.sync_config.data:
+                sync_all_configs()
             
             flash('目錄更新成功', 'success')
             log_action('edit_directory', 'directory', directory.id, f'編輯目錄: {directory.name}')
@@ -298,8 +306,12 @@ def create():
             elif updated_count > 0:
                 flash(f'成功更新 {updated_count} 個權限設定', 'success')
             
-            # 生成配置檔
-            generate_and_reload_config()
+            # 根據設定決定是否同步配置
+            if form.sync_config.data:
+                sync_all_configs()
+            else:
+                # 只生成配置檔，不重新載入
+                generate_and_reload_config()
             
             log_action('create_permission', 'permission', form.directory_id.data, 
                       f'設定權限: {form.target_type.data} 數量: {created_count + updated_count}')
@@ -335,8 +347,12 @@ def edit(id):
             
             db.session.commit()
             
-            # 生成配置檔
-            generate_and_reload_config()
+            # 根據設定決定是否同步配置
+            if form.sync_config.data:
+                sync_all_configs()
+            else:
+                # 只生成配置檔，不重新載入
+                generate_and_reload_config()
             
             flash('權限設定已更新', 'success')
             log_action('edit_permission', 'permission', permission.id, '編輯權限設定')
@@ -509,3 +525,31 @@ def sync_config():
         flash(f'同步失敗: {str(e)}', 'error')
     
     return redirect(url_for('permissions.list'))
+
+def sync_all_configs():
+    """同步所有配置檔案（用戶、群組、權限）並重新載入服務"""
+    try:
+        from ..proftpd import validate_proftpd_config
+        
+        # 同步用戶和群組檔案以及動態配置
+        success, message = sync_proftpd_files()
+        
+        if success:
+            # 驗證配置
+            validate_success, validate_message = validate_proftpd_config()
+            if validate_success:
+                # 重新載入服務
+                reload_success, reload_message = reload_proftpd()
+                if reload_success:
+                    flash('所有配置已同步並重新載入服務', 'success')
+                else:
+                    flash(f'配置同步成功，但服務重新載入失敗: {reload_message}', 'warning')
+            else:
+                flash(f'配置同步成功，但驗證失敗: {validate_message}', 'warning')
+        else:
+            flash(f'配置同步失敗: {message}', 'error')
+        
+        log_action('sync_all_config', 'config', None, '同步所有 ProFTPD 配置')
+        
+    except Exception as e:
+        flash(f'配置同步失敗: {str(e)}', 'error')

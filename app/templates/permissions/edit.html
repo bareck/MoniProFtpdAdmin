@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}編輯權限設定 - ProFTPD 管理系統{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="bi bi-pencil-square"></i> 編輯權限設定</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" class="needs-validation" novalidate>
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.directory_id.label(class="form-label") }}
+                        {{ form.directory_id(class="form-select", disabled=True) }}
+                        <div class="form-text">目錄不可在編輯時更改</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.target_type.label(class="form-label") }}
+                        {{ form.target_type(class="form-select", disabled=True, id="target_type") }}
+                        <div class="form-text">權限目標類型不可在編輯時更改</div>
+                    </div>
+                    
+                    <!-- 顯示目標信息 -->
+                    <div class="mb-3">
+                        <label class="form-label">權限目標</label>
+                        <div class="border rounded p-3 bg-light">
+                            {% if permission.user %}
+                                <i class="bi bi-person-fill text-primary"></i>
+                                <strong>用戶:</strong> {{ permission.user.username }} (UID: {{ permission.user.uid }})
+                            {% elif permission.group %}
+                                <i class="bi bi-people-fill text-success"></i>
+                                <strong>群組:</strong> {{ permission.group.groupname }} (GID: {{ permission.group.gid }})
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">權限設定</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_read(class="form-check-input") }}
+                                    {{ form.can_read.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許讀取檔案和列出目錄
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_write(class="form-check-input") }}
+                                    {{ form.can_write.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許上傳和修改檔案
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    {{ form.can_delete(class="form-check-input") }}
+                                    {{ form.can_delete.label(class="form-check-label") }}
+                                    <div class="form-text small">
+                                        允許刪除檔案和目錄操作
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.sync_config(class="form-check-input", role="switch") }}
+                            {{ form.sync_config.label(class="form-check-label") }}
+                            <div class="form-text">
+                                <i class="bi bi-info-circle text-info"></i>
+                                權限設定完成後自動同步配置檔案並重新載入 ProFTPD 服務，確保變更立即生效
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        {{ form.submit(class="btn btn-primary", value="更新權限") }}
+                        <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">取消</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> 權限設定說明</h5>
+            </div>
+            <div class="card-body">
+                <h6>權限類型</h6>
+                <ul class="small">
+                    <li><strong>讀取權限</strong>: LIST, CWD, PWD, NLST, STAT, MLSD</li>
+                    <li><strong>寫入權限</strong>: STOR, STOU, APPE</li>
+                    <li><strong>刪除權限</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
+                </ul>
+                
+                <h6 class="mt-3">權限目標</h6>
+                <ul class="small">
+                    <li><strong>用戶權限</strong>: 針對特定用戶的權限設定</li>
+                    <li><strong>群組權限</strong>: 針對整個群組的權限設定</li>
+                </ul>
+                
+                <div class="alert alert-warning mt-3">
+                    <small>
+                        <i class="bi bi-exclamation-triangle"></i>
+                        用戶的最終權限是其群組權限與用戶特定權限的聯集
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-lightbulb"></i> 常用權限組合</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-success btn-sm w-100" onclick="setPermissions(true, true, true)">
+                        完整權限 (讀寫刪)
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setPermissions(true, true, false)">
+                        讀寫權限
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-info btn-sm w-100" onclick="setPermissions(true, false, false)">
+                        僅讀取權限
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button type="button" class="btn btn-outline-secondary btn-sm w-100" onclick="setPermissions(false, false, false)">
+                        無權限
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5><i class="bi bi-clock-history"></i> 權限歷史</h5>
+            </div>
+            <div class="card-body">
+                <div class="small">
+                    <div class="mb-2">
+                        <strong>創建時間:</strong><br>
+                        {{ permission.created_at.strftime('%Y-%m-%d %H:%M:%S') if permission.created_at else 'N/A' }}
+                    </div>
+                    <div class="mb-2">
+                        <strong>最後更新:</strong><br>
+                        {{ permission.updated_at.strftime('%Y-%m-%d %H:%M:%S') if permission.updated_at else 'N/A' }}
+                    </div>
+                    <div class="mb-2">
+                        <strong>目錄路徑:</strong><br>
+                        <code>{{ permission.directory.path }}</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function setPermissions(read, write, deletePermission) {
+    document.getElementById('can_read').checked = read;
+    document.getElementById('can_write').checked = write;
+    document.getElementById('can_delete').checked = deletePermission;
+}
+</script>
+{% endblock %}

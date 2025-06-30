@@ -89,6 +89,17 @@
                         </div>
                     </div>
                     
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            {{ form.sync_config(class="form-check-input", role="switch") }}
+                            {{ form.sync_config.label(class="form-check-label") }}
+                            <div class="form-text">
+                                <i class="bi bi-info-circle text-info"></i>
+                                權限設定完成後自動同步配置檔案並重新載入 ProFTPD 服務，確保變更立即生效
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="d-flex gap-2">
                         {{ form.submit(class="btn btn-primary", onclick="return validateForm()") }}
                         <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">取消</a>
