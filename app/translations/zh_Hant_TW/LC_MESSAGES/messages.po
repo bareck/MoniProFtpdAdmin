@@ -2836,3 +2836,100 @@ msgstr "虛擬用戶認證"
 msgid "Virtual group definition"
 msgstr "虛擬群組定義"
 
+
+# Settings page translations
+msgid "System Settings"
+msgstr "系統設定"
+
+msgid "Backup & Restore"
+msgstr "備份還原"
+
+msgid "Admin Settings"
+msgstr "管理員設定"
+
+msgid "Max Connections"
+msgstr "最大連線數"
+
+msgid "Auto Backup"
+msgstr "自動備份"
+
+msgid "System Status"
+msgstr "系統狀態"
+
+msgid "Quick Settings"
+msgstr "快速設定"
+
+msgid "Maintenance Mode"
+msgstr "維護模式"
+
+msgid "Temporarily stop FTP service"
+msgstr "暫時停止 FTP 服務"
+
+msgid "SSL/TLS Requirement"
+msgstr "SSL/TLS 要求"
+
+msgid "Force encrypted connections"
+msgstr "強制使用加密連線"
+
+msgid "Record all FTP activities"
+msgstr "記錄所有 FTP 活動"
+
+msgid "Regularly backup system data"
+msgstr "定期備份系統資料"
+
+msgid "Current Settings Summary"
+msgstr "目前設定摘要"
+
+msgid "Server Name"
+msgstr "伺服器名稱"
+
+msgid "Max Per IP"
+msgstr "每 IP 連線數"
+
+msgid "Passive Port Range"
+msgstr "被動埠範圍"
+
+msgid "Log Level"
+msgstr "日誌等級"
+
+msgid "Login Attempts Limit"
+msgstr "登入嘗試限制"
+
+msgid "attempts"
+msgstr "次"
+
+msgid "Backup Frequency"
+msgstr "備份頻率"
+
+msgid "Daily"
+msgstr "每日"
+
+msgid "Weekly"
+msgstr "每週"
+
+msgid "Monthly"
+msgstr "每月"
+
+msgid "Management Functions"
+msgstr "管理功能"
+
+msgid "Adjust FTP server parameters"
+msgstr "調整 FTP 伺服器參數"
+
+msgid "Generate and manage configuration files"
+msgstr "生成和管理配置檔"
+
+msgid "Create and manage system backups"
+msgstr "建立和管理系統備份"
+
+msgid "Change administrator account information"
+msgstr "變更管理員帳號資訊"
+
+msgid "Settings updated"
+msgstr "設定已更新"
+
+msgid "Settings update failed"
+msgstr "設定更新失敗"
+
+msgid "Quick settings update failed"
+msgstr "快速設定更新失敗"

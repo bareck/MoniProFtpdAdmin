@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}系統設定 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('System Settings') }} - ProFTPD {{ _('Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-gear"></i> 系統設定</h1>
+    <h1><i class="bi bi-gear"></i> {{ _('System Settings') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('settings.system_settings') }}" class="btn btn-outline-primary">
-            <i class="bi bi-sliders"></i> 系統設定
+            <i class="bi bi-sliders"></i> {{ _('System Settings') }}
         </a>
         <a href="{{ url_for('settings.config_management') }}" class="btn btn-outline-info">
-            <i class="bi bi-file-earmark-code"></i> 配置管理
+            <i class="bi bi-file-earmark-code"></i> {{ _('Configuration Management') }}
         </a>
         <a href="{{ url_for('settings.backup_restore') }}" class="btn btn-outline-success">
-            <i class="bi bi-hdd"></i> 備份還原
+            <i class="bi bi-hdd"></i> {{ _('Backup & Restore') }}
         </a>
         <a href="{{ url_for('settings.admin_management') }}" class="btn btn-outline-warning">
-            <i class="bi bi-person-gear"></i> 管理員設定
+            <i class="bi bi-person-gear"></i> {{ _('Admin Settings') }}
         </a>
     </div>
 </div>
@@ -27,7 +27,7 @@
         <div class="card bg-primary text-white">
             <div class="card-body text-center">
                 <h3>{{ settings.get('ftp_max_clients', '50') }}</h3>
-                <small>最大連線數</small>
+                <small>{{ _('Max Connections') }}</small>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                     <i class="bi bi-x-circle"></i>
                     {% endif %}
                 </h3>
-                <small>存取日誌</small>
+                <small>{{ _('Access Log') }}</small>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                     <i class="bi bi-x-circle"></i>
                     {% endif %}
                 </h3>
-                <small>自動備份</small>
+                <small>{{ _('Auto Backup') }}</small>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
                     <i class="bi bi-check-circle"></i>
                     {% endif %}
                 </h3>
-                <small>系統狀態</small>
+                <small>{{ _('System Status') }}</small>
             </div>
         </div>
     </div>
@@ -80,14 +80,14 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-lightning"></i> 快速設定</h5>
+                <h5><i class="bi bi-lightning"></i> {{ _('Quick Settings') }}</h5>
             </div>
             <div class="card-body">
                 <div class="list-group list-group-flush">
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>維護模式</strong>
-                            <br><small class="text-muted">暫時停止 FTP 服務</small>
+                            <strong>{{ _('Maintenance Mode') }}</strong>
+                            <br><small class="text-muted">{{ _('Temporarily stop FTP service') }}</small>
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="maintenanceMode" 
@@ -98,8 +98,8 @@
                     
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>SSL/TLS 要求</strong>
-                            <br><small class="text-muted">強制使用加密連線</small>
+                            <strong>{{ _('SSL/TLS Requirement') }}</strong>
+                            <br><small class="text-muted">{{ _('Force encrypted connections') }}</small>
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="requireSSL"
@@ -110,8 +110,8 @@
                     
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>存取日誌</strong>
-                            <br><small class="text-muted">記錄所有 FTP 活動</small>
+                            <strong>{{ _('Access Log') }}</strong>
+                            <br><small class="text-muted">{{ _('Record all FTP activities') }}</small>
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="accessLog"
@@ -122,8 +122,8 @@
                     
                     <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>自動備份</strong>
-                            <br><small class="text-muted">定期備份系統資料</small>
+                            <strong>{{ _('Auto Backup') }}</strong>
+                            <br><small class="text-muted">{{ _('Regularly backup system data') }}</small>
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="autoBackup"
@@ -139,41 +139,41 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 目前設定摘要</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Current Settings Summary') }}</h5>
             </div>
             <div class="card-body">
                 <table class="table table-sm table-borderless">
                     <tr>
-                        <td><strong>伺服器名稱:</strong></td>
+                        <td><strong>{{ _('Server Name') }}:</strong></td>
                         <td>{{ settings.get('ftp_server_name', 'ProFTPD Server') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>最大連線數:</strong></td>
+                        <td><strong>{{ _('Max Connections') }}:</strong></td>
                         <td>{{ settings.get('ftp_max_clients', '50') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>每 IP 連線數:</strong></td>
+                        <td><strong>{{ _('Max Per IP') }}:</strong></td>
                         <td>{{ settings.get('ftp_max_per_ip', '5') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>被動埠範圍:</strong></td>
+                        <td><strong>{{ _('Passive Port Range') }}:</strong></td>
                         <td>{{ settings.get('ftp_passive_ports', '60000-65000') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>日誌等級:</strong></td>
+                        <td><strong>{{ _('Log Level') }}:</strong></td>
                         <td>{{ settings.get('log_level', 'info').title() }}</td>
                     </tr>
                     <tr>
-                        <td><strong>登入嘗試限制:</strong></td>
-                        <td>{{ settings.get('security_login_attempts', '5') }} 次</td>
+                        <td><strong>{{ _('Login Attempts Limit') }}:</strong></td>
+                        <td>{{ settings.get('security_login_attempts', '5') }} {{ _('attempts') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>備份頻率:</strong></td>
+                        <td><strong>{{ _('Backup Frequency') }}:</strong></td>
                         <td>
                             {% set interval = settings.get('system_backup_interval', 'weekly') %}
-                            {% if interval == 'daily' %}每日
-                            {% elif interval == 'weekly' %}每週
-                            {% elif interval == 'monthly' %}每月
+                            {% if interval == 'daily' %}{{ _('Daily') }}
+                            {% elif interval == 'weekly' %}{{ _('Weekly') }}
+                            {% elif interval == 'monthly' %}{{ _('Monthly') }}
                             {% else %}{{ interval }}{% endif %}
                         </td>
                     </tr>
@@ -188,7 +188,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-tools"></i> 管理功能</h5>
+                <h5><i class="bi bi-tools"></i> {{ _('Management Functions') }}</h5>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -196,8 +196,8 @@
                         <div class="d-grid">
                             <a href="{{ url_for('settings.system_settings') }}" class="btn btn-outline-primary btn-lg">
                                 <i class="bi bi-sliders d-block fs-2 mb-2"></i>
-                                系統設定
-                                <br><small>調整 FTP 伺服器參數</small>
+                                {{ _('System Settings') }}
+                                <br><small>{{ _('Adjust FTP server parameters') }}</small>
                             </a>
                         </div>
                     </div>
@@ -205,8 +205,8 @@
                         <div class="d-grid">
                             <a href="{{ url_for('settings.config_management') }}" class="btn btn-outline-info btn-lg">
                                 <i class="bi bi-file-earmark-code d-block fs-2 mb-2"></i>
-                                配置管理
-                                <br><small>生成和管理配置檔</small>
+                                {{ _('Configuration Management') }}
+                                <br><small>{{ _('Generate and manage configuration files') }}</small>
                             </a>
                         </div>
                     </div>
@@ -214,8 +214,8 @@
                         <div class="d-grid">
                             <a href="{{ url_for('settings.backup_restore') }}" class="btn btn-outline-success btn-lg">
                                 <i class="bi bi-hdd d-block fs-2 mb-2"></i>
-                                備份還原
-                                <br><small>建立和管理系統備份</small>
+                                {{ _('Backup & Restore') }}
+                                <br><small>{{ _('Create and manage system backups') }}</small>
                             </a>
                         </div>
                     </div>
@@ -223,8 +223,8 @@
                         <div class="d-grid">
                             <a href="{{ url_for('settings.admin_management') }}" class="btn btn-outline-warning btn-lg">
                                 <i class="bi bi-person-gear d-block fs-2 mb-2"></i>
-                                管理員設定
-                                <br><small>變更管理員帳號資訊</small>
+                                {{ _('Admin Settings') }}
+                                <br><small>{{ _('Change administrator account information') }}</small>
                             </a>
                         </div>
                     </div>
@@ -269,14 +269,14 @@ function updateQuickSetting(key, value) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showToast('設定已更新', 'success');
+            showToast('{{ _('Settings updated') }}', 'success');
         } else {
-            showToast('設定更新失敗: ' + data.error, 'error');
+            showToast('{{ _('Settings update failed') }}: ' + data.error, 'error');
         }
     })
     .catch(error => {
-        console.error('快速設定更新失敗:', error);
-        showToast('設定更新失敗', 'error');
+        console.error('{{ _('Quick settings update failed') }}:', error);
+        showToast('{{ _('Settings update failed') }}', 'error');
     });
 }
 

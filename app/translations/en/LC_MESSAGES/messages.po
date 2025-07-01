@@ -2081,3 +2081,100 @@ msgstr "No log data available"
 msgid "Logs cleared"
 msgstr "Logs cleared"
 
+
+# Settings page translations
+msgid "System Settings"
+msgstr "System Settings"
+
+msgid "Backup & Restore"
+msgstr "Backup & Restore"
+
+msgid "Admin Settings"
+msgstr "Admin Settings"
+
+msgid "Max Connections"
+msgstr "Max Connections"
+
+msgid "Auto Backup"
+msgstr "Auto Backup"
+
+msgid "System Status"
+msgstr "System Status"
+
+msgid "Quick Settings"
+msgstr "Quick Settings"
+
+msgid "Maintenance Mode"
+msgstr "Maintenance Mode"
+
+msgid "Temporarily stop FTP service"
+msgstr "Temporarily stop FTP service"
+
+msgid "SSL/TLS Requirement"
+msgstr "SSL/TLS Requirement"
+
+msgid "Force encrypted connections"
+msgstr "Force encrypted connections"
+
+msgid "Record all FTP activities"
+msgstr "Record all FTP activities"
+
+msgid "Regularly backup system data"
+msgstr "Regularly backup system data"
+
+msgid "Current Settings Summary"
+msgstr "Current Settings Summary"
+
+msgid "Server Name"
+msgstr "Server Name"
+
+msgid "Max Per IP"
+msgstr "Max Per IP"
+
+msgid "Passive Port Range"
+msgstr "Passive Port Range"
+
+msgid "Log Level"
+msgstr "Log Level"
+
+msgid "Login Attempts Limit"
+msgstr "Login Attempts Limit"
+
+msgid "attempts"
+msgstr "attempts"
+
+msgid "Backup Frequency"
+msgstr "Backup Frequency"
+
+msgid "Daily"
+msgstr "Daily"
+
+msgid "Weekly"
+msgstr "Weekly"
+
+msgid "Monthly"
+msgstr "Monthly"
+
+msgid "Management Functions"
+msgstr "Management Functions"
+
+msgid "Adjust FTP server parameters"
+msgstr "Adjust FTP server parameters"
+
+msgid "Generate and manage configuration files"
+msgstr "Generate and manage configuration files"
+
+msgid "Create and manage system backups"
+msgstr "Create and manage system backups"
+
+msgid "Change administrator account information"
+msgstr "Change administrator account information"
+
+msgid "Settings updated"
+msgstr "Settings updated"
+
+msgid "Settings update failed"
+msgstr "Settings update failed"
+
+msgid "Quick settings update failed"
+msgstr "Quick settings update failed"
