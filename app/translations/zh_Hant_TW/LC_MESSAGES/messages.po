@@ -868,6 +868,81 @@ msgstr "無日誌資料"
 msgid "Logs cleared"
 msgstr "日誌已清除"
 
+msgid "FTP Connection Monitoring"
+msgstr "FTP 連線監控"
+
+msgid "Refresh"
+msgstr "重新整理"
+
+msgid "Back to Monitoring Center"
+msgstr "返回監控中心"
+
+msgid "Total Connections"
+msgstr "總連線數"
+
+msgid "Connected Users"
+msgstr "連線用戶"
+
+msgid "Source IPs"
+msgstr "來源 IP"
+
+msgid "Last Updated"
+msgstr "最後更新"
+
+msgid "Real-time Connection List"
+msgstr "即時連線列表"
+
+msgid "Auto Refresh"
+msgstr "自動重新整理"
+
+msgid "Client IP"
+msgstr "客戶端 IP"
+
+msgid "Connection Time"
+msgstr "連線時間"
+
+msgid "Disconnect"
+msgstr "中斷連線"
+
+msgid "No FTP connections currently"
+msgstr "目前無 FTP 連線"
+
+msgid "User Connection Distribution"
+msgstr "用戶連線分布"
+
+msgid "Connections"
+msgstr "連線數"
+
+msgid "Ratio"
+msgstr "比例"
+
+msgid "No connection data"
+msgstr "無連線資料"
+
+msgid "IP Address Distribution"
+msgstr "IP 位址分布"
+
+msgid "IP Address"
+msgstr "IP 位址"
+
+msgid "Connection Trends (Last 24 Hours)"
+msgstr "連線趨勢 (最近 24 小時)"
+
+msgid "Feature Under Development"
+msgstr "功能開發中"
+
+msgid "Connection history chart feature is under development, will parse historical connection data from ProFTPD logs."
+msgstr "連線歷史圖表功能正在開發中，將從 ProFTPD 日誌解析歷史連線資料。"
+
+msgid "Connection Trends Chart Area"
+msgstr "連線趨勢圖表區域"
+
+msgid "Are you sure you want to disconnect this connection?"
+msgstr "確定要中斷此連線嗎？"
+
+msgid "Connection disconnect feature is under development"
+msgstr "連線中斷功能正在開發中"
+
 #: app/templates/groups/members.html:121
 msgid "Current Member Count"
 msgstr "目前成員數"
