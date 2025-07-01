@@ -1198,6 +1198,114 @@ msgstr "平均速度 (KB/s)"
 msgid "Report exported"
 msgstr "報表已匯出"
 
+msgid "Hostname"
+msgstr "主機名稱"
+
+msgid "Operating System"
+msgstr "作業系統"
+
+msgid "Architecture"
+msgstr "系統架構"
+
+msgid "Python Version"
+msgstr "Python 版本"
+
+msgid "System Uptime"
+msgstr "系統運行時間"
+
+msgid "hours"
+msgstr "小時"
+
+msgid "CPU Cores"
+msgstr "CPU 核心"
+
+msgid "Real-time System Status"
+msgstr "即時系統狀態"
+
+msgid "CPU Usage"
+msgstr "CPU 使用率"
+
+msgid "Memory Usage"
+msgstr "記憶體使用率"
+
+msgid "System Load Average"
+msgstr "系統負載平均"
+
+msgid "1 minute"
+msgstr "1 分鐘"
+
+msgid "5 minutes"
+msgstr "5 分鐘"
+
+msgid "15 minutes"
+msgstr "15 分鐘"
+
+msgid "Disk Partitions"
+msgstr "磁碟分割區"
+
+msgid "Device"
+msgstr "裝置"
+
+msgid "Mount Point"
+msgstr "掛載點"
+
+msgid "File System"
+msgstr "檔案系統"
+
+msgid "Unable to retrieve disk partition information"
+msgstr "無法取得磁碟分割區資訊"
+
+msgid "System Service Status"
+msgstr "系統服務狀態"
+
+msgid "Unable to retrieve service status"
+msgstr "無法取得服務狀態"
+
+msgid "Network Information"
+msgstr "網路資訊"
+
+msgid "Network Connections"
+msgstr "網路連線"
+
+msgid "Network Interfaces"
+msgstr "網路介面"
+
+msgid "Sent"
+msgstr "已傳送"
+
+msgid "Received"
+msgstr "已接收"
+
+msgid "Unable to retrieve network information"
+msgstr "無法取得網路資訊"
+
+msgid "Network Interface Details"
+msgstr "網路介面詳細資訊"
+
+msgid "addresses"
+msgstr "個位址"
+
+msgid "Protocol"
+msgstr "協定"
+
+msgid "Address"
+msgstr "位址"
+
+msgid "Netmask"
+msgstr "子網路遮罩"
+
+msgid "Broadcast Address"
+msgstr "廣播位址"
+
+msgid "This interface has no address information"
+msgstr "此介面沒有位址資訊"
+
+msgid "System information updated"
+msgstr "系統資訊已更新"
+
+msgid "Update system information failed"
+msgstr "更新系統資訊失敗"
+
 #: app/templates/groups/members.html:121
 msgid "Current Member Count"
 msgstr "目前成員數"
