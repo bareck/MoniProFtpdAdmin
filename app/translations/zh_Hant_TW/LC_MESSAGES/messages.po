@@ -943,6 +943,129 @@ msgstr "確定要中斷此連線嗎？"
 msgid "Connection disconnect feature is under development"
 msgstr "連線中斷功能正在開發中"
 
+msgid "Log Monitoring"
+msgstr "日誌監控"
+
+msgid "ProFTPD Log Monitoring"
+msgstr "ProFTPD 日誌監控"
+
+msgid "Log Type"
+msgstr "日誌類型"
+
+msgid "System Log"
+msgstr "系統日誌"
+
+msgid "Access Log"
+msgstr "存取日誌"
+
+msgid "Authentication Log"
+msgstr "認證日誌"
+
+msgid "Display Lines"
+msgstr "顯示行數"
+
+msgid "lines"
+msgstr "行"
+
+msgid "Log Entries"
+msgstr "日誌項目"
+
+msgid "Successful Operations"
+msgstr "成功操作"
+
+msgid "Warnings"
+msgstr "警告"
+
+msgid "Errors"
+msgstr "錯誤"
+
+msgid "Log Content"
+msgstr "日誌內容"
+
+msgid "Export"
+msgstr "匯出"
+
+msgid "Clear Display"
+msgstr "清除顯示"
+
+msgid "Command"
+msgstr "指令"
+
+msgid "Status Code"
+msgstr "狀態碼"
+
+msgid "Bytes"
+msgstr "位元組"
+
+msgid "Message"
+msgstr "訊息"
+
+msgid "No log records found"
+msgstr "找不到日誌記錄"
+
+msgid "Please check log file path or permission settings"
+msgstr "請檢查日誌檔案路徑或權限設定"
+
+msgid "Log Details"
+msgstr "日誌詳情"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Copy"
+msgstr "複製"
+
+msgid "Log Format Description"
+msgstr "日誌格式說明"
+
+msgid "Connection source address"
+msgstr "連線來源位址"
+
+msgid "FTP commands (GET, PUT, LIST, etc.)"
+msgstr "FTP 指令 (GET, PUT, LIST 等)"
+
+msgid "HTTP-style status codes"
+msgstr "HTTP 風格狀態碼"
+
+msgid "Amount of data transferred"
+msgstr "傳輸的資料量"
+
+msgid "Login Success/Failure"
+msgstr "登入成功/失敗"
+
+msgid "User attempting to log in"
+msgstr "嘗試登入的用戶"
+
+msgid "Authentication Method"
+msgstr "認證方式"
+
+msgid "Authentication method used"
+msgstr "使用的認證方式"
+
+msgid "Source of login attempt"
+msgstr "登入嘗試來源"
+
+msgid "Status Code Description"
+msgstr "狀態碼說明"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "Client Error"
+msgstr "客戶端錯誤"
+
+msgid "Server Error"
+msgstr "伺服器錯誤"
+
+msgid "Log content copied to clipboard"
+msgstr "日誌內容已複製到剪貼簿"
+
+msgid "Copy failed"
+msgstr "複製失敗"
+
+msgid "Are you sure you want to clear the log display? This will not delete the actual log files."
+msgstr "確定要清除日誌顯示嗎？這不會刪除實際的日誌檔案。"
+
 #: app/templates/groups/members.html:121
 msgid "Current Member Count"
 msgstr "目前成員數"
