@@ -85,3 +85,11 @@ proftpd.conf
 
 # Other documentation files
 需求說明.md
+
+# Node.js dependencies (used for frontend tools)
+node_modules/
+package-lock.json
+package.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
