@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}配置預覽 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Configuration Preview') }} - ProFTPD {{ _('Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-eye"></i> ProFTPD 配置預覽</h1>
+    <h1><i class="bi bi-eye"></i> ProFTPD {{ _('Configuration Preview') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('config.download') }}" class="btn btn-outline-primary">
-            <i class="bi bi-download"></i> 下載配置
+            <i class="bi bi-download"></i> {{ _('Download Configuration') }}
         </a>
         <a href="{{ url_for('config.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回
+            <i class="bi bi-arrow-left"></i> {{ _('Back') }}
         </a>
     </div>
 </div>
@@ -20,10 +20,10 @@
         <h5><i class="bi bi-file-text"></i> dynamic.conf 配置內容</h5>
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-outline-secondary" onclick="copyToClipboard()">
-                <i class="bi bi-clipboard"></i> 複製
+                <i class="bi bi-clipboard"></i> {{ _('Copy') }}
             </button>
             <button type="button" class="btn btn-outline-secondary" onclick="toggleLineNumbers()">
-                <i class="bi bi-list-ol"></i> 行號
+                <i class="bi bi-list-ol"></i> {{ _('Line Numbers') }}
             </button>
         </div>
     </div>
@@ -34,32 +34,32 @@
 
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-info-circle"></i> 配置說明</h5>
+        <h5><i class="bi bi-info-circle"></i> {{ _('Configuration Description') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <h6>配置結構</h6>
+                <h6>{{ _('Configuration Structure') }}</h6>
                 <ul class="small">
-                    <li><strong>Directory 區塊</strong>: 每個目錄一個配置區塊</li>
-                    <li><strong>Limit 區塊</strong>: 按權限類型分組的限制設定</li>
-                    <li><strong>AllowUser/AllowGroup</strong>: 允許的用戶和群組</li>
-                    <li><strong>DenyAll</strong>: 預設拒絕所有其他存取</li>
+                    <li><strong>{{ _('Directory Blocks') }}</strong>: {{ _('One configuration block per directory') }}</li>
+                    <li><strong>{{ _('Limit Blocks') }}</strong>: {{ _('Restriction settings grouped by permission type') }}</li>
+                    <li><strong>AllowUser/AllowGroup</strong>: {{ _('Allowed users and groups') }}</li>
+                    <li><strong>DenyAll</strong>: {{ _('Default deny all other access') }}</li>
                 </ul>
             </div>
             <div class="col-md-6">
-                <h6>權限對應</h6>
+                <h6>{{ _('Permission Mapping') }}</h6>
                 <ul class="small">
-                    <li><strong>讀取權限</strong>: READ, CWD, PWD, LIST, NLST, STAT, MLSD</li>
-                    <li><strong>寫入權限</strong>: STOR, STOU, APPE</li>
-                    <li><strong>刪除權限</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
+                    <li><strong>{{ _('Read Permissions') }}</strong>: READ, CWD, PWD, LIST, NLST, STAT, MLSD</li>
+                    <li><strong>{{ _('Write Permissions') }}</strong>: STOR, STOU, APPE</li>
+                    <li><strong>{{ _('Delete Permissions') }}</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
                 </ul>
             </div>
         </div>
         
         <div class="alert alert-info mt-3">
             <i class="bi bi-lightbulb"></i>
-            <strong>使用說明:</strong> 此配置檔應該在主 proftpd.conf 中使用 <code>Include /etc/proftpd/dynamic.conf</code> 指令包含。
+            <strong>{{ _('Usage Instructions') }}:</strong> {{ _('This configuration file should be included in the main proftpd.conf using the') }} <code>Include /etc/proftpd/dynamic.conf</code> {{ _('directive') }}.
         </div>
     </div>
 </div>
@@ -67,32 +67,32 @@
 <!-- 配置統計 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-bar-chart"></i> 配置統計</h5>
+        <h5><i class="bi bi-bar-chart"></i> {{ _('Configuration Statistics') }}</h5>
     </div>
     <div class="card-body">
         <div class="row text-center">
             <div class="col-md-3">
                 <div class="border rounded p-3">
                     <h4 id="directory-count" class="text-primary">0</h4>
-                    <small class="text-muted">目錄數量</small>
+                    <small class="text-muted">{{ _('Directory Count') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="border rounded p-3">
                     <h4 id="user-permission-count" class="text-info">0</h4>
-                    <small class="text-muted">用戶權限</small>
+                    <small class="text-muted">{{ _('User Permissions') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="border rounded p-3">
                     <h4 id="group-permission-count" class="text-warning">0</h4>
-                    <small class="text-muted">群組權限</small>
+                    <small class="text-muted">{{ _('Group Permissions') }}</small>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="border rounded p-3">
                     <h4 id="line-count" class="text-secondary">0</h4>
-                    <small class="text-muted">配置行數</small>
+                    <small class="text-muted">{{ _('Configuration Lines') }}</small>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@ function copyToClipboard() {
     
     if (navigator.clipboard) {
         navigator.clipboard.writeText(configContent).then(function() {
-            showToast('配置內容已複製到剪貼簿');
+            showToast('{{ _('Configuration content copied to clipboard') }}');
         }).catch(function() {
             fallbackCopyToClipboard(configContent);
         });
@@ -128,9 +128,9 @@ function fallbackCopyToClipboard(text) {
     
     try {
         document.execCommand('copy');
-        showToast('配置內容已複製到剪貼簿');
+        showToast('{{ _('Configuration content copied to clipboard') }}');
     } catch (err) {
-        showToast('複製失敗，請手動選擇並複製', 'error');
+        showToast('{{ _('Copy failed, please select and copy manually') }}', 'error');
     }
     
     document.body.removeChild(textArea);

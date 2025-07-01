@@ -23,7 +23,7 @@ def login():
             user.last_login = datetime.utcnow()
             db.session.commit()
             
-            log_action('login', 'admin', user.id, f'用戶 {user.username} 登入')
+            log_action('login', 'admin', user.id, description_key='user_logged_in', username=user.username)
             
             next_page = request.args.get('next')
             if not next_page or not next_page.startswith('/'):
@@ -36,7 +36,7 @@ def login():
 @bp.route('/logout')
 @login_required
 def logout():
-    log_action('logout', 'admin', current_user.id, f'用戶 {current_user.username} 登出')
+    log_action('logout', 'admin', current_user.id, description_key='user_logged_out', username=current_user.username)
     logout_user()
     flash('您已成功登出', 'success')
     return redirect(url_for('auth.login'))
@@ -49,7 +49,7 @@ def change_password():
         if current_user.check_password(form.current_password.data):
             current_user.set_password(form.new_password.data)
             db.session.commit()
-            log_action('change_password', 'admin', current_user.id, '更改密碼')
+            log_action('change_password', 'admin', current_user.id, description_key='password_changed')
             flash('密碼已成功更改', 'success')
             return redirect(url_for('main.index'))
         else:

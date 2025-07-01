@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}配置管理 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Configuration Management') }} - ProFTPD {{ _('Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-gear"></i> ProFTPD 配置管理</h1>
+    <h1><i class="bi bi-gear"></i> ProFTPD {{ _('Configuration Management') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('config.preview') }}" class="btn btn-outline-info">
-            <i class="bi bi-eye"></i> 配置預覽
+            <i class="bi bi-eye"></i> {{ _('Configuration Preview') }}
         </a>
         <a href="{{ url_for('config.download') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-download"></i> 下載配置
+            <i class="bi bi-download"></i> {{ _('Download Configuration') }}
         </a>
     </div>
 </div>
@@ -20,31 +20,31 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-file-text"></i> 配置檔狀態</h5>
+                <h5><i class="bi bi-file-text"></i> {{ _('Configuration File Status') }}</h5>
             </div>
             <div class="card-body">
                 <table class="table table-borderless">
                     <tr>
-                        <td><strong>配置檔路徑:</strong></td>
+                        <td><strong>{{ _('Configuration File Path') }}:</strong></td>
                         <td><code>{{ config_file }}</code></td>
                     </tr>
                     <tr>
-                        <td><strong>檔案狀態:</strong></td>
+                        <td><strong>{{ _('File Status') }}:</strong></td>
                         <td>
                             {% if config_exists %}
-                            <span class="badge bg-success">存在</span>
+                            <span class="badge bg-success">{{ _('Exists') }}</span>
                             {% else %}
-                            <span class="badge bg-warning">不存在</span>
+                            <span class="badge bg-warning">{{ _('Does not exist') }}</span>
                             {% endif %}
                         </td>
                     </tr>
                     {% if config_exists %}
                     <tr>
-                        <td><strong>檔案大小:</strong></td>
+                        <td><strong>{{ _('File Size') }}:</strong></td>
                         <td>{{ "%.1f"|format(config_size / 1024) }} KB</td>
                     </tr>
                     <tr>
-                        <td><strong>最後修改:</strong></td>
+                        <td><strong>{{ _('Last Modified') }}:</strong></td>
                         <td>
                             {% if config_mtime %}
                                 <span id="config-mtime" data-timestamp="{{ config_mtime }}">{{ config_mtime }}</span>
@@ -62,19 +62,19 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 配置說明</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Configuration Description') }}</h5>
             </div>
             <div class="card-body">
                 <div class="alert alert-info">
-                    <strong>動態配置檔</strong><br>
-                    此檔案包含根據資料庫設定自動生成的目錄權限配置。
+                    <strong>{{ _('Dynamic Configuration File') }}</strong><br>
+                    {{ _('This file contains directory permission configurations automatically generated based on database settings.') }}
                 </div>
                 
                 <ul class="small">
-                    <li><strong>自動生成</strong>: 基於用戶、群組和權限設定</li>
-                    <li><strong>包含檔案</strong>: 在主配置檔中使用 Include 指令</li>
-                    <li><strong>即時更新</strong>: 權限變更時自動重新生成</li>
-                    <li><strong>語法驗證</strong>: 生成後自動檢查語法正確性</li>
+                    <li><strong>{{ _('Auto-generated') }}</strong>: {{ _('Based on user, group and permission settings') }}</li>
+                    <li><strong>{{ _('Include File') }}</strong>: {{ _('Use Include directive in main configuration file') }}</li>
+                    <li><strong>{{ _('Real-time Update') }}</strong>: {{ _('Automatically regenerated when permissions change') }}</li>
+                    <li><strong>{{ _('Syntax Validation') }}</strong>: {{ _('Automatically check syntax correctness after generation') }}</li>
                 </ul>
             </div>
         </div>
@@ -86,7 +86,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-tools"></i> 配置操作</h5>
+                <h5><i class="bi bi-tools"></i> {{ _('Configuration Operations') }}</h5>
             </div>
             <div class="card-body">
                 <div class="row g-3">
@@ -94,9 +94,9 @@
                         <form method="POST" action="{{ url_for('config.generate') }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-primary w-100" 
-                                    onclick="return confirm('確定要重新生成配置檔嗎？')">
+                                    onclick="return confirm('{{ _('Are you sure you want to regenerate the configuration file?') }}')">
                                 <i class="bi bi-arrow-clockwise"></i><br>
-                                <small>生成配置檔</small>
+                                <small>{{ _('Generate Config') }}</small>
                             </button>
                         </form>
                     </div>
@@ -105,7 +105,7 @@
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-outline-info w-100">
                                 <i class="bi bi-check-circle"></i><br>
-                                <small>驗證語法</small>
+                                <small>{{ _('Validate Syntax') }}</small>
                             </button>
                         </form>
                     </div>
@@ -113,9 +113,9 @@
                         <form method="POST" action="{{ url_for('config.reload') }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-outline-warning w-100"
-                                    onclick="return confirm('確定要重新載入 ProFTPD 服務嗎？')">
+                                    onclick="return confirm('{{ _('Are you sure you want to reload the ProFTPD service?') }}')">
                                 <i class="bi bi-arrow-repeat"></i><br>
-                                <small>重新載入服務</small>
+                                <small>{{ _('Reload Service') }}</small>
                             </button>
                         </form>
                     </div>
@@ -124,7 +124,7 @@
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-outline-secondary w-100">
                                 <i class="bi bi-shield"></i><br>
-                                <small>備份配置</small>
+                                <small>{{ _('Backup Config') }}</small>
                             </button>
                         </form>
                     </div>
@@ -136,8 +136,8 @@
                     <form method="POST" action="{{ url_for('config.sync_all') }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <button type="submit" class="btn btn-success btn-lg"
-                                onclick="return confirm('這將同步所有配置檔案並重新載入服務，確定要繼續嗎？')">
-                            <i class="bi bi-cloud-arrow-up"></i> 同步所有配置並重新載入
+                                onclick="return confirm('{{ _('This will sync all configuration files and reload the service. Are you sure you want to continue?') }}')">
+                            <i class="bi bi-cloud-arrow-up"></i> {{ _('Sync All Configs and Reload') }}
                         </button>
                     </form>
                 </div>
@@ -149,38 +149,38 @@
 <!-- 配置流程說明 -->
 <div class="card">
     <div class="card-header">
-        <h5><i class="bi bi-diagram-3"></i> 配置管理流程</h5>
+        <h5><i class="bi bi-diagram-3"></i> {{ _('Configuration Management Process') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <h6>自動配置流程</h6>
+                <h6>{{ _('Automatic Configuration Process') }}</h6>
                 <ol class="small">
-                    <li><strong>資料變更</strong>: 修改用戶、群組或權限</li>
-                    <li><strong>檔案同步</strong>: 自動更新 ftpd.passwd 和 ftpd.group</li>
-                    <li><strong>配置生成</strong>: 自動生成 dynamic.conf</li>
-                    <li><strong>服務重載</strong>: 重新載入 ProFTPD 服務</li>
+                    <li><strong>{{ _('Data Changes') }}</strong>: {{ _('Modify users, groups or permissions') }}</li>
+                    <li><strong>{{ _('File Sync') }}</strong>: {{ _('Auto-update ftpd.passwd and ftpd.group') }}</li>
+                    <li><strong>{{ _('Config Generation') }}</strong>: {{ _('Auto-generate dynamic.conf') }}</li>
+                    <li><strong>{{ _('Service Reload') }}</strong>: {{ _('Reload ProFTPD service') }}</li>
                 </ol>
             </div>
             <div class="col-md-6">
-                <h6>手動配置流程</h6>
+                <h6>{{ _('Manual Configuration Process') }}</h6>
                 <ol class="small">
-                    <li><strong>生成配置</strong>: 手動重新生成配置檔</li>
-                    <li><strong>語法驗證</strong>: 檢查配置檔語法</li>
-                    <li><strong>備份檔案</strong>: 備份現有配置</li>
-                    <li><strong>重載服務</strong>: 套用新配置</li>
+                    <li><strong>{{ _('Generate Config') }}</strong>: {{ _('Manually regenerate configuration file') }}</li>
+                    <li><strong>{{ _('Syntax Validation') }}</strong>: {{ _('Check configuration file syntax') }}</li>
+                    <li><strong>{{ _('Backup Files') }}</strong>: {{ _('Backup existing configuration') }}</li>
+                    <li><strong>{{ _('Reload Service') }}</strong>: {{ _('Apply new configuration') }}</li>
                 </ol>
             </div>
         </div>
         
         <div class="alert alert-warning mt-3">
             <i class="bi bi-exclamation-triangle"></i>
-            <strong>重要注意事項:</strong>
+            <strong>{{ _('Important Notes') }}:</strong>
             <ul class="mb-0 mt-1">
-                <li>修改權限設定後，系統會自動重新生成配置檔</li>
-                <li>如果自動同步失敗，請使用「同步所有配置」按鈕</li>
-                <li>配置檔語法錯誤可能導致 ProFTPD 無法啟動</li>
-                <li>建議在變更前先備份配置檔</li>
+                <li>{{ _('After modifying permission settings, the system will automatically regenerate the configuration file') }}</li>
+                <li>{{ _('If automatic sync fails, please use the "Sync All Configs" button') }}</li>
+                <li>{{ _('Configuration file syntax errors may cause ProFTPD to fail to start') }}</li>
+                <li>{{ _('It is recommended to backup configuration files before making changes') }}</li>
             </ul>
         </div>
     </div>
@@ -189,42 +189,42 @@
 <!-- 相關檔案 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-files"></i> 相關配置檔案</h5>
+        <h5><i class="bi bi-files"></i> {{ _('Related Configuration Files') }}</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>檔案</th>
-                        <th>用途</th>
-                        <th>自動生成</th>
-                        <th>路徑</th>
+                        <th>{{ _('File') }}</th>
+                        <th>{{ _('Purpose') }}</th>
+                        <th>{{ _('Auto-generated') }}</th>
+                        <th>{{ _('Path') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>proftpd.conf</strong></td>
-                        <td>主配置檔</td>
-                        <td><span class="badge bg-secondary">手動</span></td>
+                        <td>{{ _('Main configuration file') }}</td>
+                        <td><span class="badge bg-secondary">{{ _('Manual') }}</span></td>
                         <td><code>/etc/proftpd/proftpd.conf</code></td>
                     </tr>
                     <tr>
                         <td><strong>dynamic.conf</strong></td>
-                        <td>動態權限配置</td>
-                        <td><span class="badge bg-success">自動</span></td>
+                        <td>{{ _('Dynamic permission configuration') }}</td>
+                        <td><span class="badge bg-success">{{ _('Auto') }}</span></td>
                         <td><code>{{ config_file }}</code></td>
                     </tr>
                     <tr>
                         <td><strong>ftpd.passwd</strong></td>
-                        <td>虛擬用戶認證</td>
-                        <td><span class="badge bg-success">自動</span></td>
+                        <td>{{ _('Virtual user authentication') }}</td>
+                        <td><span class="badge bg-success">{{ _('Auto') }}</span></td>
                         <td><code>/etc/proftpd/ftpd.passwd</code></td>
                     </tr>
                     <tr>
                         <td><strong>ftpd.group</strong></td>
-                        <td>虛擬群組定義</td>
-                        <td><span class="badge bg-success">自動</span></td>
+                        <td>{{ _('Virtual group definition') }}</td>
+                        <td><span class="badge bg-success">{{ _('Auto') }}</span></td>
                         <td><code>/etc/proftpd/ftpd.group</code></td>
                     </tr>
                 </tbody>

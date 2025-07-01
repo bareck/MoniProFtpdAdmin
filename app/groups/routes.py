@@ -63,7 +63,7 @@ def create():
             else:
                 flash(f'群組創建成功，但同步失敗: {message}', 'warning')
             
-            log_action('create_group', 'group', group.id, f'創建群組: {group.groupname}')
+            log_action('create_group', 'group', group.id, description_key='group_created', groupname=group.groupname)
             return redirect(url_for('groups.list'))
             
         except Exception as e:
@@ -102,7 +102,7 @@ def edit(id):
             else:
                 flash(f'群組更新成功，但同步失敗: {message}', 'warning')
             
-            log_action('edit_group', 'group', group.id, f'編輯群組: {group.groupname}')
+            log_action('edit_group', 'group', group.id, description_key='group_edited', groupname=group.groupname)
             return redirect(url_for('groups.detail', id=group.id))
             
         except Exception as e:
@@ -136,7 +136,7 @@ def delete(id):
         else:
             flash(f'群組已刪除，但同步失敗: {message}', 'warning')
         
-        log_action('delete_group', 'group', id, f'刪除群組: {groupname}')
+        log_action('delete_group', 'group', id, description_key='group_deleted', groupname=groupname)
         
     except Exception as e:
         db.session.rollback()
@@ -190,7 +190,7 @@ def manage_members(id):
                 flash(f'成員更新成功，但同步失敗: {message}', 'warning')
             
             log_action('update_group_members', 'group', group.id, 
-                      f'更新群組 {group.groupname} 的成員')
+                      description_key='group_members_updated', groupname=group.groupname)
             
             return redirect(url_for('groups.detail', id=group.id))
             
@@ -222,7 +222,7 @@ def add_member(group_id, user_id):
             
             flash(f'已將用戶 {user.username} 加入群組 {group.groupname}', 'success')
             log_action('add_member_to_group', 'group', group.id, 
-                      f'將用戶 {user.username} 加入群組 {group.groupname}')
+                      description_key='user_added_to_group', username=user.username, groupname=group.groupname)
             
             # 同步檔案
             sync_proftpd_files()
@@ -251,7 +251,7 @@ def remove_member(group_id, user_id):
         
         flash(f'已將用戶 {user_name} 從群組 {group_name} 中移除', 'success')
         log_action('remove_member_from_group', 'group', group_id, 
-                  f'將用戶 {user_name} 從群組 {group_name} 中移除')
+                  description_key='user_removed_from_group', username=user_name, groupname=group_name)
         
         # 同步檔案
         sync_proftpd_files()

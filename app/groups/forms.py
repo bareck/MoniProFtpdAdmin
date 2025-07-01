@@ -1,21 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField, SelectMultipleField, SubmitField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
+from flask_babel import lazy_gettext as _l
 from ..models import FtpGroup, FtpUser
 
 class FtpGroupForm(FlaskForm):
-    groupname = StringField('群組名稱', validators=[
-        DataRequired(message='群組名稱不能為空'),
-        Length(1, 80, message='群組名稱長度必須在1-80字符之間')
+    groupname = StringField(_l('Group Name'), validators=[
+        DataRequired(message=_l('Group name cannot be empty')),
+        Length(1, 80, message=_l('Group name length must be between 1-80 characters'))
     ])
     gid = IntegerField('GID', validators=[
-        DataRequired(message='GID不能為空'),
-        NumberRange(min=1000, max=65535, message='GID必須在1000-65535之間')
+        DataRequired(message=_l('GID cannot be empty')),
+        NumberRange(min=1000, max=65535, message=_l('GID must be between 1000-65535'))
     ])
-    description = TextAreaField('描述', validators=[
-        Length(0, 500, message='描述不能超過500字符')
+    description = TextAreaField(_l('Description'), validators=[
+        Length(0, 500, message=_l('Description cannot exceed 500 characters'))
     ])
-    submit = SubmitField('儲存')
+    submit = SubmitField(_l('Save'))
     
     def __init__(self, original_group=None, *args, **kwargs):
         super(FtpGroupForm, self).__init__(*args, **kwargs)
@@ -26,19 +27,19 @@ class FtpGroupForm(FlaskForm):
             return
         group = FtpGroup.query.filter_by(groupname=field.data).first()
         if group:
-            raise ValidationError('群組名稱已存在')
+            raise ValidationError(_l('Group name already exists'))
     
     def validate_gid(self, field):
         if self.original_group and field.data == self.original_group.gid:
             return
         group = FtpGroup.query.filter_by(gid=field.data).first()
         if group:
-            raise ValidationError('GID已被使用')
+            raise ValidationError(_l('GID already in use'))
 
 class GroupMembersForm(FlaskForm):
     """群組成員管理表單"""
-    members = SelectMultipleField('選擇成員', coerce=int)
-    submit = SubmitField('更新成員')
+    members = SelectMultipleField(_l('Select Members'), coerce=int)
+    submit = SubmitField(_l('Update Members'))
     
     def __init__(self, *args, **kwargs):
         super(GroupMembersForm, self).__init__(*args, **kwargs)
@@ -47,5 +48,5 @@ class GroupMembersForm(FlaskForm):
 
 class GroupSearchForm(FlaskForm):
     """群組搜尋表單"""
-    search = StringField('搜尋群組', validators=[Length(0, 64)])
-    submit = SubmitField('搜尋')
+    search = StringField(_l('Search Groups'), validators=[Length(0, 64)])
+    submit = SubmitField(_l('Search'))

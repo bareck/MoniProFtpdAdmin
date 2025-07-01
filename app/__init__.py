@@ -1,6 +1,7 @@
-from flask import Flask
+from flask import Flask, request, session
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
+from flask_babel import Babel, _, get_locale
 from config import config
 import os
 
@@ -21,6 +22,25 @@ def create_app(config_name=None):
     login_manager.login_message_category = 'info'
     
     csrf.init_app(app)
+    
+    def get_locale():
+        # 1. 檢查URL參數
+        if request.args.get('lang'):
+            session['lang'] = request.args.get('lang')
+        # 2. 檢查session  
+        if 'lang' in session and session['lang'] in app.config['LANGUAGES']:
+            return session['lang']
+        # 3. 使用瀏覽器偏好設定
+        return request.accept_languages.best_match(app.config['LANGUAGES']) or app.config['BABEL_DEFAULT_LOCALE']
+    
+    # Initialize Babel with locale selector  
+    babel = Babel(app, locale_selector=get_locale)
+    
+    # Register template functions
+    @app.template_global()
+    def get_current_locale():
+        from flask_babel import get_locale
+        return str(get_locale())
     
     # Import models
     from .models import db

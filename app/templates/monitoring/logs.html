@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}日誌監控 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Log Monitoring') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-file-text"></i> ProFTPD 日誌監控</h1>
+    <h1><i class="bi bi-file-text"></i> {{ _('ProFTPD Log Monitoring') }}</h1>
     <div class="btn-group" role="group">
         <button type="button" class="btn btn-outline-primary" onclick="refreshLogs()">
-            <i class="bi bi-arrow-clockwise"></i> 重新整理
+            <i class="bi bi-arrow-clockwise"></i> {{ _('Refresh') }}
         </button>
         <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回監控中心
+            <i class="bi bi-arrow-left"></i> {{ _('Back to Monitoring Center') }}
         </a>
     </div>
 </div>
@@ -20,29 +20,29 @@
     <div class="card-body">
         <form method="GET" class="row g-3">
             <div class="col-md-4">
-                <label for="type" class="form-label">日誌類型</label>
+                <label for="type" class="form-label">{{ _('Log Type') }}</label>
                 <select name="type" id="type" class="form-select">
-                    <option value="main" {% if log_type == 'main' %}selected{% endif %}>系統日誌 (/var/log/proftpd/proftpd.log)</option>
-                    <option value="access" {% if log_type == 'access' %}selected{% endif %}>存取日誌 (/var/log/proftpd/access.log)</option>
-                    <option value="auth" {% if log_type == 'auth' %}selected{% endif %}>認證日誌 (/var/log/proftpd/auth.log)</option>
+                    <option value="main" {% if log_type == 'main' %}selected{% endif %}>{{ _('System Log') }} (/var/log/proftpd/proftpd.log)</option>
+                    <option value="access" {% if log_type == 'access' %}selected{% endif %}>{{ _('Access Log') }} (/var/log/proftpd/access.log)</option>
+                    <option value="auth" {% if log_type == 'auth' %}selected{% endif %}>{{ _('Authentication Log') }} (/var/log/proftpd/auth.log)</option>
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="lines" class="form-label">顯示行數</label>
+                <label for="lines" class="form-label">{{ _('Display Lines') }}</label>
                 <select name="lines" id="lines" class="form-select">
-                    <option value="50" {% if lines == 50 %}selected{% endif %}>50 行</option>
-                    <option value="100" {% if lines == 100 %}selected{% endif %}>100 行</option>
-                    <option value="200" {% if lines == 200 %}selected{% endif %}>200 行</option>
-                    <option value="500" {% if lines == 500 %}selected{% endif %}>500 行</option>
+                    <option value="50" {% if lines == 50 %}selected{% endif %}>50 {{ _('lines') }}</option>
+                    <option value="100" {% if lines == 100 %}selected{% endif %}>100 {{ _('lines') }}</option>
+                    <option value="200" {% if lines == 200 %}selected{% endif %}>200 {{ _('lines') }}</option>
+                    <option value="500" {% if lines == 500 %}selected{% endif %}>500 {{ _('lines') }}</option>
                 </select>
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary me-2">
-                    <i class="bi bi-search"></i> 查詢
+                    <i class="bi bi-search"></i> {{ _('Search') }}
                 </button>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="autoRefresh">
-                    <label class="form-check-label" for="autoRefresh">自動重新整理</label>
+                    <label class="form-check-label" for="autoRefresh">{{ _('Auto Refresh') }}</label>
                 </div>
             </div>
         </form>
@@ -55,7 +55,7 @@
         <div class="card bg-primary text-white">
             <div class="card-body text-center">
                 <h3 id="total-logs">{{ logs|length }}</h3>
-                <small>日誌條目</small>
+                <small>{{ _('Log Entries') }}</small>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
         <div class="card bg-success text-white">
             <div class="card-body text-center">
                 <h3 id="success-count">-</h3>
-                <small>成功操作</small>
+                <small>{{ _('Successful Operations') }}</small>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
         <div class="card bg-warning text-white">
             <div class="card-body text-center">
                 <h3 id="warning-count">-</h3>
-                <small>警告</small>
+                <small>{{ _('Warnings') }}</small>
             </div>
         </div>
     </div>
@@ -79,7 +79,7 @@
         <div class="card bg-danger text-white">
             <div class="card-body text-center">
                 <h3 id="error-count">-</h3>
-                <small>錯誤</small>
+                <small>{{ _('Errors') }}</small>
             </div>
         </div>
     </div>
@@ -88,13 +88,13 @@
 <!-- 日誌內容 -->
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-list"></i> {{ log_type|title }} 日誌內容</h5>
+        <h5><i class="bi bi-list"></i> {{ log_type|title }} {{ _('Log Content') }}</h5>
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-outline-secondary" onclick="exportLogs()">
-                <i class="bi bi-download"></i> 匯出
+                <i class="bi bi-download"></i> {{ _('Export') }}
             </button>
             <button type="button" class="btn btn-outline-secondary" onclick="clearLogDisplay()">
-                <i class="bi bi-trash"></i> 清空顯示
+                <i class="bi bi-trash"></i> {{ _('Clear Display') }}
             </button>
         </div>
     </div>
@@ -104,16 +104,16 @@
             <table class="table table-sm table-hover mb-0">
                 <thead class="table-dark sticky-top">
                     <tr>
-                        <th style="width: 150px;">時間</th>
+                        <th style="width: 150px;">{{ _('Time') }}</th>
                         {% if log_type == 'access' %}
-                        <th>客戶端 IP</th>
-                        <th>指令</th>
-                        <th>狀態碼</th>
-                        <th>位元組</th>
+                        <th>{{ _('Client IP') }}</th>
+                        <th>{{ _('Command') }}</th>
+                        <th>{{ _('Status Code') }}</th>
+                        <th>{{ _('Bytes') }}</th>
                         {% else %}
-                        <th>訊息</th>
+                        <th>{{ _('Message') }}</th>
                         {% endif %}
-                        <th style="width: 50px;">操作</th>
+                        <th style="width: 50px;">{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody id="log-tbody">
@@ -123,9 +123,9 @@
                             <small class="text-muted">{{ log.timestamp }}</small>
                         </td>
                         {% if log_type == 'access' %}
-                        <td>{{ log.client_ip or '-' }}</td>
+                        <td>{{ log.client_ip or _('N/A') }}</td>
                         <td>
-                            <code class="small">{{ log.command or '-' }}</code>
+                            <code class="small">{{ log.command or _('N/A') }}</code>
                         </td>
                         <td>
                             {% if log.status_code %}
@@ -140,10 +140,10 @@
                                 <span class="badge bg-secondary">{{ log.status_code }}</span>
                                 {% endif %}
                             {% else %}
-                            -
+                            {{ _('N/A') }}
                             {% endif %}
                         </td>
-                        <td>{{ log.bytes or '-' }}</td>
+                        <td>{{ log.bytes or _('N/A') }}</td>
                         {% else %}
                         <td>
                             <span class="font-monospace small">{{ log.message }}</span>
@@ -152,7 +152,7 @@
                         <td>
                             <button type="button" class="btn btn-outline-info btn-sm" 
                                     onclick="showLogDetail('{{ log.raw|replace("'", "\\'") }}')" 
-                                    title="詳細資訊">
+                                    title="{{ _('Details') }}">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </td>
@@ -163,8 +163,8 @@
             {% else %}
             <div class="text-center py-5">
                 <i class="bi bi-file-text fs-1 text-muted"></i>
-                <p class="text-muted mt-2">沒有找到日誌記錄</p>
-                <p class="text-muted">請檢查日誌檔案路徑或權限設定</p>
+                <p class="text-muted mt-2">{{ _('No log records found') }}</p>
+                <p class="text-muted">{{ _('Please check log file path or permission settings') }}</p>
             </div>
             {% endif %}
         </div>
@@ -176,15 +176,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">日誌詳細資訊</h5>
+                <h5 class="modal-title">{{ _('Log Details') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <pre id="log-detail-content" class="bg-light p-3" style="white-space: pre-wrap;"></pre>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                <button type="button" class="btn btn-primary" onclick="copyLogDetail()">複製</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
+                <button type="button" class="btn btn-primary" onclick="copyLogDetail()">{{ _('Copy') }}</button>
             </div>
         </div>
     </div>
@@ -193,34 +193,34 @@
 <!-- 日誌說明 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-info-circle"></i> 日誌格式說明</h5>
+        <h5><i class="bi bi-info-circle"></i> {{ _('Log Format Description') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <h6>存取日誌 (access.log)</h6>
+                <h6>{{ _('Access Log') }} (access.log)</h6>
                 <ul class="small">
-                    <li><strong>客戶端 IP</strong>: 連線來源位址</li>
-                    <li><strong>指令</strong>: FTP 指令 (GET, PUT, LIST 等)</li>
-                    <li><strong>狀態碼</strong>: HTTP 風格的狀態碼</li>
-                    <li><strong>位元組</strong>: 傳輸的資料量</li>
+                    <li><strong>{{ _('Client IP') }}</strong>: {{ _('Connection source address') }}</li>
+                    <li><strong>{{ _('Command') }}</strong>: {{ _('FTP commands (GET, PUT, LIST, etc.)') }}</li>
+                    <li><strong>{{ _('Status Code') }}</strong>: {{ _('HTTP-style status codes') }}</li>
+                    <li><strong>{{ _('Bytes') }}</strong>: {{ _('Amount of data transferred') }}</li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <h6>認證日誌 (auth.log)</h6>
+                <h6>{{ _('Authentication Log') }} (auth.log)</h6>
                 <ul class="small">
-                    <li><strong>登入成功/失敗</strong>: 用戶認證結果</li>
-                    <li><strong>用戶名稱</strong>: 嘗試登入的用戶</li>
-                    <li><strong>認證方法</strong>: 使用的認證方式</li>
-                    <li><strong>來源 IP</strong>: 登入嘗試的來源</li>
+                    <li><strong>{{ _('Login Success/Failure') }}</strong>: {{ _('User authentication results') }}</li>
+                    <li><strong>{{ _('Username') }}</strong>: {{ _('User attempting to log in') }}</li>
+                    <li><strong>{{ _('Authentication Method') }}</strong>: {{ _('Authentication method used') }}</li>
+                    <li><strong>{{ _('Source IP') }}</strong>: {{ _('Source of login attempt') }}</li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <h6>狀態碼說明</h6>
+                <h6>{{ _('Status Code Description') }}</h6>
                 <ul class="small">
-                    <li><span class="badge bg-success">2xx</span> 成功</li>
-                    <li><span class="badge bg-warning">4xx</span> 客戶端錯誤</li>
-                    <li><span class="badge bg-danger">5xx</span> 伺服器錯誤</li>
+                    <li><span class="badge bg-success">2xx</span> {{ _('Success') }}</li>
+                    <li><span class="badge bg-warning">4xx</span> {{ _('Client Error') }}</li>
+                    <li><span class="badge bg-danger">5xx</span> {{ _('Server Error') }}</li>
                 </ul>
             </div>
         </div>
@@ -298,9 +298,9 @@ function showLogDetail(rawLog) {
 function copyLogDetail() {
     const content = document.getElementById('log-detail-content').textContent;
     navigator.clipboard.writeText(content).then(function() {
-        showToast('日誌內容已複製到剪貼簿');
+        showToast('{{ _('Log content copied to clipboard') }}');
     }).catch(function() {
-        showToast('複製失敗', 'error');
+        showToast('{{ _('Copy failed') }}', 'error');
     });
 }
 
@@ -314,7 +314,7 @@ function exportLogs() {
 }
 
 function clearLogDisplay() {
-    if (confirm('確定要清空日誌顯示嗎？這不會刪除實際的日誌檔案。')) {
+    if (confirm('{{ _('Are you sure you want to clear the log display? This will not delete the actual log files.') }}')) {
         document.getElementById('log-tbody').innerHTML = '';
         document.getElementById('total-logs').textContent = '0';
         document.getElementById('success-count').textContent = '0';

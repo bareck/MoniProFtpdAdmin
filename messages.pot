@@ -1,0 +1,2838 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-01 19:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app/auth/forms.py:7 app/auth/forms.py:23
+#: app/templates/monitoring/connections.html:71
+#: app/templates/monitoring/connections.html:131
+#: app/templates/monitoring/connections.html:289
+#: app/templates/monitoring/logs.html:213
+#: app/templates/monitoring/statistics.html:70 app/templates/users/list.html:49
+#: app/users/forms.py:8
+msgid "Username"
+msgstr ""
+
+#: app/auth/forms.py:8 app/auth/forms.py:25 app/users/forms.py:12
+#: app/users/forms.py:56
+msgid "Password"
+msgstr ""
+
+#: app/auth/forms.py:9
+msgid "Remember Me"
+msgstr ""
+
+#: app/auth/forms.py:10 app/templates/auth/login.html:3
+msgid "Login"
+msgstr ""
+
+#: app/auth/forms.py:13
+msgid "Current Password"
+msgstr ""
+
+#: app/auth/forms.py:14
+msgid "New Password"
+msgstr ""
+
+#: app/auth/forms.py:15
+msgid "Confirm New Password"
+msgstr ""
+
+#: app/auth/forms.py:16 app/templates/base.html:80
+msgid "Change Password"
+msgstr ""
+
+#: app/auth/forms.py:20
+msgid "Password confirmation does not match"
+msgstr ""
+
+#: app/auth/forms.py:24
+msgid "Email"
+msgstr ""
+
+#: app/auth/forms.py:26
+msgid "Create Administrator"
+msgstr ""
+
+#: app/groups/forms.py:8 app/templates/groups/detail.html:34
+#: app/templates/groups/edit.html:68 app/templates/groups/edit.html:102
+#: app/templates/groups/list.html:41 app/templates/groups/members.html:118
+msgid "Group Name"
+msgstr ""
+
+#: app/groups/forms.py:9
+msgid "Group name cannot be empty"
+msgstr ""
+
+#: app/groups/forms.py:10
+msgid "Group name length must be between 1-80 characters"
+msgstr ""
+
+#: app/groups/forms.py:13 app/users/forms.py:25
+msgid "GID cannot be empty"
+msgstr ""
+
+#: app/groups/forms.py:14 app/users/forms.py:26
+msgid "GID must be between 1000-65535"
+msgstr ""
+
+#: app/groups/forms.py:16 app/permissions/forms.py:17
+#: app/templates/groups/detail.html:72 app/templates/groups/list.html:43
+#: app/templates/groups/members.html:120 app/templates/main/index.html:123
+#: app/templates/monitoring/index.html:285
+#: app/templates/permissions/directories.html:31
+msgid "Description"
+msgstr ""
+
+#: app/groups/forms.py:17 app/permissions/forms.py:18
+msgid "Description cannot exceed 500 characters"
+msgstr ""
+
+#: app/groups/forms.py:19 app/permissions/forms.py:23 app/users/forms.py:35
+msgid "Save"
+msgstr ""
+
+#: app/groups/forms.py:30
+msgid "Group name already exists"
+msgstr ""
+
+#: app/groups/forms.py:37
+msgid "GID already in use"
+msgstr ""
+
+#: app/groups/forms.py:41
+msgid "Select Members"
+msgstr ""
+
+#: app/groups/forms.py:42
+msgid "Update Members"
+msgstr ""
+
+#: app/groups/forms.py:51
+msgid "Search Groups"
+msgstr ""
+
+#: app/groups/forms.py:52 app/templates/groups/list.html:23
+#: app/templates/monitoring/logs.html:41 app/templates/users/list.html:31
+#: app/users/forms.py:80
+msgid "Search"
+msgstr ""
+
+#: app/main/routes.py:52 app/templates/base.html:28
+#: app/templates/main/index.html:3 app/templates/main/index.html:30
+msgid "Dashboard"
+msgstr ""
+
+#: app/permissions/forms.py:9 app/templates/monitoring/statistics.html:155
+#: app/templates/monitoring/statistics.html:320
+#: app/templates/permissions/directories.html:29
+msgid "Directory Name"
+msgstr ""
+
+#: app/permissions/forms.py:10
+msgid "Directory name cannot be empty"
+msgstr ""
+
+#: app/permissions/forms.py:11
+msgid "Directory name length must be between 1-100 characters"
+msgstr ""
+
+#: app/permissions/forms.py:13
+msgid "Directory Path"
+msgstr ""
+
+#: app/permissions/forms.py:14
+msgid "Directory path cannot be empty"
+msgstr ""
+
+#: app/permissions/forms.py:15
+msgid "Directory path cannot exceed 200 characters"
+msgstr ""
+
+#: app/permissions/forms.py:20
+msgid "Enable"
+msgstr ""
+
+#: app/permissions/forms.py:21
+msgid "Create Physical Directory"
+msgstr ""
+
+#: app/permissions/forms.py:22 app/permissions/forms.py:53
+#: app/templates/permissions/matrix.html:188
+msgid "Sync All Configurations and Reload"
+msgstr ""
+
+#: app/permissions/forms.py:34
+msgid "Directory path already exists"
+msgstr ""
+
+#: app/permissions/forms.py:38 app/permissions/forms.py:82
+#: app/templates/groups/detail.html:90 app/templates/permissions/list.html:68
+#: app/templates/permissions/matrix.html:35
+#: app/templates/permissions/matrix.html:104
+msgid "Directory"
+msgstr ""
+
+#: app/permissions/forms.py:39
+msgid "Permission Target"
+msgstr ""
+
+#: app/permissions/forms.py:40 app/templates/permissions/list.html:96
+#: app/templates/permissions/matrix.html:35
+msgid "User"
+msgstr ""
+
+#: app/permissions/forms.py:41 app/templates/permissions/list.html:98
+#: app/templates/permissions/matrix.html:104 app/users/forms.py:63
+msgid "Group"
+msgstr ""
+
+#: app/permissions/forms.py:45 app/templates/permissions/create.html:35
+msgid "Select Users"
+msgstr ""
+
+#: app/permissions/forms.py:47 app/templates/permissions/create.html:48
+msgid "Select Groups"
+msgstr ""
+
+#: app/permissions/forms.py:49
+msgid "Read Permission (LIST, CWD, PWD, NLST, STAT, MLSD)"
+msgstr ""
+
+#: app/permissions/forms.py:50
+msgid "Write Permission (STOR, STOU, APPE)"
+msgstr ""
+
+#: app/permissions/forms.py:51
+msgid "Delete Permission (DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD)"
+msgstr ""
+
+#: app/permissions/forms.py:54
+msgid "Save Permissions"
+msgstr ""
+
+#: app/permissions/forms.py:71
+msgid "Please select at least one user"
+msgstr ""
+
+#: app/permissions/forms.py:75
+msgid "Please select at least one group"
+msgstr ""
+
+#: app/permissions/forms.py:83
+msgid "Apply to All Users"
+msgstr ""
+
+#: app/permissions/forms.py:84
+msgid "Apply to All Groups"
+msgstr ""
+
+#: app/permissions/forms.py:85
+msgid "Select Users (comma-separated user IDs)"
+msgstr ""
+
+#: app/permissions/forms.py:86
+msgid "Select Groups (comma-separated group IDs)"
+msgstr ""
+
+#: app/permissions/forms.py:88 app/templates/permissions/create.html:120
+#: app/templates/permissions/list.html:206
+#: app/templates/permissions/matrix.html:61
+#: app/templates/permissions/matrix.html:135
+msgid "Read Permission"
+msgstr ""
+
+#: app/permissions/forms.py:89 app/templates/permissions/create.html:121
+#: app/templates/permissions/list.html:217
+#: app/templates/permissions/matrix.html:70
+#: app/templates/permissions/matrix.html:144
+msgid "Write Permission"
+msgstr ""
+
+#: app/permissions/forms.py:90 app/templates/permissions/create.html:122
+#: app/templates/permissions/list.html:225
+#: app/templates/permissions/matrix.html:79
+#: app/templates/permissions/matrix.html:153
+msgid "Delete Permission"
+msgstr ""
+
+#: app/permissions/forms.py:92
+msgid "Bulk Settings"
+msgstr ""
+
+#: app/permissions/forms.py:96
+msgid "Directory Filter"
+msgstr ""
+
+#: app/permissions/forms.py:97
+msgid "User Filter"
+msgstr ""
+
+#: app/permissions/forms.py:98 app/users/forms.py:79
+msgid "Group Filter"
+msgstr ""
+
+#: app/permissions/forms.py:99
+msgid "Permission Type"
+msgstr ""
+
+#: app/permissions/forms.py:100 app/users/forms.py:75
+msgid "All"
+msgstr ""
+
+#: app/permissions/forms.py:101
+msgid "Read Only"
+msgstr ""
+
+#: app/permissions/forms.py:102
+msgid "Write Only"
+msgstr ""
+
+#: app/permissions/forms.py:103
+msgid "Delete Only"
+msgstr ""
+
+#: app/permissions/forms.py:104
+msgid "Full Permissions"
+msgstr ""
+
+#: app/permissions/forms.py:105 app/templates/permissions/create.html:162
+msgid "No Permissions"
+msgstr ""
+
+#: app/permissions/forms.py:107 app/templates/permissions/list.html:44
+msgid "Filter"
+msgstr ""
+
+#: app/permissions/forms.py:113
+msgid "All Directories"
+msgstr ""
+
+#: app/permissions/forms.py:118
+msgid "All Users"
+msgstr ""
+
+#: app/permissions/forms.py:123 app/users/forms.py:84
+msgid "All Groups"
+msgstr ""
+
+#: app/templates/auth/login.html:3 app/templates/base.html:7
+#: app/templates/base.html:17 app/templates/groups/create.html:3
+#: app/templates/groups/edit.html:3 app/templates/groups/list.html:3
+#: app/templates/groups/members.html:3 app/templates/main/index.html:3
+#: app/templates/monitoring/connections.html:3
+#: app/templates/monitoring/index.html:3 app/templates/monitoring/logs.html:3
+#: app/templates/monitoring/statistics.html:3
+#: app/templates/monitoring/system.html:3
+#: app/templates/permissions/create.html:3
+#: app/templates/permissions/directories.html:3
+#: app/templates/permissions/matrix.html:3 app/templates/users/list.html:3
+msgid "ProFTPD Management System"
+msgstr ""
+
+#: app/templates/base.html:33 app/templates/users/list.html:3
+msgid "User Management"
+msgstr ""
+
+#: app/templates/base.html:38 app/templates/groups/list.html:3
+msgid "Group Management"
+msgstr ""
+
+#: app/templates/base.html:43 app/templates/permissions/list.html:3
+msgid "Permission Management"
+msgstr ""
+
+#: app/templates/base.html:48
+msgid "Monitoring"
+msgstr ""
+
+#: app/templates/base.html:53
+msgid "Configuration"
+msgstr ""
+
+#: app/templates/base.html:58
+msgid "Settings"
+msgstr ""
+
+#: app/templates/auth/login.html:16 app/templates/base.html:70
+msgid "Chinese"
+msgstr ""
+
+#: app/templates/auth/login.html:17 app/templates/base.html:71
+msgid "English"
+msgstr ""
+
+#: app/templates/base.html:79
+msgid "Profile"
+msgstr ""
+
+#: app/templates/base.html:82
+msgid "Logout"
+msgstr ""
+
+#: app/templates/auth/login.html:24
+msgid "Administrator Login"
+msgstr ""
+
+#: app/templates/auth/login.html:60
+msgid "Default admin account"
+msgstr ""
+
+#: app/templates/auth/login.html:61
+msgid "Please change password after first login"
+msgstr ""
+
+#: app/templates/groups/create.html:3 app/templates/groups/list.html:9
+#: app/templates/permissions/matrix.html:176
+msgid "Add Group"
+msgstr ""
+
+#: app/templates/groups/create.html:10
+msgid "Add FTP Group"
+msgstr ""
+
+#: app/templates/groups/create.html:20 app/templates/groups/edit.html:20
+msgid "Please enter group name"
+msgstr ""
+
+#: app/templates/groups/create.html:34 app/templates/groups/edit.html:34
+msgid "Recommend using GID above 5000"
+msgstr ""
+
+#: app/templates/groups/create.html:44 app/templates/groups/edit.html:44
+msgid "Optional group description"
+msgstr ""
+
+#: app/templates/groups/create.html:52 app/templates/groups/detail.html:251
+#: app/templates/groups/edit.html:52 app/templates/groups/members.html:103
+#: app/templates/permissions/create.html:105
+msgid "Cancel"
+msgstr ""
+
+#: app/templates/groups/create.html:62
+msgid "Group Creation Instructions"
+msgstr ""
+
+#: app/templates/groups/create.html:65
+msgid "GID Allocation Recommendations"
+msgstr ""
+
+#: app/templates/groups/create.html:67
+msgid "Admin group"
+msgstr ""
+
+#: app/templates/groups/create.html:68 app/templates/groups/create.html:99
+#: app/templates/groups/list.html:163
+msgid "Regular user group"
+msgstr ""
+
+#: app/templates/groups/create.html:69
+msgid "Custom groups"
+msgstr ""
+
+#: app/templates/groups/create.html:72
+msgid "Group Types"
+msgstr ""
+
+#: app/templates/groups/create.html:74
+msgid "Admin Group"
+msgstr ""
+
+#: app/templates/groups/create.html:74
+msgid "Full permissions, can access all directories"
+msgstr ""
+
+#: app/templates/groups/create.html:75
+msgid "User Group"
+msgstr ""
+
+#: app/templates/groups/create.html:75
+msgid "Limited permissions, depends on directory settings"
+msgstr ""
+
+#: app/templates/groups/create.html:76
+msgid "Project Group"
+msgstr ""
+
+#: app/templates/groups/create.html:76
+msgid "For specific projects or departments"
+msgstr ""
+
+#: app/templates/groups/create.html:82
+msgid "After creating group, you can manage members on the group details page"
+msgstr ""
+
+#: app/templates/groups/create.html:90
+msgid "Default Groups"
+msgstr ""
+
+#: app/templates/groups/create.html:95 app/templates/groups/list.html:154
+msgid "System administrator group"
+msgstr ""
+
+#: app/templates/groups/create.html:103
+msgid ""
+"These groups are usually created during system initialization, not "
+"recommended to delete"
+msgstr ""
+
+#: app/templates/groups/detail.html:3
+msgid "Group Details"
+msgstr ""
+
+#: app/templates/groups/detail.html:10 app/templates/groups/list.html:80
+#: app/templates/permissions/directories.html:69
+#: app/templates/permissions/list.html:126 app/templates/users/list.html:91
+msgid "Edit"
+msgstr ""
+
+#: app/templates/groups/detail.html:13 app/templates/groups/detail.html:178
+#: app/templates/groups/detail.html:193 app/templates/groups/edit.html:123
+msgid "Manage Members"
+msgstr ""
+
+#: app/templates/groups/detail.html:17 app/templates/groups/detail.html:93
+#: app/templates/permissions/directories.html:78
+#: app/templates/permissions/list.html:73
+#: app/templates/permissions/list.html:132
+#: app/templates/permissions/matrix.html:21
+msgid "Delete"
+msgstr ""
+
+#: app/templates/groups/detail.html:27 app/templates/groups/edit.html:63
+#: app/templates/groups/members.html:114
+msgid "Group Information"
+msgstr ""
+
+#: app/templates/groups/detail.html:38 app/templates/groups/list.html:55
+#: app/templates/main/index.html:124 app/templates/monitoring/index.html:286
+#: app/templates/permissions/matrix.html:120
+msgid "Administrator"
+msgstr ""
+
+#: app/templates/groups/detail.html:40 app/templates/groups/list.html:57
+#: app/templates/permissions/matrix.html:122
+msgid "Regular User"
+msgstr ""
+
+#: app/templates/groups/detail.html:49 app/templates/groups/edit.html:70
+#: app/templates/groups/list.html:44
+msgid "Member Count"
+msgstr ""
+
+#: app/templates/groups/detail.html:59 app/templates/groups/edit.html:71
+#: app/templates/groups/list.html:45 app/templates/groups/members.html:122
+#: app/templates/permissions/directories.html:34
+#: app/templates/permissions/list.html:74 app/templates/users/list.html:54
+msgid "Created Time"
+msgstr ""
+
+#: app/templates/groups/detail.html:63 app/templates/groups/edit.html:73
+msgid "Updated Time"
+msgstr ""
+
+#: app/templates/groups/detail.html:82
+msgid "Group Permissions Overview"
+msgstr ""
+
+#: app/templates/groups/detail.html:91 app/templates/permissions/list.html:71
+#: app/templates/permissions/matrix.html:21
+msgid "Read"
+msgstr ""
+
+#: app/templates/groups/detail.html:92 app/templates/permissions/list.html:72
+#: app/templates/permissions/matrix.html:21
+msgid "Write"
+msgstr ""
+
+#: app/templates/groups/detail.html:127
+msgid "No specific directory permissions set yet"
+msgstr ""
+
+#: app/templates/groups/detail.html:130
+msgid "Manage Permissions"
+msgstr ""
+
+#: app/templates/groups/detail.html:140
+msgid "Group Members"
+msgstr ""
+
+#: app/templates/groups/detail.html:152
+#: app/templates/permissions/directories.html:59
+#: app/templates/users/list.html:80 app/users/forms.py:77
+msgid "Disabled"
+msgstr ""
+
+#: app/templates/groups/detail.html:157
+msgid "View User"
+msgstr ""
+
+#: app/templates/groups/detail.html:162
+#, python-format
+msgid "Are you sure you want to remove %(username)s from this group?"
+msgstr ""
+
+#: app/templates/groups/detail.html:162
+msgid "Remove"
+msgstr ""
+
+#: app/templates/groups/detail.html:173
+msgid "This group has no members yet"
+msgstr ""
+
+#: app/templates/groups/detail.html:186 app/templates/groups/edit.html:118
+msgid "Quick Actions"
+msgstr ""
+
+#: app/templates/groups/detail.html:190 app/templates/groups/edit.html:3
+#: app/templates/groups/members.html:176
+msgid "Edit Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:196
+msgid "Set Permissions"
+msgstr ""
+
+#: app/templates/groups/detail.html:200 app/templates/groups/edit.html:53
+#: app/templates/groups/members.html:104
+#: app/templates/permissions/matrix.html:10
+msgid "Back to List"
+msgstr ""
+
+#: app/templates/groups/detail.html:209
+msgid "Default Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:214 app/templates/groups/members.html:134
+msgid "Administrator Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:215
+msgid "This group has full system permissions, please manage members carefully."
+msgstr ""
+
+#: app/templates/groups/detail.html:219 app/templates/groups/members.html:139
+msgid "Regular User Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:220
+msgid ""
+"This group is the default group for regular users with limited "
+"permissions."
+msgstr ""
+
+#: app/templates/groups/detail.html:235
+msgid "Confirm Delete Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:239
+#, python-format
+msgid "Are you sure you want to delete group %(groupname)s?"
+msgstr ""
+
+#: app/templates/groups/detail.html:242
+msgid "Warning"
+msgstr ""
+
+#: app/templates/groups/detail.html:242
+msgid "This operation cannot be undone and will:"
+msgstr ""
+
+#: app/templates/groups/detail.html:244
+msgid "Delete group data"
+msgstr ""
+
+#: app/templates/groups/detail.html:245
+msgid "Clear group-specific permission settings"
+msgstr ""
+
+#: app/templates/groups/detail.html:246
+msgid "Update ProFTPD configuration files"
+msgstr ""
+
+#: app/templates/groups/detail.html:253
+msgid "Confirm Delete"
+msgstr ""
+
+#: app/templates/groups/edit.html:10
+msgid "Edit FTP Group"
+msgstr ""
+
+#: app/templates/groups/edit.html:66
+msgid "Current Settings"
+msgstr ""
+
+#: app/templates/groups/edit.html:78 app/templates/groups/members.html:47
+msgid "Current Members"
+msgstr ""
+
+#: app/templates/groups/edit.html:88
+msgid "This group currently has no members"
+msgstr ""
+
+#: app/templates/groups/edit.html:97
+msgid "Edit Warnings"
+msgstr ""
+
+#: app/templates/groups/edit.html:101
+msgid "GID Changes"
+msgstr ""
+
+#: app/templates/groups/edit.html:101
+msgid "Modifying GID may affect existing permission settings"
+msgstr ""
+
+#: app/templates/groups/edit.html:102
+msgid "Changing name will update all related configurations"
+msgstr ""
+
+#: app/templates/groups/edit.html:103
+msgid "Member Management"
+msgstr ""
+
+#: app/templates/groups/edit.html:103
+msgid "Manage members on the group details page"
+msgstr ""
+
+#: app/templates/groups/edit.html:104
+#: app/templates/monitoring/statistics.html:159
+#: app/templates/permissions/create.html:60
+msgid "Permission Settings"
+msgstr ""
+
+#: app/templates/groups/edit.html:104
+msgid "Set access permissions on the directory permissions page"
+msgstr ""
+
+#: app/templates/groups/edit.html:110
+msgid ""
+"Changes will be synchronized to ProFTPD configuration and service will be"
+" reloaded"
+msgstr ""
+
+#: app/templates/groups/edit.html:126 app/templates/groups/members.html:182
+msgid "Directory Permissions"
+msgstr ""
+
+#: app/templates/groups/edit.html:157
+msgid "Current group name"
+msgstr ""
+
+#: app/templates/groups/list.html:7
+msgid "FTP Group Management"
+msgstr ""
+
+#: app/templates/groups/list.html:33
+msgid "Group List"
+msgstr ""
+
+#: app/templates/groups/list.html:33
+#: app/templates/permissions/directories.html:21
+#: app/templates/permissions/list.html:57 app/templates/users/list.html:41
+msgid "Total"
+msgstr ""
+
+#: app/templates/groups/list.html:33
+msgid "groups"
+msgstr ""
+
+#: app/templates/groups/list.html:46
+#: app/templates/monitoring/connections.html:75
+#: app/templates/monitoring/connections.html:293
+#: app/templates/monitoring/logs.html:116
+#: app/templates/permissions/directories.html:35
+#: app/templates/permissions/list.html:75 app/templates/users/list.html:55
+msgid "Actions"
+msgstr ""
+
+#: app/templates/groups/list.html:66 app/templates/groups/members.html:120
+#: app/templates/permissions/directories.html:52
+msgid "No description"
+msgstr ""
+
+#: app/templates/groups/list.html:76 app/templates/monitoring/logs.html:155
+#: app/templates/users/list.html:87
+msgid "Details"
+msgstr ""
+
+#: app/templates/groups/list.html:84
+msgid "Members"
+msgstr ""
+
+#: app/templates/groups/list.html:97
+msgid "Group Pagination"
+msgstr ""
+
+#: app/templates/groups/list.html:101 app/templates/permissions/list.html:150
+#: app/templates/users/list.html:112
+msgid "Previous"
+msgstr ""
+
+#: app/templates/groups/list.html:125 app/templates/permissions/list.html:174
+#: app/templates/users/list.html:136
+msgid "Next"
+msgstr ""
+
+#: app/templates/groups/list.html:135
+msgid "No groups created yet"
+msgstr ""
+
+#: app/templates/groups/list.html:137
+msgid "Add Group Now"
+msgstr ""
+
+#: app/templates/groups/list.html:147
+msgid "Default Groups Description"
+msgstr ""
+
+#: app/templates/groups/list.html:155
+msgid "Has complete file and directory permissions"
+msgstr ""
+
+#: app/templates/groups/list.html:156
+msgid "Can access all FTP directories"
+msgstr ""
+
+#: app/templates/groups/list.html:157
+msgid "Can perform all FTP operations"
+msgstr ""
+
+#: app/templates/groups/list.html:164
+msgid "Limited file permissions"
+msgstr ""
+
+#: app/templates/groups/list.html:165
+msgid "Access permissions depend on directory settings"
+msgstr ""
+
+#: app/templates/groups/list.html:166
+msgid "Usually cannot delete files or create directories"
+msgstr ""
+
+#: app/templates/groups/members.html:3 app/templates/groups/members.html:10
+msgid "Manage Group Members"
+msgstr ""
+
+#: app/templates/groups/members.html:21
+msgid "Available Users"
+msgstr ""
+
+#: app/templates/groups/members.html:38
+msgid "No available users currently"
+msgstr ""
+
+#: app/templates/groups/members.html:65
+msgid "No members currently"
+msgstr ""
+
+#: app/templates/groups/members.html:79
+msgid ""
+"Select users to add to this group. Deselect to remove users from the "
+"group."
+msgstr ""
+
+#: app/templates/groups/members.html:87
+#: app/templates/permissions/create.html:175
+msgid "Select All"
+msgstr ""
+
+#: app/templates/groups/members.html:90
+msgid "Clear All"
+msgstr ""
+
+#: app/templates/groups/members.html:95
+msgid "Selected"
+msgstr ""
+
+#: app/templates/groups/members.html:95 app/templates/users/list.html:41
+msgid "users"
+msgstr ""
+
+#: app/templates/groups/members.html:121
+msgid "Current Member Count"
+msgstr ""
+
+#: app/templates/groups/members.html:129
+#: app/templates/permissions/list.html:201
+msgid "Permission Description"
+msgstr ""
+
+#: app/templates/groups/members.html:135
+msgid "Has complete permissions for all directories"
+msgstr ""
+
+#: app/templates/groups/members.html:140
+msgid "Limited directory permissions, depends on settings"
+msgstr ""
+
+#: app/templates/groups/members.html:144
+msgid "Custom Group"
+msgstr ""
+
+#: app/templates/groups/members.html:145
+msgid "Permissions depend on directory settings"
+msgstr ""
+
+#: app/templates/groups/members.html:150
+msgid "Group permissions can be set on the Directory Permissions page"
+msgstr ""
+
+#: app/templates/groups/members.html:157
+msgid "Important Notes"
+msgstr ""
+
+#: app/templates/groups/members.html:161
+msgid "Sync Updates"
+msgstr ""
+
+#: app/templates/groups/members.html:161
+msgid "Member changes will be immediately synchronized to ProFTPD configuration"
+msgstr ""
+
+#: app/templates/groups/members.html:162
+msgid "Permission Effective"
+msgstr ""
+
+#: app/templates/groups/members.html:162
+msgid "FTP service will be automatically reloaded after changes"
+msgstr ""
+
+#: app/templates/groups/members.html:163
+msgid "Login Impact"
+msgstr ""
+
+#: app/templates/groups/members.html:163
+msgid "Removing members may affect ongoing FTP connections"
+msgstr ""
+
+#: app/templates/groups/members.html:164
+#: app/templates/permissions/create.html:170
+msgid "Batch Operations"
+msgstr ""
+
+#: app/templates/groups/members.html:164
+msgid "Can add or remove multiple members simultaneously"
+msgstr ""
+
+#: app/templates/groups/members.html:171
+msgid "Other Actions"
+msgstr ""
+
+#: app/templates/groups/members.html:179 app/templates/main/index.html:178
+msgid "Manage Users"
+msgstr ""
+
+#: app/templates/groups/members.html:235
+msgid "Are you sure you want to remove all members?"
+msgstr ""
+
+#: app/templates/groups/members.html:244
+msgid "Are you sure you want to make the following changes?"
+msgstr ""
+
+#: app/templates/groups/members.html:247
+#, python-format
+msgid "Add %(count)s members"
+msgstr ""
+
+#: app/templates/groups/members.html:250
+#, python-format
+msgid "Remove %(count)s members"
+msgstr ""
+
+#: app/templates/main/index.html:31
+msgid "ProFTPD Virtual User Management System"
+msgstr ""
+
+#: app/templates/main/index.html:42
+msgid "Total Users"
+msgstr ""
+
+#: app/templates/main/index.html:60
+msgid "Active Users"
+msgstr ""
+
+#: app/templates/main/index.html:78
+msgid "Total Groups"
+msgstr ""
+
+#: app/templates/main/index.html:96
+msgid "Total Directories"
+msgstr ""
+
+#: app/templates/main/index.html:113
+msgid "Recent Activity Log"
+msgstr ""
+
+#: app/templates/main/index.html:121 app/templates/monitoring/index.html:283
+#: app/templates/monitoring/logs.html:107
+msgid "Time"
+msgstr ""
+
+#: app/templates/main/index.html:122 app/templates/monitoring/index.html:284
+msgid "Action"
+msgstr ""
+
+#: app/templates/main/index.html:142 app/templates/monitoring/index.html:308
+msgid "No activity log yet"
+msgstr ""
+
+#: app/templates/main/index.html:151 app/templates/monitoring/system.html:23
+msgid "System Information"
+msgstr ""
+
+#: app/templates/main/index.html:155 app/templates/monitoring/index.html:145
+msgid "Disk Usage"
+msgstr ""
+
+#: app/templates/main/index.html:160
+msgid "Current Administrator"
+msgstr ""
+
+#: app/templates/main/index.html:165
+msgid "Last Login"
+msgstr ""
+
+#: app/templates/main/index.html:170
+msgid "First Login"
+msgstr ""
+
+#: app/templates/main/index.html:181
+msgid "View Monitoring"
+msgstr ""
+
+#: app/templates/main/index.html:184
+msgid "System Settings"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:3
+#: app/templates/monitoring/connections.html:7
+msgid "FTP Connection Monitoring"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:10
+#: app/templates/monitoring/index.html:262
+#: app/templates/monitoring/logs.html:10
+#: app/templates/monitoring/system.html:10
+msgid "Refresh"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:13
+#: app/templates/monitoring/logs.html:13
+#: app/templates/monitoring/statistics.html:16
+#: app/templates/monitoring/system.html:13
+msgid "Back to Monitoring Center"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:24
+msgid "Total Connections"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:32
+msgid "Connected Users"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:40
+msgid "Source IPs"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:48
+msgid "Last Updated"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:57
+msgid "Real-time Connection List"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:60
+#: app/templates/monitoring/logs.html:45
+msgid "Auto Refresh"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:72
+#: app/templates/monitoring/connections.html:290
+#: app/templates/monitoring/logs.html:109
+#: app/templates/monitoring/logs.html:203
+msgid "Client IP"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:73
+#: app/templates/monitoring/connections.html:291
+#: app/templates/permissions/directories.html:32
+#: app/templates/users/list.html:53 app/users/forms.py:74
+msgid "Status"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:74
+#: app/templates/monitoring/connections.html:292
+msgid "Connection Time"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:93
+#: app/templates/monitoring/connections.html:300
+#: app/templates/monitoring/index.html:122
+#: app/templates/monitoring/index.html:128
+#: app/templates/monitoring/logs.html:126
+#: app/templates/monitoring/logs.html:128
+#: app/templates/monitoring/logs.html:143
+#: app/templates/monitoring/logs.html:146
+#: app/templates/monitoring/system.html:277
+#: app/templates/monitoring/system.html:278
+msgid "N/A"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:98
+#: app/templates/monitoring/connections.html:306
+msgid "Disconnect"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:111
+#: app/templates/monitoring/connections.html:277
+msgid "No FTP connections currently"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:123
+msgid "User Connection Distribution"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:132
+#: app/templates/monitoring/connections.html:173
+msgid "Connections"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:133
+#: app/templates/monitoring/connections.html:174
+msgid "Ratio"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:155
+#: app/templates/monitoring/connections.html:196
+msgid "No connection data"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:164
+msgid "IP Address Distribution"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:172
+#: app/templates/monitoring/index.html:287
+msgid "IP Address"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:206
+msgid "Connection Trends (Last 24 Hours)"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:211
+#: app/templates/monitoring/statistics.html:109
+#: app/templates/monitoring/statistics.html:251
+msgid "Feature Under Development"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:211
+msgid ""
+"Connection history chart feature is under development, will parse "
+"historical connection data from ProFTPD logs."
+msgstr ""
+
+#: app/templates/monitoring/connections.html:217
+msgid "Connection Trends Chart Area"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:265
+#: app/templates/monitoring/connections.html:266
+msgid "Refresh connections failed"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:355
+msgid "Are you sure you want to disconnect this connection?"
+msgstr ""
+
+#: app/templates/monitoring/connections.html:357
+msgid "Connection disconnect feature is under development"
+msgstr ""
+
+#: app/templates/monitoring/index.html:3 app/templates/monitoring/index.html:7
+msgid "Monitoring Center"
+msgstr ""
+
+#: app/templates/monitoring/index.html:10
+msgid "Connection Monitoring"
+msgstr ""
+
+#: app/templates/monitoring/index.html:13 app/templates/monitoring/logs.html:3
+msgid "Log Monitoring"
+msgstr ""
+
+#: app/templates/monitoring/index.html:16
+#: app/templates/monitoring/statistics.html:3
+msgid "Statistics Report"
+msgstr ""
+
+#: app/templates/monitoring/index.html:19
+#: app/templates/monitoring/system.html:3
+#: app/templates/monitoring/system.html:7
+msgid "System Monitoring"
+msgstr ""
+
+#: app/templates/monitoring/index.html:32
+msgid "FTP Users"
+msgstr ""
+
+#: app/templates/monitoring/index.html:34
+msgid "Active/Total"
+msgstr ""
+
+#: app/templates/monitoring/index.html:51
+msgid "FTP Connections"
+msgstr ""
+
+#: app/templates/monitoring/index.html:53
+msgid "Current Connections"
+msgstr ""
+
+#: app/templates/monitoring/index.html:70
+#: app/templates/monitoring/index.html:196
+#: app/templates/monitoring/system.html:63
+msgid "CPU Usage"
+msgstr ""
+
+#: app/templates/monitoring/index.html:72
+#: app/templates/monitoring/system.html:49
+msgid "cores"
+msgstr ""
+
+#: app/templates/monitoring/index.html:89
+#: app/templates/monitoring/index.html:208
+#: app/templates/monitoring/system.html:73
+msgid "Memory Usage"
+msgstr ""
+
+#: app/templates/monitoring/index.html:103
+msgid "Service Status and Disk Usage"
+msgstr ""
+
+#: app/templates/monitoring/index.html:108
+msgid "ProFTPD Service Status"
+msgstr ""
+
+#: app/templates/monitoring/index.html:113
+msgid "Service Status"
+msgstr ""
+
+#: app/templates/monitoring/index.html:115
+#: app/templates/monitoring/system.html:183
+msgid "Running"
+msgstr ""
+
+#: app/templates/monitoring/index.html:117
+#: app/templates/monitoring/system.html:185
+msgid "Stopped"
+msgstr ""
+
+#: app/templates/monitoring/index.html:121
+msgid "Process PID"
+msgstr ""
+
+#: app/templates/monitoring/index.html:127
+msgid "Start Time"
+msgstr ""
+
+#: app/templates/monitoring/index.html:135
+msgid ""
+"ProFTPD service is not running, please check service status or contact "
+"system administrator."
+msgstr ""
+
+#: app/templates/monitoring/index.html:149
+msgid "FTP Root Directory"
+msgstr ""
+
+#: app/templates/monitoring/index.html:164
+#: app/templates/monitoring/system.html:129
+msgid "Used"
+msgstr ""
+
+#: app/templates/monitoring/index.html:170
+#: app/templates/monitoring/system.html:130
+msgid "Available"
+msgstr ""
+
+#: app/templates/monitoring/index.html:176
+#: app/templates/monitoring/system.html:128
+msgid "Total Capacity"
+msgstr ""
+
+#: app/templates/monitoring/index.html:185
+#: app/templates/monitoring/index.html:190
+msgid "System Resource Usage"
+msgstr ""
+
+#: app/templates/monitoring/index.html:203
+msgid "core processor"
+msgstr ""
+
+#: app/templates/monitoring/index.html:215
+msgid "Total Memory"
+msgstr ""
+
+#: app/templates/monitoring/index.html:220
+msgid "System Load"
+msgstr ""
+
+#: app/templates/monitoring/index.html:222
+#: app/templates/monitoring/system.html:92
+msgid "1 minute"
+msgstr ""
+
+#: app/templates/monitoring/index.html:223
+#: app/templates/monitoring/system.html:98
+msgid "5 minutes"
+msgstr ""
+
+#: app/templates/monitoring/index.html:224
+#: app/templates/monitoring/system.html:104
+msgid "15 minutes"
+msgstr ""
+
+#: app/templates/monitoring/index.html:226
+#: app/templates/monitoring/system.html:44
+msgid "System Uptime"
+msgstr ""
+
+#: app/templates/monitoring/index.html:226
+#: app/templates/monitoring/statistics.html:12
+#: app/templates/monitoring/statistics.html:14
+#: app/templates/monitoring/system.html:45
+msgid "days"
+msgstr ""
+
+#: app/templates/monitoring/index.html:238
+msgid "ProFTPD Real-time Logs"
+msgstr ""
+
+#: app/templates/monitoring/index.html:240
+#: app/templates/monitoring/index.html:258
+#: app/templates/monitoring/index.html:382
+#: app/templates/monitoring/logs.html:25
+msgid "System Log"
+msgstr ""
+
+#: app/templates/monitoring/index.html:241
+#: app/templates/monitoring/index.html:383
+#: app/templates/monitoring/logs.html:26 app/templates/monitoring/logs.html:201
+msgid "Access Log"
+msgstr ""
+
+#: app/templates/monitoring/index.html:242
+#: app/templates/monitoring/index.html:384
+#: app/templates/monitoring/logs.html:27 app/templates/monitoring/logs.html:210
+msgid "Authentication Log"
+msgstr ""
+
+#: app/templates/monitoring/index.html:244
+msgid "More"
+msgstr ""
+
+#: app/templates/monitoring/index.html:252
+msgid "Loading logs..."
+msgstr ""
+
+#: app/templates/monitoring/index.html:257
+msgid "Last updated"
+msgstr ""
+
+#: app/templates/monitoring/index.html:258
+msgid "Log type"
+msgstr ""
+
+#: app/templates/monitoring/index.html:265
+msgid "Clear"
+msgstr ""
+
+#: app/templates/monitoring/index.html:275
+msgid "Recent Management Activity"
+msgstr ""
+
+#: app/templates/monitoring/index.html:352
+msgid "Update statistics failed"
+msgstr ""
+
+#: app/templates/monitoring/index.html:394
+msgid "Loading"
+msgstr ""
+
+#: app/templates/monitoring/index.html:414
+msgid "No log data available"
+msgstr ""
+
+#: app/templates/monitoring/index.html:421
+#: app/templates/monitoring/index.html:422
+msgid "Load logs failed"
+msgstr ""
+
+#: app/templates/monitoring/index.html:431
+msgid "Logs cleared"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:7
+msgid "ProFTPD Log Monitoring"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:23
+msgid "Log Type"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:31
+msgid "Display Lines"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:33 app/templates/monitoring/logs.html:34
+#: app/templates/monitoring/logs.html:35 app/templates/monitoring/logs.html:36
+msgid "lines"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:58
+msgid "Log Entries"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:66
+msgid "Successful Operations"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:74
+msgid "Warnings"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:82
+msgid "Errors"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:91
+msgid "Log Content"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:94
+msgid "Export"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:97
+msgid "Clear Display"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:110
+#: app/templates/monitoring/logs.html:204
+msgid "Command"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:111
+#: app/templates/monitoring/logs.html:205
+msgid "Status Code"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:112
+#: app/templates/monitoring/logs.html:206
+msgid "Bytes"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:114
+msgid "Message"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:166
+msgid "No log records found"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:167
+msgid "Please check log file path or permission settings"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:179
+msgid "Log Details"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:186
+msgid "Close"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:187
+msgid "Copy"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:196
+msgid "Log Format Description"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:203
+msgid "Connection source address"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:204
+msgid "FTP commands (GET, PUT, LIST, etc.)"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:205
+msgid "HTTP-style status codes"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:206
+msgid "Amount of data transferred"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:212
+msgid "Login Success/Failure"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:212
+msgid "User authentication results"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:213
+msgid "User attempting to log in"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:214
+msgid "Authentication Method"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:214
+msgid "Authentication method used"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:215
+msgid "Source IP"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:215
+msgid "Source of login attempt"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:219
+msgid "Status Code Description"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:221
+msgid "Success"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:222
+msgid "Client Error"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:223
+msgid "Server Error"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:301
+msgid "Log content copied to clipboard"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:303
+msgid "Copy failed"
+msgstr ""
+
+#: app/templates/monitoring/logs.html:317
+msgid ""
+"Are you sure you want to clear the log display? This will not delete the "
+"actual log files."
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:7
+msgid "FTP Statistics Report"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:10
+msgid "day"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:27
+msgid "Total Logins"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:35
+msgid "File Transfers"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:43
+msgid "Total Transfer Volume"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:51
+msgid "Error Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:62
+msgid "Most Active Users"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:71
+msgid "Login Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:72
+msgid "Uploaded Files"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:73
+msgid "Downloaded Files"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:74
+msgid "Transfer Volume"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:93
+msgid "No user activity data"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:94
+msgid "Data will be generated from ProFTPD log analysis"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:104
+msgid "Activity Time Distribution"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:109
+msgid "Activity time distribution chart is under development"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:116
+msgid "0-8 hours"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:124
+msgid "8-16 hours"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:132
+msgid "16-24 hours"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:147
+msgid "Directory Usage Statistics"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:156
+#: app/templates/monitoring/statistics.html:320
+#: app/templates/permissions/directories.html:30
+msgid "Path"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:157
+#: app/templates/monitoring/statistics.html:320
+msgid "File Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:158
+msgid "Used Space"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:160
+#: app/templates/monitoring/system.html:131
+msgid "Usage Rate"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:190
+msgid "No directory statistics data"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:192
+#: app/templates/permissions/list.html:190
+msgid "Manage Directories"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:204
+#: app/templates/monitoring/statistics.html:326
+msgid "Transfer Statistics"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:211
+#: app/templates/monitoring/statistics.html:327
+msgid "Upload Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:217
+#: app/templates/monitoring/statistics.html:327
+msgid "Download Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:223
+msgid "Average Transfer Speed"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:231
+msgid "Upload Ratio"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:232
+msgid "Download Ratio"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:235
+msgid "Upload"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:236
+msgid "Download"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:246
+msgid "Transfer Trends"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:251
+msgid "Transfer trends chart is under development"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:257
+msgid "Transfer Trends Chart Area"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:267
+msgid "Report Export"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:273
+msgid ""
+"Export statistics reports in different formats for further analysis or "
+"archiving. Reports include user activity, directory usage, transfer "
+"statistics and other information."
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:313
+msgid "PDF export feature is under development"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:319
+msgid "Directory Statistics"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:320
+msgid "Used Space (MB)"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:320
+#: app/templates/permissions/directories.html:33
+msgid "Permission Settings Count"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:327
+msgid "Total Transfer Volume (GB)"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:327
+msgid "Average Speed (KB/s)"
+msgstr ""
+
+#: app/templates/monitoring/statistics.html:350
+msgid "Report exported"
+msgstr ""
+
+#: app/templates/monitoring/system.html:28
+msgid "Hostname"
+msgstr ""
+
+#: app/templates/monitoring/system.html:32
+msgid "Operating System"
+msgstr ""
+
+#: app/templates/monitoring/system.html:36
+msgid "Architecture"
+msgstr ""
+
+#: app/templates/monitoring/system.html:40
+msgid "Python Version"
+msgstr ""
+
+#: app/templates/monitoring/system.html:45
+msgid "hours"
+msgstr ""
+
+#: app/templates/monitoring/system.html:48
+msgid "CPU Cores"
+msgstr ""
+
+#: app/templates/monitoring/system.html:59
+msgid "Real-time System Status"
+msgstr ""
+
+#: app/templates/monitoring/system.html:87
+msgid "System Load Average"
+msgstr ""
+
+#: app/templates/monitoring/system.html:117
+msgid "Disk Partitions"
+msgstr ""
+
+#: app/templates/monitoring/system.html:125
+msgid "Device"
+msgstr ""
+
+#: app/templates/monitoring/system.html:126
+msgid "Mount Point"
+msgstr ""
+
+#: app/templates/monitoring/system.html:127
+msgid "File System"
+msgstr ""
+
+#: app/templates/monitoring/system.html:163
+msgid "Unable to retrieve disk partition information"
+msgstr ""
+
+#: app/templates/monitoring/system.html:174
+msgid "System Service Status"
+msgstr ""
+
+#: app/templates/monitoring/system.html:191
+msgid "Unable to retrieve service status"
+msgstr ""
+
+#: app/templates/monitoring/system.html:200
+msgid "Network Information"
+msgstr ""
+
+#: app/templates/monitoring/system.html:208
+msgid "Network Connections"
+msgstr ""
+
+#: app/templates/monitoring/system.html:214
+msgid "Network Interfaces"
+msgstr ""
+
+#: app/templates/monitoring/system.html:223
+msgid "Sent"
+msgstr ""
+
+#: app/templates/monitoring/system.html:229
+msgid "Received"
+msgstr ""
+
+#: app/templates/monitoring/system.html:234
+msgid "Unable to retrieve network information"
+msgstr ""
+
+#: app/templates/monitoring/system.html:245
+msgid "Network Interface Details"
+msgstr ""
+
+#: app/templates/monitoring/system.html:255
+msgid "addresses"
+msgstr ""
+
+#: app/templates/monitoring/system.html:266
+msgid "Protocol"
+msgstr ""
+
+#: app/templates/monitoring/system.html:267
+msgid "Address"
+msgstr ""
+
+#: app/templates/monitoring/system.html:268
+msgid "Netmask"
+msgstr ""
+
+#: app/templates/monitoring/system.html:269
+msgid "Broadcast Address"
+msgstr ""
+
+#: app/templates/monitoring/system.html:285
+msgid "This interface has no address information"
+msgstr ""
+
+#: app/templates/monitoring/system.html:312
+msgid "System information updated"
+msgstr ""
+
+#: app/templates/monitoring/system.html:315
+#: app/templates/monitoring/system.html:316
+msgid "Update system information failed"
+msgstr ""
+
+#: app/templates/permissions/create.html:3
+#: app/templates/permissions/create.html:10
+#: app/templates/permissions/list.html:187
+msgid "Add Permission Setting"
+msgstr ""
+
+#: app/templates/permissions/create.html:19
+msgid "Please select directory"
+msgstr ""
+
+#: app/templates/permissions/create.html:38
+msgid "User list will be loaded dynamically by JavaScript"
+msgstr ""
+
+#: app/templates/permissions/create.html:40
+msgid "Select one or more users for permission settings"
+msgstr ""
+
+#: app/templates/permissions/create.html:51
+msgid "Group list will be loaded dynamically by JavaScript"
+msgstr ""
+
+#: app/templates/permissions/create.html:53
+msgid "Select one or more groups for permission settings"
+msgstr ""
+
+#: app/templates/permissions/create.html:67
+msgid "Allow reading files and listing directories"
+msgstr ""
+
+#: app/templates/permissions/create.html:76
+msgid "Allow uploading and modifying files"
+msgstr ""
+
+#: app/templates/permissions/create.html:85
+msgid "Allow deleting files and directory operations"
+msgstr ""
+
+#: app/templates/permissions/create.html:98
+msgid ""
+"Automatically sync configuration files and reload ProFTPD service after "
+"permission settings are completed, ensuring changes take effect "
+"immediately"
+msgstr ""
+
+#: app/templates/permissions/create.html:115
+msgid "Permission Settings Instructions"
+msgstr ""
+
+#: app/templates/permissions/create.html:118
+msgid "Permission Types"
+msgstr ""
+
+#: app/templates/permissions/create.html:125
+msgid "Permission Targets"
+msgstr ""
+
+#: app/templates/permissions/create.html:127
+msgid "User Permissions"
+msgstr ""
+
+#: app/templates/permissions/create.html:127
+msgid "Permission settings for specific users"
+msgstr ""
+
+#: app/templates/permissions/create.html:128
+msgid "Group Permissions"
+msgstr ""
+
+#: app/templates/permissions/create.html:128
+msgid "Permission settings for entire groups"
+msgstr ""
+
+#: app/templates/permissions/create.html:134
+msgid ""
+"The final permissions for a user are the union of their group permissions"
+" and user-specific permissions"
+msgstr ""
+
+#: app/templates/permissions/create.html:142
+msgid "Common Permission Combinations"
+msgstr ""
+
+#: app/templates/permissions/create.html:147
+msgid "Full Permissions (Read/Write/Delete)"
+msgstr ""
+
+#: app/templates/permissions/create.html:152
+msgid "Read/Write Permissions"
+msgstr ""
+
+#: app/templates/permissions/create.html:157
+msgid "Read Only Permissions"
+msgstr ""
+
+#: app/templates/permissions/create.html:178
+msgid "Clear Selection"
+msgstr ""
+
+#: app/templates/permissions/directories.html:3
+#: app/templates/permissions/list.html:16
+msgid "Directory Management"
+msgstr ""
+
+#: app/templates/permissions/directories.html:7
+msgid "FTP Directory Management"
+msgstr ""
+
+#: app/templates/permissions/directories.html:10
+msgid "Add Directory"
+msgstr ""
+
+#: app/templates/permissions/directories.html:13
+msgid "Back to Permission Management"
+msgstr ""
+
+#: app/templates/permissions/directories.html:21
+msgid "Directory List"
+msgstr ""
+
+#: app/templates/permissions/directories.html:21
+msgid "directories"
+msgstr ""
+
+#: app/templates/permissions/directories.html:57
+#: app/templates/users/list.html:78 app/users/forms.py:76
+msgid "Enabled"
+msgstr ""
+
+#: app/templates/permissions/directories.html:73
+msgid "View Permissions"
+msgstr ""
+
+#: app/templates/permissions/directories.html:82
+msgid "Has permission settings, cannot delete"
+msgstr ""
+
+#: app/templates/permissions/directories.html:96
+msgid "No directories created yet"
+msgstr ""
+
+#: app/templates/permissions/directories.html:98
+msgid "Add Directory Now"
+msgstr ""
+
+#: app/templates/permissions/list.html:3
+msgid "Management System"
+msgstr ""
+
+#: app/templates/permissions/list.html:7
+msgid "Directory Permissions Management"
+msgstr ""
+
+#: app/templates/permissions/list.html:10
+#: app/templates/permissions/matrix.html:13
+msgid "Add Permission"
+msgstr ""
+
+#: app/templates/permissions/list.html:13
+#: app/templates/permissions/matrix.html:3
+#: app/templates/permissions/matrix.html:7
+msgid "Permission Matrix"
+msgstr ""
+
+#: app/templates/permissions/list.html:47
+msgid "Reset"
+msgstr ""
+
+#: app/templates/permissions/list.html:57
+msgid "Permission Settings List"
+msgstr ""
+
+#: app/templates/permissions/list.html:57
+msgid "settings"
+msgstr ""
+
+#: app/templates/permissions/list.html:59
+msgid "Sync Configuration"
+msgstr ""
+
+#: app/templates/permissions/list.html:69
+msgid "Target"
+msgstr ""
+
+#: app/templates/permissions/list.html:70
+msgid "Type"
+msgstr ""
+
+#: app/templates/permissions/list.html:103
+msgid "Allow Read"
+msgstr ""
+
+#: app/templates/permissions/list.html:105
+msgid "Deny Read"
+msgstr ""
+
+#: app/templates/permissions/list.html:110
+msgid "Allow Write"
+msgstr ""
+
+#: app/templates/permissions/list.html:112
+msgid "Deny Write"
+msgstr ""
+
+#: app/templates/permissions/list.html:117
+msgid "Allow Delete"
+msgstr ""
+
+#: app/templates/permissions/list.html:119
+msgid "Deny Delete"
+msgstr ""
+
+#: app/templates/permissions/list.html:132
+msgid "Are you sure you want to delete this permission setting?"
+msgstr ""
+
+#: app/templates/permissions/list.html:146
+msgid "Permission Pagination"
+msgstr ""
+
+#: app/templates/permissions/list.html:184
+msgid "No permissions have been set yet"
+msgstr ""
+
+#: app/templates/permissions/list.html:208
+msgid "List directory contents"
+msgstr ""
+
+#: app/templates/permissions/list.html:209
+msgid "Change directory"
+msgstr ""
+
+#: app/templates/permissions/list.html:210
+msgid "Show current directory"
+msgstr ""
+
+#: app/templates/permissions/list.html:211
+msgid "List file names"
+msgstr ""
+
+#: app/templates/permissions/list.html:212
+msgid "Show file status"
+msgstr ""
+
+#: app/templates/permissions/list.html:213
+msgid "Machine list directory"
+msgstr ""
+
+#: app/templates/permissions/list.html:219
+msgid "Store file"
+msgstr ""
+
+#: app/templates/permissions/list.html:220
+msgid "Store unique file"
+msgstr ""
+
+#: app/templates/permissions/list.html:221
+msgid "Append to file"
+msgstr ""
+
+#: app/templates/permissions/list.html:227
+msgid "Delete file"
+msgstr ""
+
+#: app/templates/permissions/list.html:228
+msgid "Make directory"
+msgstr ""
+
+#: app/templates/permissions/list.html:229
+msgid "Remove directory"
+msgstr ""
+
+#: app/templates/permissions/list.html:230
+msgid "Rename"
+msgstr ""
+
+#: app/templates/permissions/list.html:231
+msgid "Change permissions"
+msgstr ""
+
+#: app/templates/permissions/list.html:255
+msgid "Are you sure you want to sync configuration to ProFTPD?"
+msgstr ""
+
+#: app/templates/permissions/list.html:268
+msgid "Sync failed"
+msgstr ""
+
+#: app/templates/permissions/list.html:269
+msgid "Sync failed, please try again later"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:20
+msgid "Usage Instructions"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:20
+msgid ""
+"Click checkboxes in the table to toggle permissions. Changes are saved "
+"immediately."
+msgstr ""
+
+#: app/templates/permissions/matrix.html:28
+msgid "User Permission Matrix"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:97
+msgid "Group Permission Matrix"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:170
+msgid "No users or groups to display permission matrix"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:173 app/templates/users/list.html:9
+msgid "Add User"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:182
+msgid "Sync Configuration Button"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:187
+msgid ""
+"This will sync all configuration files and reload services, are you sure "
+"to continue?"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:194
+msgid ""
+"After making changes in the permission matrix, it is recommended to click"
+" this button to sync all configurations and reload ProFTPD service"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:201
+msgid "Permission Inheritance Explanation"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:205
+msgid "Note"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:205
+msgid ""
+"The final permissions for a user are the union of their group permissions"
+" and user-specific permissions."
+msgstr ""
+
+#: app/templates/permissions/matrix.html:206
+msgid ""
+"Even if a group does not have a certain permission, if the user has that "
+"permission in their specific settings, the user can still perform that "
+"operation."
+msgstr ""
+
+#: app/templates/permissions/matrix.html:211
+msgid "Permission Priority"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:213
+msgid "User-specific permissions"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:213
+msgid "highest priority"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:214
+msgid "Group permissions"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:214
+msgid "union of all member groups"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:215
+msgid "Default permissions"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:215
+msgid "ProFTPD configuration settings"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:219
+msgid "Permission Example"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:221
+msgid "User A belongs to users group (read-only permission)"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:222
+msgid "But User A has specific write permission setting"
+msgstr ""
+
+#: app/templates/permissions/matrix.html:223
+msgid "Result: User A can read and write"
+msgstr ""
+
+#: app/templates/users/list.html:7
+msgid "FTP User Management"
+msgstr ""
+
+#: app/templates/users/list.html:41
+msgid "User List"
+msgstr ""
+
+#: app/templates/users/list.html:51 app/users/forms.py:16
+msgid "Home Directory"
+msgstr ""
+
+#: app/templates/users/list.html:52 app/templates/users/list.html:95
+msgid "Groups"
+msgstr ""
+
+#: app/templates/users/list.html:108
+msgid "User Pagination"
+msgstr ""
+
+#: app/templates/users/list.html:146
+msgid "No users created yet"
+msgstr ""
+
+#: app/templates/users/list.html:148
+msgid "Add User Now"
+msgstr ""
+
+#: app/users/forms.py:9
+msgid "Username cannot be empty"
+msgstr ""
+
+#: app/users/forms.py:10
+msgid "Username length must be between 1-64 characters"
+msgstr ""
+
+#: app/users/forms.py:13
+msgid "Password cannot be empty"
+msgstr ""
+
+#: app/users/forms.py:14 app/users/forms.py:58
+msgid "Password length must be between 6-128 characters"
+msgstr ""
+
+#: app/users/forms.py:17
+msgid "Home directory cannot be empty"
+msgstr ""
+
+#: app/users/forms.py:18
+msgid "Home directory path cannot exceed 200 characters"
+msgstr ""
+
+#: app/users/forms.py:21
+msgid "UID cannot be empty"
+msgstr ""
+
+#: app/users/forms.py:22
+msgid "UID must be between 1000-65535"
+msgstr ""
+
+#: app/users/forms.py:24
+msgid "Default GID"
+msgstr ""
+
+#: app/users/forms.py:29
+msgid "Shell path cannot exceed 100 characters"
+msgstr ""
+
+#: app/users/forms.py:31
+msgid "Comment"
+msgstr ""
+
+#: app/users/forms.py:32
+msgid "Comment cannot exceed 500 characters"
+msgstr ""
+
+#: app/users/forms.py:34
+msgid "Enable Account"
+msgstr ""
+
+#: app/users/forms.py:46
+msgid "Username already exists"
+msgstr ""
+
+#: app/users/forms.py:53
+msgid "UID already in use"
+msgstr ""
+
+#: app/users/forms.py:64
+msgid "Join Group"
+msgstr ""
+
+#: app/users/forms.py:73
+msgid "Search Users"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/_termui_impl.py:556
+#, python-brace-format
+msgid "{editor}: Editing failed"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/_termui_impl.py:560
+#, python-brace-format
+msgid "{editor}: Editing failed: {e}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1124
+msgid "Aborted!"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1349
+#: venv/lib/python3.9/site-packages/click/core.py:1379
+#, python-brace-format
+msgid "(Deprecated) {text}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1396
+msgid "Options"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1422
+#, python-brace-format
+msgid "Got unexpected extra argument ({args})"
+msgid_plural "Got unexpected extra arguments ({args})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1438
+#, python-brace-format
+msgid "DeprecationWarning: The command {name!r} is deprecated."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1645
+msgid "Commands"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1677
+msgid "Missing command."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:1755
+#, python-brace-format
+msgid "No such command {name!r}."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2313
+msgid "Value must be an iterable."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2334
+#, python-brace-format
+msgid "Takes {nargs} values but 1 was given."
+msgid_plural "Takes {nargs} values but {len} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2783
+#, python-brace-format
+msgid "env var: {var}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2813
+msgid "(dynamic)"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2828
+#, python-brace-format
+msgid "default: {default}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/core.py:2841
+msgid "required"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/decorators.py:457
+#, python-format
+msgid "%(prog)s, version %(version)s"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/decorators.py:520
+msgid "Show the version and exit."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/decorators.py:541
+msgid "Show this message and exit."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:49
+#: venv/lib/python3.9/site-packages/click/exceptions.py:88
+#, python-brace-format
+msgid "Error: {message}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:80
+#, python-brace-format
+msgid "Try '{command} {option}' for help."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:129
+#, python-brace-format
+msgid "Invalid value: {message}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:131
+#, python-brace-format
+msgid "Invalid value for {param_hint}: {message}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:187
+msgid "Missing argument"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:189
+msgid "Missing option"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:191
+msgid "Missing parameter"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:193
+#, python-brace-format
+msgid "Missing {param_type}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:200
+#, python-brace-format
+msgid "Missing parameter: {param_name}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:220
+#, python-brace-format
+msgid "No such option: {name}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:232
+#, python-brace-format
+msgid "Did you mean {possibility}?"
+msgid_plural "(Possible options: {possibilities})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:270
+msgid "unknown error"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/exceptions.py:277
+#, python-brace-format
+msgid "Could not open file {filename!r}: {message}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/parser.py:233
+#, python-brace-format
+msgid "Argument {name!r} takes {nargs} values."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/parser.py:415
+#, python-brace-format
+msgid "Option {name!r} does not take a value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/parser.py:476
+#, python-brace-format
+msgid "Option {name!r} requires an argument."
+msgid_plural "Option {name!r} requires {nargs} arguments."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/shell_completion.py:326
+msgid "Shell completion is not supported for Bash versions older than 4.4."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/shell_completion.py:333
+msgid "Couldn't detect Bash version, shell completion is not supported."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:158
+msgid "Repeat for confirmation"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:174
+msgid "Error: The value you entered was invalid."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:176
+#, python-brace-format
+msgid "Error: {e.message}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:187
+msgid "Error: The two entered values do not match."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:243
+msgid "Error: invalid input"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/termui.py:773
+msgid "Press any key to continue..."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:267
+#, python-brace-format
+msgid ""
+"Choose from:\n"
+"\t{choices}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:299
+#, python-brace-format
+msgid "{value!r} is not {choice}."
+msgid_plural "{value!r} is not one of {choices}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:393
+#, python-brace-format
+msgid "{value!r} does not match the format {format}."
+msgid_plural "{value!r} does not match the formats {formats}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:415
+#, python-brace-format
+msgid "{value!r} is not a valid {number_type}."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:471
+#, python-brace-format
+msgid "{value} is not in the range {range}."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:612
+#, python-brace-format
+msgid "{value!r} is not a valid boolean."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:636
+#, python-brace-format
+msgid "{value!r} is not a valid UUID."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:826
+msgid "file"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:828
+msgid "directory"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:830
+msgid "path"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:881
+#, python-brace-format
+msgid "{name} {filename!r} does not exist."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:890
+#, python-brace-format
+msgid "{name} {filename!r} is a file."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:898
+#, python-brace-format
+msgid "{name} {filename!r} is a directory."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:907
+#, python-brace-format
+msgid "{name} {filename!r} is not readable."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:916
+#, python-brace-format
+msgid "{name} {filename!r} is not writable."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:925
+#, python-brace-format
+msgid "{name} {filename!r} is not executable."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/click/types.py:992
+#, python-brace-format
+msgid "{len_type} values are required, but {len_value} was given."
+msgid_plural "{len_type} values are required, but {len_value} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/flask_wtf/file.py:55
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:293
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:323
+msgid "This field is required."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/flask_wtf/file.py:94
+#, python-brace-format
+msgid "File does not have an approved extension: {extensions}"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/flask_wtf/file.py:101
+msgid "File does not have an approved extension."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/flask_wtf/file.py:140
+#, python-brace-format
+msgid "File must be between {min_size} and {max_size} bytes."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:86
+#, python-format
+msgid "Invalid field name '%s'."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:99
+#, python-format
+msgid "Field must be equal to %(other_name)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:146
+#, python-format
+msgid "Field must be at least %(min)d character long."
+msgid_plural "Field must be at least %(min)d characters long."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:152
+#, python-format
+msgid "Field cannot be longer than %(max)d character."
+msgid_plural "Field cannot be longer than %(max)d characters."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:158
+#, python-format
+msgid "Field must be exactly %(max)d character long."
+msgid_plural "Field must be exactly %(max)d characters long."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:164
+#, python-format
+msgid "Field must be between %(min)d and %(max)d characters long."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:216
+#, python-format
+msgid "Number must be at least %(min)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:219
+#, python-format
+msgid "Number must be at most %(max)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:222
+#, python-format
+msgid "Number must be between %(min)s and %(max)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:358
+msgid "Invalid input."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:422
+msgid "Invalid email address."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:460
+msgid "Invalid IP address."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:503
+msgid "Invalid Mac address."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:540
+msgid "Invalid URL."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:561
+msgid "Invalid UUID."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:594
+#, python-format
+msgid "Invalid value, must be one of: %(values)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:629
+#, python-format
+msgid "Invalid value, can't be any of: %(values)s."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:698
+msgid "This field cannot be edited"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/validators.py:714
+msgid "This field is disabled and cannot have a value"
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/csrf/core.py:96
+msgid "Invalid CSRF Token."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/csrf/session.py:63
+msgid "CSRF token missing."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/csrf/session.py:71
+msgid "CSRF failed."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/csrf/session.py:76
+msgid "CSRF token expired."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:141
+msgid "Invalid Choice: could not coerce."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:148
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:202
+msgid "Choices cannot be None."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:154
+msgid "Not a valid choice."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:193
+msgid "Invalid choice(s): one or more data inputs could not be coerced."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/choices.py:209
+#, python-format
+msgid "'%(value)s' is not a valid choice for this field."
+msgid_plural "'%(value)s' are not valid choices for this field."
+msgstr[0] ""
+msgstr[1] ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/datetime.py:51
+msgid "Not a valid datetime value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/datetime.py:77
+msgid "Not a valid date value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/datetime.py:103
+msgid "Not a valid time value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/datetime.py:148
+msgid "Not a valid week value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/numeric.py:82
+#: venv/lib/python3.9/site-packages/wtforms/fields/numeric.py:92
+msgid "Not a valid integer value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/numeric.py:168
+msgid "Not a valid decimal value."
+msgstr ""
+
+#: venv/lib/python3.9/site-packages/wtforms/fields/numeric.py:197
+msgid "Not a valid float value."
+msgstr ""
+

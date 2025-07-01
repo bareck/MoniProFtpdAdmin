@@ -1,0 +1,1919 @@
+# Chinese (Traditional, Taiwan) translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-01 17:10+0800\n"
+"PO-Revision-Date: 2025-07-01 02:04+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hant_TW\n"
+"Language-Team: zh_Hant_TW <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app/auth/forms.py:7 app/auth/forms.py:23 app/templates/users/list.html:49
+#: app/users/forms.py:8
+msgid "Username"
+msgstr "用戶名"
+
+#: app/auth/forms.py:8 app/auth/forms.py:25 app/users/forms.py:12
+#: app/users/forms.py:56
+msgid "Password"
+msgstr "密碼"
+
+#: app/auth/forms.py:9
+msgid "Remember Me"
+msgstr "記住我"
+
+#: app/auth/forms.py:10 app/templates/auth/login.html:3
+msgid "Login"
+msgstr "登入"
+
+#: app/auth/forms.py:13
+msgid "Current Password"
+msgstr "目前密碼"
+
+#: app/auth/forms.py:14
+msgid "New Password"
+msgstr "新密碼"
+
+#: app/auth/forms.py:15
+msgid "Confirm New Password"
+msgstr "確認新密碼"
+
+#: app/auth/forms.py:16 app/templates/base.html:80
+msgid "Change Password"
+msgstr "更改密碼"
+
+#: app/auth/forms.py:20
+msgid "Password confirmation does not match"
+msgstr "密碼確認不符"
+
+#: app/auth/forms.py:24
+msgid "Email"
+msgstr "電子郵件"
+
+#: app/auth/forms.py:26
+msgid "Create Administrator"
+msgstr "創建管理員"
+
+#: app/groups/forms.py:8 app/templates/groups/detail.html:34
+#: app/templates/groups/edit.html:68 app/templates/groups/edit.html:102
+#: app/templates/groups/list.html:41 app/templates/groups/members.html:118
+msgid "Group Name"
+msgstr "群組名稱"
+
+#: app/groups/forms.py:9
+msgid "Group name cannot be empty"
+msgstr "群組名稱不能為空"
+
+#: app/groups/forms.py:10
+msgid "Group name length must be between 1-80 characters"
+msgstr "群組名稱長度必須在 1-80 字元之間"
+
+#: app/groups/forms.py:13 app/users/forms.py:25
+msgid "GID cannot be empty"
+msgstr "GID 不能為空"
+
+#: app/groups/forms.py:14 app/users/forms.py:26
+msgid "GID must be between 1000-65535"
+msgstr "GID 必須在 1000-65535 之間"
+
+#: app/groups/forms.py:16 app/permissions/forms.py:17
+#: app/templates/groups/detail.html:72 app/templates/groups/list.html:43
+#: app/templates/groups/members.html:120 app/templates/main/index.html:123
+msgid "Description"
+msgstr "描述"
+
+#: app/groups/forms.py:17 app/permissions/forms.py:18
+msgid "Description cannot exceed 500 characters"
+msgstr "描述不能超過 500 字元"
+
+#: app/groups/forms.py:19 app/permissions/forms.py:23 app/users/forms.py:35
+msgid "Save"
+msgstr "儲存"
+
+#: app/groups/forms.py:30
+msgid "Group name already exists"
+msgstr "群組名稱已存在"
+
+#: app/groups/forms.py:37
+msgid "GID already in use"
+msgstr "GID 已被使用"
+
+#: app/groups/forms.py:41
+msgid "Select Members"
+msgstr "選擇成員"
+
+#: app/groups/forms.py:42
+msgid "Update Members"
+msgstr "更新成員"
+
+#: app/groups/forms.py:51
+msgid "Search Groups"
+msgstr "搜尋群組"
+
+#: app/groups/forms.py:52 app/templates/groups/list.html:23
+#: app/templates/users/list.html:31 app/users/forms.py:80
+msgid "Search"
+msgstr "搜尋"
+
+#: app/main/routes.py:52 app/templates/base.html:28
+#: app/templates/main/index.html:3 app/templates/main/index.html:30
+msgid "Dashboard"
+msgstr "儀表板"
+
+#: app/permissions/forms.py:9
+msgid "Directory Name"
+msgstr "目錄名稱"
+
+#: app/permissions/forms.py:10
+msgid "Directory name cannot be empty"
+msgstr "目錄名稱不能為空"
+
+#: app/permissions/forms.py:11
+msgid "Directory name length must be between 1-100 characters"
+msgstr "目錄名稱長度必須在 1-100 字元之間"
+
+#: app/permissions/forms.py:13
+msgid "Directory Path"
+msgstr "目錄路徑"
+
+#: app/permissions/forms.py:14
+msgid "Directory path cannot be empty"
+msgstr "目錄路徑不能為空"
+
+#: app/permissions/forms.py:15
+msgid "Directory path cannot exceed 200 characters"
+msgstr "目錄路徑不能超過 200 字元"
+
+#: app/permissions/forms.py:20
+#, fuzzy
+msgid "Enable"
+msgstr "啟用"
+
+#: app/permissions/forms.py:21
+msgid "Create Physical Directory"
+msgstr "建立實體目錄"
+
+#: app/permissions/forms.py:22 app/permissions/forms.py:53
+msgid "Sync All Configurations and Reload"
+msgstr "同步所有配置並重新載入"
+
+#: app/permissions/forms.py:34
+msgid "Directory path already exists"
+msgstr "目錄路徑已存在"
+
+#: app/permissions/forms.py:38 app/permissions/forms.py:82
+#: app/templates/groups/detail.html:90 app/templates/permissions/list.html:68
+msgid "Directory"
+msgstr "目錄"
+
+#: app/permissions/forms.py:39
+msgid "Permission Target"
+msgstr "權限目標"
+
+#: app/permissions/forms.py:40 app/templates/permissions/list.html:96
+#, fuzzy
+msgid "User"
+msgstr "個用戶"
+
+#: app/permissions/forms.py:41 app/templates/permissions/list.html:98
+#: app/users/forms.py:63
+msgid "Group"
+msgstr "群組"
+
+#: app/permissions/forms.py:45
+#, fuzzy
+msgid "Select Users"
+msgstr "選擇成員"
+
+#: app/permissions/forms.py:47
+#, fuzzy
+msgid "Select Groups"
+msgstr "搜尋群組"
+
+#: app/permissions/forms.py:49
+msgid "Read Permission (LIST, CWD, PWD, NLST, STAT, MLSD)"
+msgstr ""
+
+#: app/permissions/forms.py:50
+msgid "Write Permission (STOR, STOU, APPE)"
+msgstr ""
+
+#: app/permissions/forms.py:51
+msgid "Delete Permission (DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD)"
+msgstr ""
+
+#: app/permissions/forms.py:54
+#, fuzzy
+msgid "Save Permissions"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:71
+msgid "Please select at least one user"
+msgstr ""
+
+#: app/permissions/forms.py:75
+msgid "Please select at least one group"
+msgstr ""
+
+#: app/permissions/forms.py:83
+#, fuzzy
+msgid "Apply to All Users"
+msgstr "總用戶數"
+
+#: app/permissions/forms.py:84
+#, fuzzy
+msgid "Apply to All Groups"
+msgstr "群組數量"
+
+#: app/permissions/forms.py:85
+msgid "Select Users (comma-separated user IDs)"
+msgstr ""
+
+#: app/permissions/forms.py:86
+msgid "Select Groups (comma-separated group IDs)"
+msgstr ""
+
+#: app/permissions/forms.py:88 app/templates/permissions/list.html:206
+#, fuzzy
+msgid "Read Permission"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:89 app/templates/permissions/list.html:217
+#, fuzzy
+msgid "Write Permission"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:90 app/templates/permissions/list.html:225
+#, fuzzy
+msgid "Delete Permission"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:92
+#, fuzzy
+msgid "Bulk Settings"
+msgstr "設定"
+
+#: app/permissions/forms.py:96
+msgid "Directory Filter"
+msgstr "目錄篩選"
+
+#: app/permissions/forms.py:97
+msgid "User Filter"
+msgstr "用戶篩選"
+
+#: app/permissions/forms.py:98 app/users/forms.py:79
+msgid "Group Filter"
+msgstr "群組篩選"
+
+#: app/permissions/forms.py:99
+msgid "Permission Type"
+msgstr "權限類型"
+
+#: app/permissions/forms.py:100 app/users/forms.py:75
+msgid "All"
+msgstr "全部"
+
+#: app/permissions/forms.py:101
+#, fuzzy
+msgid "Read Only"
+msgstr "讀取"
+
+#: app/permissions/forms.py:102
+#, fuzzy
+msgid "Write Only"
+msgstr "寫入"
+
+#: app/permissions/forms.py:103
+#, fuzzy
+msgid "Delete Only"
+msgstr "刪除"
+
+#: app/permissions/forms.py:104
+#, fuzzy
+msgid "Full Permissions"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:105
+#, fuzzy
+msgid "No Permissions"
+msgstr "設定權限"
+
+#: app/permissions/forms.py:107 app/templates/permissions/list.html:44
+#, fuzzy
+msgid "Filter"
+msgstr "個人資料"
+
+#: app/permissions/forms.py:113
+msgid "All Directories"
+msgstr "所有目錄"
+
+#: app/permissions/forms.py:118
+msgid "All Users"
+msgstr "所有用戶"
+
+#: app/permissions/forms.py:123 app/users/forms.py:84
+msgid "All Groups"
+msgstr "所有群組"
+
+#: app/templates/auth/login.html:3 app/templates/base.html:7
+#: app/templates/base.html:17 app/templates/groups/create.html:3
+#: app/templates/groups/edit.html:3 app/templates/groups/list.html:3
+#: app/templates/groups/members.html:3 app/templates/main/index.html:3
+#: app/templates/users/list.html:3
+msgid "ProFTPD Management System"
+msgstr "ProFTPD 管理系統"
+
+#: app/templates/base.html:33 app/templates/users/list.html:3
+msgid "User Management"
+msgstr "用戶管理"
+
+#: app/templates/base.html:38 app/templates/groups/list.html:3
+msgid "Group Management"
+msgstr "群組管理"
+
+#: app/templates/base.html:43 app/templates/permissions/list.html:3
+msgid "Permission Management"
+msgstr "權限管理"
+
+#: app/templates/base.html:48
+msgid "Monitoring"
+msgstr "監控"
+
+#: app/templates/base.html:53
+msgid "Configuration"
+msgstr "配置"
+
+#: app/templates/base.html:58
+msgid "Settings"
+msgstr "設定"
+
+#: app/templates/auth/login.html:16 app/templates/base.html:70
+msgid "Chinese"
+msgstr "中文"
+
+#: app/templates/auth/login.html:17 app/templates/base.html:71
+msgid "English"
+msgstr "English"
+
+#: app/templates/base.html:79
+msgid "Profile"
+msgstr "個人資料"
+
+#: app/templates/base.html:82
+msgid "Logout"
+msgstr "登出"
+
+#: app/templates/auth/login.html:24
+msgid "Administrator Login"
+msgstr "管理員登入"
+
+#: app/templates/auth/login.html:60
+msgid "Default admin account"
+msgstr "預設管理員帳號"
+
+#: app/templates/auth/login.html:61
+msgid "Please change password after first login"
+msgstr "首次登入後請更改密碼"
+
+#: app/templates/groups/create.html:3 app/templates/groups/list.html:9
+#, fuzzy
+msgid "Add Group"
+msgstr "所有群組"
+
+#: app/templates/groups/create.html:10
+#, fuzzy
+msgid "Add FTP Group"
+msgstr "所有群組"
+
+#: app/templates/groups/create.html:20 app/templates/groups/edit.html:20
+msgid "Please enter group name"
+msgstr "請輸入群組名稱"
+
+#: app/templates/groups/create.html:34 app/templates/groups/edit.html:34
+msgid "Recommend using GID above 5000"
+msgstr "建議使用 5000 以上的 GID"
+
+#: app/templates/groups/create.html:44 app/templates/groups/edit.html:44
+msgid "Optional group description"
+msgstr "可選的群組描述"
+
+#: app/templates/groups/create.html:52 app/templates/groups/detail.html:251
+#: app/templates/groups/edit.html:52 app/templates/groups/members.html:103
+msgid "Cancel"
+msgstr "取消"
+
+#: app/templates/groups/create.html:62
+msgid "Group Creation Instructions"
+msgstr "群組建立說明"
+
+#: app/templates/groups/create.html:65
+msgid "GID Allocation Recommendations"
+msgstr "GID 分配建議"
+
+#: app/templates/groups/create.html:67
+msgid "Admin group"
+msgstr "管理員群組"
+
+#: app/templates/groups/create.html:68 app/templates/groups/create.html:99
+#: app/templates/groups/list.html:163
+msgid "Regular user group"
+msgstr "一般用戶群組"
+
+#: app/templates/groups/create.html:69
+msgid "Custom groups"
+msgstr "自定義群組"
+
+#: app/templates/groups/create.html:72
+msgid "Group Types"
+msgstr "群組類型"
+
+#: app/templates/groups/create.html:74
+#, fuzzy
+msgid "Admin Group"
+msgstr "加入群組"
+
+#: app/templates/groups/create.html:74
+msgid "Full permissions, can access all directories"
+msgstr "完整權限，可存取所有目錄"
+
+#: app/templates/groups/create.html:75
+#, fuzzy
+msgid "User Group"
+msgstr "群組"
+
+#: app/templates/groups/create.html:75
+msgid "Limited permissions, depends on directory settings"
+msgstr "受限權限，依目錄設定而定"
+
+#: app/templates/groups/create.html:76
+#, fuzzy
+msgid "Project Group"
+msgstr "加入群組"
+
+#: app/templates/groups/create.html:76
+msgid "For specific projects or departments"
+msgstr ""
+
+#: app/templates/groups/create.html:82
+msgid "After creating group, you can manage members on the group details page"
+msgstr ""
+
+#: app/templates/groups/create.html:90
+#, fuzzy
+msgid "Default Groups"
+msgstr "所有群組"
+
+#: app/templates/groups/create.html:95 app/templates/groups/list.html:154
+#, fuzzy
+msgid "System administrator group"
+msgstr "創建管理員"
+
+#: app/templates/groups/create.html:103
+msgid "These groups are usually created during system initialization, not recommended to delete"
+msgstr ""
+
+#: app/templates/groups/detail.html:3
+#, fuzzy
+msgid "Group Details"
+msgstr "詳情"
+
+#: app/templates/groups/detail.html:10 app/templates/groups/list.html:80
+#: app/templates/permissions/list.html:126 app/templates/users/list.html:91
+msgid "Edit"
+msgstr "編輯"
+
+#: app/templates/groups/detail.html:13 app/templates/groups/detail.html:178
+#: app/templates/groups/detail.html:193 app/templates/groups/edit.html:123
+#, fuzzy
+msgid "Manage Members"
+msgstr "管理用戶"
+
+#: app/templates/groups/detail.html:17 app/templates/groups/detail.html:93
+#: app/templates/permissions/list.html:73
+#: app/templates/permissions/list.html:132
+msgid "Delete"
+msgstr "刪除"
+
+#: app/templates/groups/detail.html:27 app/templates/groups/edit.html:63
+#: app/templates/groups/members.html:114
+msgid "Group Information"
+msgstr "群組資訊"
+
+#: app/templates/groups/detail.html:38 app/templates/groups/list.html:55
+#: app/templates/main/index.html:124
+msgid "Administrator"
+msgstr "管理員"
+
+#: app/templates/groups/detail.html:40 app/templates/groups/list.html:57
+msgid "Regular User"
+msgstr "一般用戶"
+
+#: app/templates/groups/detail.html:49 app/templates/groups/edit.html:70
+#: app/templates/groups/list.html:44
+msgid "Member Count"
+msgstr "成員數量"
+
+#: app/templates/groups/detail.html:59 app/templates/groups/edit.html:71
+#: app/templates/groups/list.html:45 app/templates/groups/members.html:122
+#: app/templates/permissions/list.html:74 app/templates/users/list.html:54
+msgid "Created Time"
+msgstr "創建時間"
+
+#: app/templates/groups/detail.html:63 app/templates/groups/edit.html:73
+#, fuzzy
+msgid "Updated Time"
+msgstr "創建時間"
+
+#: app/templates/groups/detail.html:82
+msgid "Group Permissions Overview"
+msgstr "群組權限概覽"
+
+#: app/templates/groups/detail.html:91 app/templates/permissions/list.html:71
+msgid "Read"
+msgstr "讀取"
+
+#: app/templates/groups/detail.html:92 app/templates/permissions/list.html:72
+msgid "Write"
+msgstr "寫入"
+
+#: app/templates/groups/detail.html:127
+msgid "No specific directory permissions set yet"
+msgstr ""
+
+#: app/templates/groups/detail.html:130
+#, fuzzy
+msgid "Manage Permissions"
+msgstr "管理用戶"
+
+#: app/templates/groups/detail.html:140
+msgid "Group Members"
+msgstr "群組成員"
+
+#: app/templates/groups/detail.html:152 app/templates/users/list.html:80
+#: app/users/forms.py:77
+msgid "Disabled"
+msgstr "停用"
+
+#: app/templates/groups/detail.html:157
+#, fuzzy
+msgid "View User"
+msgstr "啟用用戶"
+
+#: app/templates/groups/detail.html:162
+#, python-format
+msgid "Are you sure you want to remove %(username)s from this group?"
+msgstr ""
+
+#: app/templates/groups/detail.html:162
+msgid "Remove"
+msgstr "移除"
+
+#: app/templates/groups/detail.html:173
+msgid "This group has no members yet"
+msgstr "此群組尚無成員"
+
+#: app/templates/groups/detail.html:186 app/templates/groups/edit.html:118
+msgid "Quick Actions"
+msgstr "快速操作"
+
+#: app/templates/groups/detail.html:190 app/templates/groups/edit.html:3
+#: app/templates/groups/members.html:176
+#, fuzzy
+msgid "Edit Group"
+msgstr "加入群組"
+
+#: app/templates/groups/detail.html:196
+msgid "Set Permissions"
+msgstr "設定權限"
+
+#: app/templates/groups/detail.html:200 app/templates/groups/edit.html:53
+#: app/templates/groups/members.html:104
+msgid "Back to List"
+msgstr "返回列表"
+
+#: app/templates/groups/detail.html:209
+msgid "Default Group"
+msgstr "預設群組"
+
+#: app/templates/groups/detail.html:214 app/templates/groups/members.html:134
+#, fuzzy
+msgid "Administrator Group"
+msgstr "管理員"
+
+#: app/templates/groups/detail.html:215
+msgid "This group has full system permissions, please manage members carefully."
+msgstr ""
+
+#: app/templates/groups/detail.html:219 app/templates/groups/members.html:139
+msgid "Regular User Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:220
+msgid "This group is the default group for regular users with limited permissions."
+msgstr ""
+
+#: app/templates/groups/detail.html:235
+msgid "Confirm Delete Group"
+msgstr ""
+
+#: app/templates/groups/detail.html:239
+#, python-format
+msgid "Are you sure you want to delete group %(groupname)s?"
+msgstr ""
+
+#: app/templates/groups/detail.html:242
+msgid "Warning"
+msgstr "警告"
+
+#: app/templates/groups/detail.html:242
+msgid "This operation cannot be undone and will:"
+msgstr ""
+
+#: app/templates/groups/detail.html:244
+msgid "Delete group data"
+msgstr ""
+
+#: app/templates/groups/detail.html:245
+msgid "Clear group-specific permission settings"
+msgstr ""
+
+#: app/templates/groups/detail.html:246
+msgid "Update ProFTPD configuration files"
+msgstr ""
+
+#: app/templates/groups/detail.html:253
+msgid "Confirm Delete"
+msgstr "確認刪除"
+
+#: app/templates/groups/edit.html:10
+#, fuzzy
+msgid "Edit FTP Group"
+msgstr "群組數量"
+
+#: app/templates/groups/edit.html:66
+#, fuzzy
+msgid "Current Settings"
+msgstr "設定"
+
+#: app/templates/groups/edit.html:78 app/templates/groups/members.html:47
+#, fuzzy
+msgid "Current Members"
+msgstr "記住我"
+
+#: app/templates/groups/edit.html:88
+msgid "This group currently has no members"
+msgstr ""
+
+#: app/templates/groups/edit.html:97
+msgid "Edit Warnings"
+msgstr "編輯警告"
+
+#: app/templates/groups/edit.html:101
+msgid "GID Changes"
+msgstr ""
+
+#: app/templates/groups/edit.html:101
+msgid "Modifying GID may affect existing permission settings"
+msgstr ""
+
+#: app/templates/groups/edit.html:102
+msgid "Changing name will update all related configurations"
+msgstr ""
+
+#: app/templates/groups/edit.html:103
+#, fuzzy
+msgid "Member Management"
+msgstr "用戶管理"
+
+#: app/templates/groups/edit.html:103
+msgid "Manage members on the group details page"
+msgstr ""
+
+#: app/templates/groups/edit.html:104
+#, fuzzy
+msgid "Permission Settings"
+msgstr "權限管理"
+
+#: app/templates/groups/edit.html:104
+msgid "Set access permissions on the directory permissions page"
+msgstr ""
+
+#: app/templates/groups/edit.html:110
+msgid "Changes will be synchronized to ProFTPD configuration and service will be reloaded"
+msgstr ""
+
+#: app/templates/groups/edit.html:126 app/templates/groups/members.html:182
+msgid "Directory Permissions"
+msgstr "目錄權限"
+
+#: app/templates/groups/edit.html:157
+msgid "Current group name"
+msgstr ""
+
+#: app/templates/groups/list.html:7
+msgid "FTP Group Management"
+msgstr "FTP 群組管理"
+
+#: app/templates/groups/list.html:33
+msgid "Group List"
+msgstr "群組列表"
+
+#: app/templates/groups/list.html:33 app/templates/permissions/list.html:57
+#: app/templates/users/list.html:41
+msgid "Total"
+msgstr "共"
+
+#: app/templates/groups/list.html:33
+#, fuzzy
+msgid "groups"
+msgstr "群組"
+
+#: app/templates/groups/list.html:46 app/templates/permissions/list.html:75
+#: app/templates/users/list.html:55
+msgid "Actions"
+msgstr "操作"
+
+#: app/templates/groups/list.html:66 app/templates/groups/members.html:120
+#, fuzzy
+msgid "No description"
+msgstr "描述"
+
+#: app/templates/groups/list.html:76 app/templates/users/list.html:87
+msgid "Details"
+msgstr "詳情"
+
+#: app/templates/groups/list.html:84
+#, fuzzy
+msgid "Members"
+msgstr "記住我"
+
+#: app/templates/groups/list.html:97
+#, fuzzy
+msgid "Group Pagination"
+msgstr "用戶分頁"
+
+#: app/templates/groups/list.html:101 app/templates/permissions/list.html:150
+#: app/templates/users/list.html:112
+msgid "Previous"
+msgstr "上一頁"
+
+#: app/templates/groups/list.html:125 app/templates/permissions/list.html:174
+#: app/templates/users/list.html:136
+msgid "Next"
+msgstr "下一頁"
+
+#: app/templates/groups/list.html:135
+msgid "No groups created yet"
+msgstr "尚未建立任何群組"
+
+#: app/templates/groups/list.html:137
+msgid "Add Group Now"
+msgstr "立即新增群組"
+
+#: app/templates/groups/list.html:147
+msgid "Default Groups Description"
+msgstr "預設群組說明"
+
+#: app/templates/groups/list.html:155
+msgid "Has complete file and directory permissions"
+msgstr "擁有完整的檔案和目錄權限"
+
+#: app/templates/groups/list.html:156
+msgid "Can access all FTP directories"
+msgstr "可存取所有 FTP 目錄"
+
+#: app/templates/groups/list.html:157
+msgid "Can perform all FTP operations"
+msgstr "可執行所有 FTP 操作"
+
+#: app/templates/groups/list.html:164
+msgid "Limited file permissions"
+msgstr "受限的檔案權限"
+
+#: app/templates/groups/list.html:165
+msgid "Access permissions depend on directory settings"
+msgstr "存取權限依目錄設定而定"
+
+#: app/templates/groups/list.html:166
+msgid "Usually cannot delete files or create directories"
+msgstr "通常無法刪除檔案或建立目錄"
+
+#: app/templates/groups/members.html:3 app/templates/groups/members.html:10
+#, fuzzy
+msgid "Manage Group Members"
+msgstr "管理用戶"
+
+#: app/templates/groups/members.html:21
+#, fuzzy
+msgid "Available Users"
+msgstr "管理用戶"
+
+#: app/templates/groups/members.html:38
+msgid "No available users currently"
+msgstr ""
+
+#: app/templates/groups/members.html:65
+#, fuzzy
+msgid "No members currently"
+msgstr "尚未建立任何用戶"
+
+#: app/templates/groups/members.html:79
+msgid "Select users to add to this group. Deselect to remove users from the group."
+msgstr ""
+
+#: app/templates/groups/members.html:87
+msgid "Select All"
+msgstr "全選"
+
+#: app/templates/groups/members.html:90
+msgid "Clear All"
+msgstr "清除"
+
+#: app/templates/groups/members.html:95
+msgid "Selected"
+msgstr "已選擇"
+
+#: app/templates/groups/members.html:95 app/templates/users/list.html:41
+msgid "users"
+msgstr "個用戶"
+
+msgid "N/A"
+msgstr "不適用"
+
+msgid "Refresh connections failed"
+msgstr "重新整理連線失敗"
+
+msgid "Update statistics failed"
+msgstr "更新統計失敗"
+
+msgid "Load logs failed"
+msgstr "載入日誌失敗"
+
+msgid "Loading"
+msgstr "載入中"
+
+msgid "No log data available"
+msgstr "無日誌資料"
+
+msgid "Logs cleared"
+msgstr "日誌已清除"
+
+#: app/templates/groups/members.html:121
+msgid "Current Member Count"
+msgstr "目前成員數"
+
+#: app/templates/groups/members.html:129
+#: app/templates/permissions/list.html:201
+#, fuzzy
+msgid "Permission Description"
+msgstr "描述"
+
+#: app/templates/groups/members.html:135
+msgid "Has complete permissions for all directories"
+msgstr ""
+
+#: app/templates/groups/members.html:140
+msgid "Limited directory permissions, depends on settings"
+msgstr ""
+
+#: app/templates/groups/members.html:144
+#, fuzzy
+msgid "Custom Group"
+msgstr "群組數量"
+
+#: app/templates/groups/members.html:145
+msgid "Permissions depend on directory settings"
+msgstr ""
+
+#: app/templates/groups/members.html:150
+msgid "Group permissions can be set on the Directory Permissions page"
+msgstr ""
+
+#: app/templates/groups/members.html:157
+msgid "Important Notes"
+msgstr ""
+
+#: app/templates/groups/members.html:161
+msgid "Sync Updates"
+msgstr ""
+
+#: app/templates/groups/members.html:161
+msgid "Member changes will be immediately synchronized to ProFTPD configuration"
+msgstr ""
+
+#: app/templates/groups/members.html:162
+#, fuzzy
+msgid "Permission Effective"
+msgstr "權限管理"
+
+#: app/templates/groups/members.html:162
+msgid "FTP service will be automatically reloaded after changes"
+msgstr ""
+
+#: app/templates/groups/members.html:163
+msgid "Login Impact"
+msgstr ""
+
+#: app/templates/groups/members.html:163
+msgid "Removing members may affect ongoing FTP connections"
+msgstr ""
+
+#: app/templates/groups/members.html:164
+#, fuzzy
+msgid "Batch Operations"
+msgstr "操作"
+
+#: app/templates/groups/members.html:164
+msgid "Can add or remove multiple members simultaneously"
+msgstr ""
+
+#: app/templates/groups/members.html:171
+#, fuzzy
+msgid "Other Actions"
+msgstr "操作"
+
+#: app/templates/groups/members.html:179 app/templates/main/index.html:178
+msgid "Manage Users"
+msgstr "管理用戶"
+
+#: app/templates/groups/members.html:235
+msgid "Are you sure you want to remove all members?"
+msgstr ""
+
+#: app/templates/groups/members.html:244
+msgid "Are you sure you want to make the following changes?"
+msgstr ""
+
+#: app/templates/groups/members.html:247
+#, python-format
+msgid "Add %(count)s members"
+msgstr ""
+
+#: app/templates/groups/members.html:250
+#, python-format
+msgid "Remove %(count)s members"
+msgstr ""
+
+#: app/templates/main/index.html:31
+msgid "ProFTPD Virtual User Management System"
+msgstr "ProFTPD 虛擬用戶管理系統"
+
+#: app/templates/main/index.html:42
+msgid "Total Users"
+msgstr "總用戶數"
+
+#: app/templates/main/index.html:60
+msgid "Active Users"
+msgstr "啟用用戶"
+
+#: app/templates/main/index.html:78
+msgid "Total Groups"
+msgstr "群組數量"
+
+#: app/templates/main/index.html:96
+msgid "Total Directories"
+msgstr "目錄數量"
+
+#: app/templates/main/index.html:113
+msgid "Recent Activity Log"
+msgstr "最近操作記錄"
+
+#: app/templates/main/index.html:121
+msgid "Time"
+msgstr "時間"
+
+#: app/templates/main/index.html:122
+msgid "Action"
+msgstr "操作"
+
+#: app/templates/main/index.html:142
+msgid "No activity log yet"
+msgstr "尚無操作記錄"
+
+#: app/templates/main/index.html:151
+msgid "System Information"
+msgstr "系統資訊"
+
+#: app/templates/main/index.html:155
+msgid "Disk Usage"
+msgstr "磁碟使用量"
+
+#: app/templates/main/index.html:160
+msgid "Current Administrator"
+msgstr "當前管理員"
+
+#: app/templates/main/index.html:165
+msgid "Last Login"
+msgstr "上次登入"
+
+#: app/templates/main/index.html:170
+msgid "First Login"
+msgstr "首次登入"
+
+#: app/templates/main/index.html:181
+msgid "View Monitoring"
+msgstr "查看監控"
+
+#: app/templates/main/index.html:184
+msgid "System Settings"
+msgstr "系統設定"
+
+#: app/templates/permissions/list.html:3
+#, fuzzy
+msgid "Management System"
+msgstr "ProFTPD 管理系統"
+
+#: app/templates/permissions/list.html:7
+msgid "Directory Permissions Management"
+msgstr "目錄權限管理"
+
+#: app/templates/permissions/list.html:10
+msgid "Add Permission"
+msgstr "新增權限"
+
+#: app/templates/permissions/list.html:13
+msgid "Permission Matrix"
+msgstr "權限矩陣"
+
+#: app/templates/permissions/list.html:16
+msgid "Directory Management"
+msgstr "目錄管理"
+
+#: app/templates/permissions/list.html:47
+msgid "Reset"
+msgstr "重置"
+
+#: app/templates/permissions/list.html:57
+msgid "Permission Settings List"
+msgstr "權限設定列表"
+
+#: app/templates/permissions/list.html:57
+msgid "settings"
+msgstr "個設定"
+
+#: app/templates/permissions/list.html:59
+msgid "Sync Configuration"
+msgstr "同步配置"
+
+#: app/templates/permissions/list.html:69
+msgid "Target"
+msgstr "目標"
+
+#: app/templates/permissions/list.html:70
+msgid "Type"
+msgstr "類型"
+
+#: app/templates/permissions/list.html:103
+msgid "Allow Read"
+msgstr "允許讀取"
+
+#: app/templates/permissions/list.html:105
+msgid "Deny Read"
+msgstr "禁止讀取"
+
+#: app/templates/permissions/list.html:110
+msgid "Allow Write"
+msgstr "允許寫入"
+
+#: app/templates/permissions/list.html:112
+msgid "Deny Write"
+msgstr "禁止寫入"
+
+#: app/templates/permissions/list.html:117
+msgid "Allow Delete"
+msgstr "允許刪除"
+
+#: app/templates/permissions/list.html:119
+msgid "Deny Delete"
+msgstr "禁止刪除"
+
+#: app/templates/permissions/list.html:132
+msgid "Are you sure you want to delete this permission setting?"
+msgstr "確定要刪除此權限設定嗎？"
+
+#: app/templates/permissions/list.html:146
+msgid "Permission Pagination"
+msgstr "權限分頁"
+
+#: app/templates/permissions/list.html:184
+msgid "No permissions have been set yet"
+msgstr "尚未設定任何權限"
+
+#: app/templates/permissions/list.html:187
+msgid "Add Permission Setting"
+msgstr "新增權限設定"
+
+#: app/templates/permissions/list.html:190
+msgid "Manage Directories"
+msgstr "管理目錄"
+
+#: app/templates/permissions/list.html:255
+msgid "Are you sure you want to sync configuration to ProFTPD?"
+msgstr "確定要同步配置到 ProFTPD 嗎？"
+
+#: app/templates/permissions/list.html:268
+msgid "Sync failed"
+msgstr "同步失敗"
+
+#: app/templates/permissions/list.html:269
+msgid "Sync failed, please try again later"
+msgstr "同步失敗，請稍後再試"
+
+#: app/templates/users/list.html:7
+msgid "FTP User Management"
+msgstr "FTP 用戶管理"
+
+#: app/templates/users/list.html:9
+msgid "Add User"
+msgstr "新增用戶"
+
+#: app/templates/users/list.html:41
+msgid "User List"
+msgstr "用戶列表"
+
+#: app/templates/users/list.html:51 app/users/forms.py:16
+msgid "Home Directory"
+msgstr "家目錄"
+
+#: app/templates/users/list.html:52 app/templates/users/list.html:95
+msgid "Groups"
+msgstr "群組"
+
+#: app/templates/users/list.html:53 app/users/forms.py:74
+msgid "Status"
+msgstr "狀態"
+
+#: app/templates/users/list.html:78 app/users/forms.py:76
+msgid "Enabled"
+msgstr "啟用"
+
+#: app/templates/users/list.html:108
+msgid "User Pagination"
+msgstr "用戶分頁"
+
+#: app/templates/users/list.html:146
+msgid "No users created yet"
+msgstr "尚未建立任何用戶"
+
+#: app/templates/users/list.html:148
+msgid "Add User Now"
+msgstr "立即新增用戶"
+
+#: app/users/forms.py:9
+msgid "Username cannot be empty"
+msgstr "用戶名不能為空"
+
+#: app/users/forms.py:10
+msgid "Username length must be between 1-64 characters"
+msgstr "用戶名長度必須在 1-64 字元之間"
+
+#: app/users/forms.py:13
+msgid "Password cannot be empty"
+msgstr "密碼不能為空"
+
+#: app/users/forms.py:14 app/users/forms.py:58
+msgid "Password length must be between 6-128 characters"
+msgstr "密碼長度必須在 6-128 字元之間"
+
+#: app/users/forms.py:17
+msgid "Home directory cannot be empty"
+msgstr "家目錄不能為空"
+
+#: app/users/forms.py:18
+msgid "Home directory path cannot exceed 200 characters"
+msgstr "家目錄路徑不能超過 200 字元"
+
+#: app/users/forms.py:21
+msgid "UID cannot be empty"
+msgstr "UID 不能為空"
+
+#: app/users/forms.py:22
+msgid "UID must be between 1000-65535"
+msgstr "UID 必須在 1000-65535 之間"
+
+#: app/users/forms.py:24
+msgid "Default GID"
+msgstr "預設 GID"
+
+#: app/users/forms.py:29
+msgid "Shell path cannot exceed 100 characters"
+msgstr "Shell 路徑不能超過 100 字元"
+
+#: app/users/forms.py:31
+msgid "Comment"
+msgstr "註解"
+
+#: app/users/forms.py:32
+msgid "Comment cannot exceed 500 characters"
+msgstr "註解不能超過 500 字元"
+
+#: app/users/forms.py:34
+msgid "Enable Account"
+msgstr "啟用帳號"
+
+#: app/users/forms.py:46
+msgid "Username already exists"
+msgstr "用戶名已存在"
+
+#: app/users/forms.py:53
+msgid "UID already in use"
+msgstr "UID 已被使用"
+
+#: app/users/forms.py:64
+msgid "Join Group"
+msgstr "加入群組"
+
+#: app/users/forms.py:73
+msgid "Search Users"
+msgstr "搜尋用戶"
+
+#: app/templates/permissions/list.html
+msgid "List directory contents"
+msgstr "列出目錄內容"
+
+#: app/templates/permissions/list.html
+msgid "Change directory"
+msgstr "變更目錄"
+
+#: app/templates/permissions/list.html
+msgid "Show current directory"
+msgstr "顯示目前目錄"
+
+#: app/templates/permissions/list.html
+msgid "List file names"
+msgstr "列出檔案名稱"
+
+#: app/templates/permissions/list.html
+msgid "Show file status"
+msgstr "顯示檔案狀態"
+
+#: app/templates/permissions/list.html
+msgid "Machine list directory"
+msgstr "機器列表目錄"
+
+#: app/templates/permissions/list.html
+msgid "Store file"
+msgstr "儲存檔案"
+
+#: app/templates/permissions/list.html
+msgid "Store unique file"
+msgstr "儲存唯一檔案"
+
+#: app/templates/permissions/list.html
+msgid "Append to file"
+msgstr "附加到檔案"
+
+#: app/templates/permissions/list.html
+msgid "Delete file"
+msgstr "刪除檔案"
+
+#: app/templates/permissions/list.html
+msgid "Make directory"
+msgstr "建立目錄"
+
+#: app/templates/permissions/list.html
+msgid "Remove directory"
+msgstr "移除目錄"
+
+#: app/templates/permissions/list.html
+msgid "Rename"
+msgstr "重新命名"
+
+#: app/templates/permissions/list.html
+msgid "Change permissions"
+msgstr "更改權限"
+
+#: app/templates/permissions/matrix.html
+msgid "Usage Instructions"
+msgstr "使用說明"
+
+#: app/templates/permissions/matrix.html
+msgid "Click checkboxes in the table to toggle permissions. Changes are saved immediately."
+msgstr "點擊表格中的核取方塊來切換權限。變更會立即儲存。"
+
+#: app/templates/permissions/matrix.html
+msgid "User Permission Matrix"
+msgstr "用戶權限矩陣"
+
+#: app/templates/permissions/matrix.html
+msgid "Group Permission Matrix"
+msgstr "群組權限矩陣"
+
+#: app/templates/permissions/matrix.html
+msgid "No users or groups to display permission matrix"
+msgstr "沒有用戶或群組可顯示權限矩陣"
+
+#: app/templates/permissions/matrix.html
+msgid "Add Group"
+msgstr "新增群組"
+
+#: app/templates/permissions/matrix.html
+msgid "Sync Configuration Button"
+msgstr "同步配置按鈕"
+
+#: app/templates/permissions/matrix.html
+msgid "This will sync all configuration files and reload services, are you sure to continue?"
+msgstr "這將同步所有配置檔案並重新載入服務，確定要繼續嗎？"
+
+#: app/templates/permissions/matrix.html
+msgid "After making changes in the permission matrix, it is recommended to click this button to sync all configurations and reload ProFTPD service"
+msgstr "在權限矩陣中進行變更後，建議點擊此按鈕同步所有配置並重新載入 ProFTPD 服務"
+
+#: app/templates/permissions/matrix.html
+msgid "Permission Inheritance Explanation"
+msgstr "權限繼承說明"
+
+#: app/templates/permissions/matrix.html
+msgid "Note"
+msgstr "注意"
+
+#: app/templates/permissions/matrix.html
+msgid "The final permissions for a user are the union of their group permissions and user-specific permissions."
+msgstr "用戶的最終權限是其所屬群組權限與用戶特定權限的聯集。"
+
+#: app/templates/permissions/matrix.html
+msgid "Even if a group does not have a certain permission, if the user has that permission in their specific settings, the user can still perform that operation."
+msgstr "即使群組沒有某個權限，如果用戶特定設定有該權限，用戶仍然可以執行該操作。"
+
+#: app/templates/permissions/matrix.html
+msgid "Permission Priority"
+msgstr "權限優先級"
+
+#: app/templates/permissions/matrix.html
+msgid "User-specific permissions"
+msgstr "用戶特定權限"
+
+#: app/templates/permissions/matrix.html
+msgid "highest priority"
+msgstr "最高優先級"
+
+#: app/templates/permissions/matrix.html
+msgid "Group permissions"
+msgstr "群組權限"
+
+#: app/templates/permissions/matrix.html
+msgid "union of all member groups"
+msgstr "所有所屬群組的聯集"
+
+#: app/templates/permissions/matrix.html
+msgid "Default permissions"
+msgstr "預設權限"
+
+#: app/templates/permissions/matrix.html
+msgid "ProFTPD configuration settings"
+msgstr "ProFTPD 配置檔設定"
+
+#: app/templates/permissions/matrix.html
+msgid "Permission Example"
+msgstr "權限範例"
+
+#: app/templates/permissions/matrix.html
+msgid "User A belongs to users group (read-only permission)"
+msgstr "用戶 A 屬於 users 群組 (只有讀取權限)"
+
+#: app/templates/permissions/matrix.html
+msgid "But User A has specific write permission setting"
+msgstr "但用戶 A 有特定寫入權限設定"
+
+#: app/templates/permissions/matrix.html
+msgid "Result: User A can read and write"
+msgstr "結果: 用戶 A 可以讀取和寫入"
+
+#: app/templates/permissions/create.html
+msgid "Please select directory"
+msgstr "請選擇目錄"
+
+#: app/templates/permissions/create.html
+msgid "User list will be loaded dynamically by JavaScript"
+msgstr "用戶列表將由 JavaScript 動態載入"
+
+#: app/templates/permissions/create.html
+msgid "Select one or more users for permission settings"
+msgstr "選擇一個或多個用戶進行權限設定"
+
+#: app/templates/permissions/create.html
+msgid "Group list will be loaded dynamically by JavaScript"
+msgstr "群組列表將由 JavaScript 動態載入"
+
+#: app/templates/permissions/create.html
+msgid "Select one or more groups for permission settings"
+msgstr "選擇一個或多個群組進行權限設定"
+
+#: app/templates/permissions/create.html
+msgid "Allow reading files and listing directories"
+msgstr "允許讀取檔案和列出目錄"
+
+#: app/templates/permissions/create.html
+msgid "Allow uploading and modifying files"
+msgstr "允許上傳和修改檔案"
+
+#: app/templates/permissions/create.html
+msgid "Allow deleting files and directory operations"
+msgstr "允許刪除檔案和目錄操作"
+
+#: app/templates/permissions/create.html
+msgid "Automatically sync configuration files and reload ProFTPD service after permission settings are completed, ensuring changes take effect immediately"
+msgstr "權限設定完成後自動同步配置檔案並重新載入 ProFTPD 服務，確保變更立即生效"
+
+#: app/templates/permissions/create.html
+msgid "Permission Settings Instructions"
+msgstr "權限設定說明"
+
+#: app/templates/permissions/create.html
+msgid "Permission Types"
+msgstr "權限類型"
+
+#: app/templates/permissions/create.html
+msgid "Permission Targets"
+msgstr "權限目標"
+
+#: app/templates/permissions/create.html
+msgid "User Permissions"
+msgstr "用戶權限"
+
+#: app/templates/permissions/create.html
+msgid "Permission settings for specific users"
+msgstr "針對特定用戶的權限設定"
+
+#: app/templates/permissions/create.html
+msgid "Permission settings for entire groups"
+msgstr "針對整個群組的權限設定"
+
+#: app/templates/permissions/directories.html
+msgid "FTP Directory Management"
+msgstr "FTP 目錄管理"
+
+#: app/templates/permissions/directories.html
+msgid "Add Directory"
+msgstr "新增目錄"
+
+#: app/templates/permissions/directories.html
+msgid "Back to Permission Management"
+msgstr "返回權限管理"
+
+#: app/templates/permissions/directories.html
+msgid "Directory List"
+msgstr "目錄列表"
+
+#: app/templates/permissions/directories.html
+msgid "directories"
+msgstr "個目錄"
+
+#: app/templates/permissions/directories.html
+msgid "Path"
+msgstr "路徑"
+
+#: app/templates/permissions/directories.html
+msgid "Permission Settings Count"
+msgstr "權限設定數量"
+
+#: app/templates/permissions/directories.html
+msgid "View Permissions"
+msgstr "查看權限"
+
+#: app/templates/permissions/directories.html
+msgid "Has permission settings, cannot delete"
+msgstr "有權限設定，無法刪除"
+
+#: app/templates/permissions/directories.html
+msgid "No directories created yet"
+msgstr "尚未建立任何目錄"
+
+#: app/templates/permissions/directories.html
+msgid "Add Directory Now"
+msgstr "立即新增目錄"
+
+#: app/templates/permissions/create.html
+msgid "Common Permission Combinations"
+msgstr "常用權限組合"
+
+#: app/templates/permissions/create.html
+msgid "Full Permissions (Read/Write/Delete)"
+msgstr "完整權限 (讀寫刪)"
+
+#: app/templates/permissions/create.html
+msgid "Read/Write Permissions"
+msgstr "讀寫權限"
+
+#: app/templates/permissions/create.html
+msgid "Read Only Permissions"
+msgstr "僅讀取權限"
+
+#: app/templates/permissions/create.html
+msgid "Batch Operations"
+msgstr "批量操作"
+
+#: app/templates/permissions/create.html
+msgid "Clear Selection"
+msgstr "清除選擇"
+
+#: app/templates/monitoring/index.html
+msgid "Monitoring Center"
+msgstr "監控中心"
+
+#: app/templates/monitoring/index.html
+msgid "Connection Monitoring"
+msgstr "連線監控"
+
+#: app/templates/monitoring/index.html
+msgid "Log Monitoring"
+msgstr "日誌監控"
+
+#: app/templates/monitoring/index.html
+msgid "Statistics Report"
+msgstr "統計報表"
+
+#: app/templates/monitoring/index.html
+msgid "System Monitoring"
+msgstr "系統監控"
+
+#: app/templates/monitoring/index.html
+msgid "FTP Users"
+msgstr "FTP 用戶"
+
+#: app/templates/monitoring/index.html
+msgid "Active/Total"
+msgstr "啟用/總數"
+
+#: app/templates/monitoring/index.html
+msgid "FTP Connections"
+msgstr "FTP 連線"
+
+#: app/templates/monitoring/index.html
+msgid "Current Connections"
+msgstr "目前連線數"
+
+#: app/templates/monitoring/index.html
+msgid "cores"
+msgstr "核心"
+
+#: app/templates/monitoring/index.html
+msgid "Service Status and Disk Usage"
+msgstr "服務狀態和磁碟使用量"
+
+#: app/templates/monitoring/index.html
+msgid "ProFTPD Service Status"
+msgstr "ProFTPD 服務狀態"
+
+#: app/templates/monitoring/index.html
+msgid "Service Status"
+msgstr "服務狀態"
+
+#: app/templates/monitoring/index.html
+msgid "Running"
+msgstr "運行中"
+
+#: app/templates/monitoring/index.html
+msgid "Stopped"
+msgstr "已停止"
+
+#: app/templates/monitoring/index.html
+msgid "Process PID"
+msgstr "進程 PID"
+
+#: app/templates/monitoring/index.html
+msgid "Start Time"
+msgstr "啟動時間"
+
+#: app/templates/monitoring/index.html
+msgid "ProFTPD service is not running, please check service status or contact system administrator."
+msgstr "ProFTPD 服務未運行，請檢查服務狀態或聯繫系統管理員。"
+
+#: app/templates/monitoring/index.html
+msgid "FTP Root Directory"
+msgstr "FTP 根目錄"
+
+#: app/templates/monitoring/index.html
+msgid "Used"
+msgstr "已使用"
+
+#: app/templates/monitoring/index.html
+msgid "Available"
+msgstr "可用"
+
+#: app/templates/monitoring/index.html
+msgid "Total Capacity"
+msgstr "總容量"
+
+#: app/templates/monitoring/index.html
+msgid "System Resource Usage"
+msgstr "系統資源使用量"
+
+#: app/templates/monitoring/index.html
+msgid "core processor"
+msgstr "核心處理器"
+
+#~ msgid "{editor}: Editing failed"
+#~ msgstr ""
+
+#~ msgid "{editor}: Editing failed: {e}"
+#~ msgstr ""
+
+#~ msgid "Aborted!"
+#~ msgstr ""
+
+#~ msgid "(Deprecated) {text}"
+#~ msgstr ""
+
+#~ msgid "Options"
+#~ msgstr "操作"
+
+#~ msgid "Got unexpected extra argument ({args})"
+#~ msgid_plural "Got unexpected extra arguments ({args})"
+#~ msgstr[0] ""
+
+#~ msgid "DeprecationWarning: The command {name!r} is deprecated."
+#~ msgstr ""
+
+#~ msgid "Commands"
+#~ msgstr "註解"
+
+#~ msgid "Missing command."
+#~ msgstr ""
+
+#~ msgid "No such command {name!r}."
+#~ msgstr ""
+
+#~ msgid "Value must be an iterable."
+#~ msgstr ""
+
+#~ msgid "Takes {nargs} values but 1 was given."
+#~ msgid_plural "Takes {nargs} values but {len} were given."
+#~ msgstr[0] ""
+
+#~ msgid "env var: {var}"
+#~ msgstr ""
+
+#~ msgid "(dynamic)"
+#~ msgstr ""
+
+#~ msgid "default: {default}"
+#~ msgstr "預設 GID"
+
+#~ msgid "required"
+#~ msgstr ""
+
+#~ msgid "%(prog)s, version %(version)s"
+#~ msgstr ""
+
+#~ msgid "Show the version and exit."
+#~ msgstr ""
+
+#~ msgid "Show this message and exit."
+#~ msgstr ""
+
+#~ msgid "Error: {message}"
+#~ msgstr ""
+
+#~ msgid "Try '{command} {option}' for help."
+#~ msgstr ""
+
+#~ msgid "Invalid value: {message}"
+#~ msgstr ""
+
+#~ msgid "Invalid value for {param_hint}: {message}"
+#~ msgstr ""
+
+#~ msgid "Missing argument"
+#~ msgstr "權限管理"
+
+#~ msgid "Missing option"
+#~ msgstr ""
+
+#~ msgid "Missing parameter"
+#~ msgstr "權限管理"
+
+#~ msgid "Missing {param_type}"
+#~ msgstr ""
+
+#~ msgid "Missing parameter: {param_name}"
+#~ msgstr ""
+
+#~ msgid "No such option: {name}"
+#~ msgstr ""
+
+#~ msgid "Did you mean {possibility}?"
+#~ msgid_plural "(Possible options: {possibilities})"
+#~ msgstr[0] ""
+
+#~ msgid "unknown error"
+#~ msgstr ""
+
+#~ msgid "Could not open file {filename!r}: {message}"
+#~ msgstr ""
+
+#~ msgid "Argument {name!r} takes {nargs} values."
+#~ msgstr ""
+
+#~ msgid "Option {name!r} does not take a value."
+#~ msgstr ""
+
+#~ msgid "Option {name!r} requires an argument."
+#~ msgid_plural "Option {name!r} requires {nargs} arguments."
+#~ msgstr[0] ""
+
+#~ msgid "Shell completion is not supported for Bash versions older than 4.4."
+#~ msgstr ""
+
+#~ msgid "Couldn't detect Bash version, shell completion is not supported."
+#~ msgstr ""
+
+#~ msgid "Repeat for confirmation"
+#~ msgstr "配置"
+
+#~ msgid "Error: The value you entered was invalid."
+#~ msgstr ""
+
+#~ msgid "Error: {e.message}"
+#~ msgstr ""
+
+#~ msgid "Error: The two entered values do not match."
+#~ msgstr ""
+
+#~ msgid "Error: invalid input"
+#~ msgstr ""
+
+#~ msgid "Press any key to continue..."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Choose from:\n"
+#~ "\t{choices}"
+#~ msgstr ""
+
+#~ msgid "{value!r} is not {choice}."
+#~ msgid_plural "{value!r} is not one of {choices}."
+#~ msgstr[0] ""
+
+#~ msgid "{value!r} does not match the format {format}."
+#~ msgid_plural "{value!r} does not match the formats {formats}."
+#~ msgstr[0] ""
+
+#~ msgid "{value!r} is not a valid {number_type}."
+#~ msgstr ""
+
+#~ msgid "{value} is not in the range {range}."
+#~ msgstr ""
+
+#~ msgid "{value!r} is not a valid boolean."
+#~ msgstr ""
+
+#~ msgid "{value!r} is not a valid UUID."
+#~ msgstr ""
+
+#~ msgid "path"
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} does not exist."
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} is a file."
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} is a directory."
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} is not readable."
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} is not writable."
+#~ msgstr ""
+
+#~ msgid "{name} {filename!r} is not executable."
+#~ msgstr ""
+
+#~ msgid "{len_type} values are required, but {len_value} was given."
+#~ msgid_plural "{len_type} values are required, but {len_value} were given."
+#~ msgstr[0] ""
+
+#~ msgid "This field is required."
+#~ msgstr ""
+
+#~ msgid "File does not have an approved extension: {extensions}"
+#~ msgstr ""
+
+#~ msgid "File does not have an approved extension."
+#~ msgstr ""
+
+#~ msgid "File must be between {min_size} and {max_size} bytes."
+#~ msgstr ""
+
+#~ msgid "Invalid field name '%s'."
+#~ msgstr ""
+
+#~ msgid "Field must be equal to %(other_name)s."
+#~ msgstr ""
+
+#~ msgid "Field must be at least %(min)d character long."
+#~ msgid_plural "Field must be at least %(min)d characters long."
+#~ msgstr[0] ""
+
+#~ msgid "Field cannot be longer than %(max)d character."
+#~ msgid_plural "Field cannot be longer than %(max)d characters."
+#~ msgstr[0] ""
+
+#~ msgid "Field must be exactly %(max)d character long."
+#~ msgid_plural "Field must be exactly %(max)d characters long."
+#~ msgstr[0] ""
+
+#~ msgid "Field must be between %(min)d and %(max)d characters long."
+#~ msgstr ""
+
+#~ msgid "Number must be at least %(min)s."
+#~ msgstr ""
+
+#~ msgid "Number must be at most %(max)s."
+#~ msgstr ""
+
+#~ msgid "Number must be between %(min)s and %(max)s."
+#~ msgstr ""
+
+#~ msgid "Invalid input."
+#~ msgstr ""
+
+#~ msgid "Invalid email address."
+#~ msgstr ""
+
+#~ msgid "Invalid IP address."
+#~ msgstr ""
+
+#~ msgid "Invalid Mac address."
+#~ msgstr ""
+
+#~ msgid "Invalid URL."
+#~ msgstr ""
+
+#~ msgid "Invalid UUID."
+#~ msgstr ""
+
+#~ msgid "Invalid value, must be one of: %(values)s."
+#~ msgstr ""
+
+#~ msgid "Invalid value, can't be any of: %(values)s."
+#~ msgstr ""
+
+#~ msgid "This field cannot be edited"
+#~ msgstr "UID 不能為空"
+
+#~ msgid "This field is disabled and cannot have a value"
+#~ msgstr ""
+
+#~ msgid "Invalid CSRF Token."
+#~ msgstr ""
+
+#~ msgid "CSRF token missing."
+#~ msgstr ""
+
+#~ msgid "CSRF failed."
+#~ msgstr ""
+
+#~ msgid "CSRF token expired."
+#~ msgstr ""
+
+#~ msgid "Invalid Choice: could not coerce."
+#~ msgstr ""
+
+#~ msgid "Choices cannot be None."
+#~ msgstr "UID 不能為空"
+
+#~ msgid "Not a valid choice."
+#~ msgstr ""
+
+#~ msgid "Invalid choice(s): one or more data inputs could not be coerced."
+#~ msgstr ""
+
+#~ msgid "'%(value)s' is not a valid choice for this field."
+#~ msgid_plural "'%(value)s' are not valid choices for this field."
+#~ msgstr[0] ""
+
+#~ msgid "Not a valid datetime value."
+#~ msgstr ""
+
+#~ msgid "Not a valid date value."
+#~ msgstr ""
+
+#~ msgid "Not a valid time value."
+#~ msgstr ""
+
+#~ msgid "Not a valid week value."
+#~ msgstr ""
+
+#~ msgid "Not a valid integer value."
+#~ msgstr ""
+
+#~ msgid "Not a valid decimal value."
+#~ msgstr ""
+
+#~ msgid "Not a valid float value."
+#~ msgstr ""
+

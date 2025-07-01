@@ -1,38 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}權限矩陣 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Permission Matrix') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-grid-3x3"></i> 權限矩陣</h1>
+    <h1><i class="bi bi-grid-3x3"></i> {{ _('Permission Matrix') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回列表
+            <i class="bi bi-arrow-left"></i> {{ _('Back to List') }}
         </a>
         <a href="{{ url_for('permissions.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> 新增權限
+            <i class="bi bi-plus-circle"></i> {{ _('Add Permission') }}
         </a>
     </div>
 </div>
 
 <div class="alert alert-info">
     <i class="bi bi-info-circle"></i>
-    <strong>使用說明：</strong> 點擊表格中的核取方塊來切換權限。變更會立即儲存。
-    <strong>R</strong>=讀取, <strong>W</strong>=寫入, <strong>D</strong>=刪除
+    <strong>{{ _('Usage Instructions') }}:</strong> {{ _('Click checkboxes in the table to toggle permissions. Changes are saved immediately.') }}
+    <strong>R</strong>={{ _('Read') }}, <strong>W</strong>={{ _('Write') }}, <strong>D</strong>={{ _('Delete') }}
 </div>
 
 <!-- 用戶權限矩陣 -->
 {% if users %}
 <div class="card mb-4">
     <div class="card-header">
-        <h5><i class="bi bi-people"></i> 用戶權限矩陣</h5>
+        <h5><i class="bi bi-people"></i> {{ _('User Permission Matrix') }}</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-sm permission-matrix">
                 <thead>
                     <tr>
-                        <th class="text-start">用戶 \ 目錄</th>
+                        <th class="text-start">{{ _('User') }} \ {{ _('Directory') }}</th>
                         {% for directory in directories %}
                         <th class="text-center" style="min-width: 100px;">
                             <div class="small">{{ directory.name }}</div>
@@ -58,7 +58,7 @@
                                        data-target-id="{{ user.id }}" 
                                        data-permission="read"
                                        {% if perm and perm.can_read %}checked{% endif %}
-                                       title="讀取權限">
+                                       title="{{ _('Read Permission') }}">
                                 <small>R</small>
                                 
                                 <input type="checkbox" class="permission-checkbox" 
@@ -67,7 +67,7 @@
                                        data-target-id="{{ user.id }}" 
                                        data-permission="write"
                                        {% if perm and perm.can_write %}checked{% endif %}
-                                       title="寫入權限">
+                                       title="{{ _('Write Permission') }}">
                                 <small>W</small>
                                 
                                 <input type="checkbox" class="permission-checkbox" 
@@ -76,7 +76,7 @@
                                        data-target-id="{{ user.id }}" 
                                        data-permission="delete"
                                        {% if perm and perm.can_delete %}checked{% endif %}
-                                       title="刪除權限">
+                                       title="{{ _('Delete Permission') }}">
                                 <small>D</small>
                             </div>
                         </td>
@@ -94,14 +94,14 @@
 {% if groups %}
 <div class="card">
     <div class="card-header">
-        <h5><i class="bi bi-collection"></i> 群組權限矩陣</h5>
+        <h5><i class="bi bi-collection"></i> {{ _('Group Permission Matrix') }}</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-sm permission-matrix">
                 <thead>
                     <tr>
-                        <th class="text-start">群組 \ 目錄</th>
+                        <th class="text-start">{{ _('Group') }} \ {{ _('Directory') }}</th>
                         {% for directory in directories %}
                         <th class="text-center" style="min-width: 100px;">
                             <div class="small">{{ directory.name }}</div>
@@ -117,9 +117,9 @@
                             <strong>{{ group.groupname }}</strong>
                             <br><small class="text-muted">GID: {{ group.gid }}</small>
                             {% if group.gid == 5000 %}
-                            <br><span class="badge bg-danger">管理員</span>
+                            <br><span class="badge bg-danger">{{ _('Administrator') }}</span>
                             {% elif group.gid == 5001 %}
-                            <br><span class="badge bg-info">一般用戶</span>
+                            <br><span class="badge bg-info">{{ _('Regular User') }}</span>
                             {% endif %}
                         </td>
                         {% for directory in directories %}
@@ -132,7 +132,7 @@
                                        data-target-id="{{ group.id }}" 
                                        data-permission="read"
                                        {% if perm and perm.can_read %}checked{% endif %}
-                                       title="讀取權限">
+                                       title="{{ _('Read Permission') }}">
                                 <small>R</small>
                                 
                                 <input type="checkbox" class="permission-checkbox" 
@@ -141,7 +141,7 @@
                                        data-target-id="{{ group.id }}" 
                                        data-permission="write"
                                        {% if perm and perm.can_write %}checked{% endif %}
-                                       title="寫入權限">
+                                       title="{{ _('Write Permission') }}">
                                 <small>W</small>
                                 
                                 <input type="checkbox" class="permission-checkbox" 
@@ -150,7 +150,7 @@
                                        data-target-id="{{ group.id }}" 
                                        data-permission="delete"
                                        {% if perm and perm.can_delete %}checked{% endif %}
-                                       title="刪除權限">
+                                       title="{{ _('Delete Permission') }}">
                                 <small>D</small>
                             </div>
                         </td>
@@ -167,60 +167,60 @@
 {% if not users and not groups %}
 <div class="text-center py-5">
     <i class="bi bi-grid-3x3 fs-1 text-muted"></i>
-    <p class="text-muted mt-2">沒有用戶或群組可顯示權限矩陣</p>
+    <p class="text-muted mt-2">{{ _('No users or groups to display permission matrix') }}</p>
     <div class="d-flex gap-2 justify-content-center">
         <a href="{{ url_for('users.create') }}" class="btn btn-primary">
-            <i class="bi bi-person-plus"></i> 新增用戶
+            <i class="bi bi-person-plus"></i> {{ _('Add User') }}
         </a>
         <a href="{{ url_for('groups.create') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-plus-circle"></i> 新增群組
+            <i class="bi bi-plus-circle"></i> {{ _('Add Group') }}
         </a>
     </div>
 </div>
 {% endif %}
 
-<!-- 同步配置按鈕 -->
+<!-- {{ _('Sync Configuration Button') }} -->
 <div class="d-grid gap-2 mt-4">
     <form method="POST" action="{{ url_for('config.sync_all') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <button type="submit" class="btn btn-success btn-lg w-100"
-                onclick="return confirm('這將同步所有配置檔案並重新載入服務，確定要繼續嗎？')">
-            <i class="bi bi-cloud-arrow-up"></i> 同步所有配置並重新載入
+                onclick="return confirm('{{ _('This will sync all configuration files and reload services, are you sure to continue?') }}')">
+            <i class="bi bi-cloud-arrow-up"></i> {{ _('Sync All Configurations and Reload') }}
         </button>
     </form>
     <div class="text-center">
         <small class="text-muted">
             <i class="bi bi-info-circle"></i>
-            在權限矩陣中進行變更後，建議點擊此按鈕同步所有配置並重新載入 ProFTPD 服務
+            {{ _('After making changes in the permission matrix, it is recommended to click this button to sync all configurations and reload ProFTPD service') }}
         </small>
     </div>
 </div>
 
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-info-circle"></i> 權限繼承說明</h5>
+        <h5><i class="bi bi-info-circle"></i> {{ _('Permission Inheritance Explanation') }}</h5>
     </div>
     <div class="card-body">
         <div class="alert alert-warning">
-            <strong>注意:</strong> 用戶的最終權限是其所屬群組權限與用戶特定權限的<strong>聯集</strong>。
-            即使群組沒有某個權限，如果用戶特定設定有該權限，用戶仍然可以執行該操作。
+            <strong>{{ _('Note') }}:</strong> {{ _('The final permissions for a user are the union of their group permissions and user-specific permissions.') }}
+            {{ _('Even if a group does not have a certain permission, if the user has that permission in their specific settings, the user can still perform that operation.') }}
         </div>
         
         <div class="row">
             <div class="col-md-6">
-                <h6>權限優先級</h6>
+                <h6>{{ _('Permission Priority') }}</h6>
                 <ol class="small">
-                    <li><strong>用戶特定權限</strong> (最高優先級)</li>
-                    <li><strong>群組權限</strong> (所有所屬群組的聯集)</li>
-                    <li><strong>預設權限</strong> (ProFTPD 配置檔設定)</li>
+                    <li><strong>{{ _('User-specific permissions') }}</strong> ({{ _('highest priority') }})</li>
+                    <li><strong>{{ _('Group permissions') }}</strong> ({{ _('union of all member groups') }})</li>
+                    <li><strong>{{ _('Default permissions') }}</strong> ({{ _('ProFTPD configuration settings') }})</li>
                 </ol>
             </div>
             <div class="col-md-6">
-                <h6>權限範例</h6>
+                <h6>{{ _('Permission Example') }}</h6>
                 <ul class="small">
-                    <li>用戶 A 屬於 users 群組 (只有讀取權限)</li>
-                    <li>但用戶 A 有特定寫入權限設定</li>
-                    <li>結果: 用戶 A 可以讀取<strong>和</strong>寫入</li>
+                    <li>{{ _('User A belongs to users group (read-only permission)') }}</li>
+                    <li>{{ _('But User A has specific write permission setting') }}</li>
+                    <li>{{ _('Result: User A can read and write') }}</li>
                 </ul>
             </div>
         </div>

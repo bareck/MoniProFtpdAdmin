@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}編輯群組: {{ group.groupname }} - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Edit Group') }}: {{ group.groupname }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h4><i class="bi bi-pencil-square"></i> 編輯 FTP 群組: {{ group.groupname }}</h4>
+                <h4><i class="bi bi-pencil-square"></i> {{ _('Edit FTP Group') }}: {{ group.groupname }}</h4>
             </div>
             <div class="card-body">
                 <form method="POST" class="needs-validation" novalidate>
@@ -17,7 +17,7 @@
                         <div class="col-md-6">
                             {{ form.groupname.label(class="form-label required") }}
                             {{ form.groupname(class="form-control", required=True) }}
-                            <div class="invalid-feedback">請輸入群組名稱</div>
+                            <div class="invalid-feedback">{{ _('Please enter group name') }}</div>
                             {% for error in form.groupname.errors %}
                                 <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
@@ -31,7 +31,7 @@
                                     <i class="bi bi-arrow-clockwise"></i>
                                 </button>
                             </div>
-                            <div class="form-text">建議使用 5000 以上的 GID</div>
+                            <div class="form-text">{{ _('Recommend using GID above 5000') }}</div>
                             {% for error in form.gid.errors %}
                                 <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
@@ -41,7 +41,7 @@
                     <div class="mb-3">
                         {{ form.description.label(class="form-label") }}
                         {{ form.description(class="form-control", rows="3") }}
-                        <div class="form-text">可選的群組描述</div>
+                        <div class="form-text">{{ _('Optional group description') }}</div>
                         {% for error in form.description.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -49,8 +49,8 @@
                     
                     <div class="d-flex gap-2">
                         {{ form.submit(class="btn btn-primary") }}
-                        <a href="{{ url_for('groups.detail', id=group.id) }}" class="btn btn-secondary">取消</a>
-                        <a href="{{ url_for('groups.list') }}" class="btn btn-outline-secondary">返回列表</a>
+                        <a href="{{ url_for('groups.detail', id=group.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
+                        <a href="{{ url_for('groups.list') }}" class="btn btn-outline-secondary">{{ _('Back to List') }}</a>
                     </div>
                 </form>
             </div>
@@ -60,22 +60,22 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 群組資訊</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Group Information') }}</h5>
             </div>
             <div class="card-body">
-                <h6>目前設定</h6>
+                <h6>{{ _('Current Settings') }}</h6>
                 <ul class="list-unstyled small">
-                    <li><strong>群組名稱:</strong> {{ group.groupname }}</li>
+                    <li><strong>{{ _('Group Name') }}:</strong> {{ group.groupname }}</li>
                     <li><strong>GID:</strong> {{ group.gid }}</li>
-                    <li><strong>成員數量:</strong> {{ group.members|length }}</li>
-                    <li><strong>建立時間:</strong> {{ group.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                    <li><strong>{{ _('Member Count') }}:</strong> {{ group.members|length }}</li>
+                    <li><strong>{{ _('Created Time') }}:</strong> {{ group.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
                     {% if group.updated_at %}
-                    <li><strong>更新時間:</strong> {{ group.updated_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                    <li><strong>{{ _('Updated Time') }}:</strong> {{ group.updated_at.strftime('%Y-%m-%d %H:%M') }}</li>
                     {% endif %}
                 </ul>
                 
                 {% if group.members %}
-                <h6 class="mt-3">目前成員</h6>
+                <h6 class="mt-3">{{ _('Current Members') }}</h6>
                 <div class="d-flex flex-wrap gap-1">
                     {% for membership in group.members %}
                     <span class="badge bg-secondary">{{ membership.user.username }}</span>
@@ -85,7 +85,7 @@
                 <div class="alert alert-info mt-3">
                     <small>
                         <i class="bi bi-info-circle"></i>
-                        此群組目前沒有成員
+                        {{ _('This group currently has no members') }}
                     </small>
                 </div>
                 {% endif %}
@@ -94,20 +94,20 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-exclamation-triangle"></i> 編輯注意事項</h5>
+                <h5><i class="bi bi-exclamation-triangle"></i> {{ _('Edit Warnings') }}</h5>
             </div>
             <div class="card-body">
                 <ul class="small">
-                    <li><strong>GID 變更:</strong> 修改 GID 可能影響現有權限設定</li>
-                    <li><strong>群組名稱:</strong> 變更名稱會更新所有相關配置</li>
-                    <li><strong>成員管理:</strong> 在群組詳情頁面管理成員</li>
-                    <li><strong>權限設定:</strong> 在目錄權限頁面設定存取權限</li>
+                    <li><strong>{{ _('GID Changes') }}:</strong> {{ _('Modifying GID may affect existing permission settings') }}</li>
+                    <li><strong>{{ _('Group Name') }}:</strong> {{ _('Changing name will update all related configurations') }}</li>
+                    <li><strong>{{ _('Member Management') }}:</strong> {{ _('Manage members on the group details page') }}</li>
+                    <li><strong>{{ _('Permission Settings') }}:</strong> {{ _('Set access permissions on the directory permissions page') }}</li>
                 </ul>
                 
                 <div class="alert alert-warning mt-3">
                     <small>
                         <i class="bi bi-exclamation-triangle"></i>
-                        修改將同步到 ProFTPD 配置並重新載入服務
+                        {{ _('Changes will be synchronized to ProFTPD configuration and service will be reloaded') }}
                     </small>
                 </div>
             </div>
@@ -115,15 +115,15 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-gear"></i> 快速操作</h5>
+                <h5><i class="bi bi-gear"></i> {{ _('Quick Actions') }}</h5>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
                     <a href="{{ url_for('groups.manage_members', id=group.id) }}" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-people"></i> 管理成員
+                        <i class="bi bi-people"></i> {{ _('Manage Members') }}
                     </a>
                     <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-info btn-sm">
-                        <i class="bi bi-shield-lock"></i> 目錄權限
+                        <i class="bi bi-shield-lock"></i> {{ _('Directory Permissions') }}
                     </a>
                 </div>
             </div>
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 如果名稱沒有變更，不需要檢查
         if (groupname === originalGroupname) {
-            groupnameFeedback.textContent = '目前的群組名稱';
+            groupnameFeedback.textContent = '{{ _('Current group name') }}';
             groupnameFeedback.className = 'form-text text-muted';
             return;
         }

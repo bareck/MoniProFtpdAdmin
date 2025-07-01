@@ -1,13 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}登入 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Login') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-4">
+        <!-- Language Selector for Login Page -->
+        <div class="text-center mb-3">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="loginLangDropdown" data-bs-toggle="dropdown">
+                    <i class="bi bi-translate"></i> 
+                    {% if get_current_locale() == 'en' %}English{% else %}中文{% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="?lang=zh_Hant_TW">{{ _('Chinese') }}</a></li>
+                    <li><a class="dropdown-item" href="?lang=en">{{ _('English') }}</a></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="card">
             <div class="card-header text-center">
-                <h4><i class="bi bi-box-arrow-in-right"></i> 管理員登入</h4>
+                <h4><i class="bi bi-box-arrow-in-right"></i> {{ _('Administrator Login') }}</h4>
             </div>
             <div class="card-body">
                 <form method="POST">
@@ -43,8 +57,8 @@
         
         <div class="text-center mt-3">
             <small class="text-muted">
-                預設管理員帳號: admin / admin123<br>
-                (首次登入後請更改密碼)
+                {{ _('Default admin account') }}: admin / admin123<br>
+                ({{ _('Please change password after first login') }})
             </small>
         </div>
     </div>

@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}目錄管理 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Directory Management') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-folder"></i> FTP 目錄管理</h1>
+    <h1><i class="bi bi-folder"></i> {{ _('FTP Directory Management') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('permissions.create_directory') }}" class="btn btn-primary">
-            <i class="bi bi-folder-plus"></i> 新增目錄
+            <i class="bi bi-folder-plus"></i> {{ _('Add Directory') }}
         </a>
         <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-arrow-left"></i> 返回權限管理
+            <i class="bi bi-arrow-left"></i> {{ _('Back to Permission Management') }}
         </a>
     </div>
 </div>
@@ -18,7 +18,7 @@
 <!-- 目錄列表 -->
 <div class="card">
     <div class="card-header">
-        <h5>目錄列表 (共 {{ directories|length }} 個目錄)</h5>
+        <h5>{{ _('Directory List') }} ({{ _('Total') }} {{ directories|length }} {{ _('directories') }})</h5>
     </div>
     <div class="card-body">
         {% if directories %}
@@ -26,13 +26,13 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>目錄名稱</th>
-                        <th>路徑</th>
-                        <th>描述</th>
-                        <th>狀態</th>
-                        <th>權限設定數量</th>
-                        <th>創建時間</th>
-                        <th>操作</th>
+                        <th>{{ _('Directory Name') }}</th>
+                        <th>{{ _('Path') }}</th>
+                        <th>{{ _('Description') }}</th>
+                        <th>{{ _('Status') }}</th>
+                        <th>{{ _('Permission Settings Count') }}</th>
+                        <th>{{ _('Created Time') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,14 +49,14 @@
                             {{ directory.description[:100] }}
                             {% if directory.description|length > 100 %}...{% endif %}
                             {% else %}
-                            <span class="text-muted">無描述</span>
+                            <span class="text-muted">{{ _('No description') }}</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if directory.is_active %}
-                            <span class="badge bg-success">啟用</span>
+                            <span class="badge bg-success">{{ _('Enabled') }}</span>
                             {% else %}
-                            <span class="badge bg-danger">停用</span>
+                            <span class="badge bg-danger">{{ _('Disabled') }}</span>
                             {% endif %}
                         </td>
                         <td>
@@ -66,20 +66,20 @@
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a href="{{ url_for('permissions.edit_directory', id=directory.id) }}" 
-                                   class="btn btn-outline-primary" title="編輯">
+                                   class="btn btn-outline-primary" title="{{ _('Edit') }}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <a href="{{ url_for('permissions.list') }}?directory_filter={{ directory.id }}" 
-                                   class="btn btn-outline-info" title="查看權限">
+                                   class="btn btn-outline-info" title="{{ _('View Permissions') }}">
                                     <i class="bi bi-shield-lock"></i>
                                 </a>
                                 {% if directory.permissions|length == 0 %}
                                 <button type="button" class="btn btn-outline-danger" 
-                                        onclick="showDeleteModal({{ directory.id }}, '{{ directory.name }}', '{{ directory.path }}')" title="刪除">
+                                        onclick="showDeleteModal({{ directory.id }}, '{{ directory.name }}', '{{ directory.path }}')" title="{{ _('Delete') }}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                                 {% else %}
-                                <button class="btn btn-outline-danger" disabled title="有權限設定，無法刪除">
+                                <button class="btn btn-outline-danger" disabled title="{{ _('Has permission settings, cannot delete') }}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                                 {% endif %}
@@ -93,9 +93,9 @@
         {% else %}
         <div class="text-center py-4">
             <i class="bi bi-folder fs-1 text-muted"></i>
-            <p class="text-muted mt-2">尚未建立任何目錄</p>
+            <p class="text-muted mt-2">{{ _('No directories created yet') }}</p>
             <a href="{{ url_for('permissions.create_directory') }}" class="btn btn-primary">
-                <i class="bi bi-folder-plus"></i> 立即新增目錄
+                <i class="bi bi-folder-plus"></i> {{ _('Add Directory Now') }}
             </a>
         </div>
         {% endif %}

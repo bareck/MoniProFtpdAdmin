@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}用戶管理 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('User Management') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-people"></i> FTP 用戶管理</h1>
+    <h1><i class="bi bi-people"></i> {{ _('FTP User Management') }}</h1>
     <a href="{{ url_for('users.create') }}" class="btn btn-primary">
-        <i class="bi bi-person-plus"></i> 新增用戶
+        <i class="bi bi-person-plus"></i> {{ _('Add User') }}
     </a>
 </div>
 
@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-outline-primary w-100">
-                    <i class="bi bi-search"></i> 搜尋
+                    <i class="bi bi-search"></i> {{ _('Search') }}
                 </button>
             </div>
         </form>
@@ -38,7 +38,7 @@
 <!-- 用戶列表 -->
 <div class="card">
     <div class="card-header">
-        <h5>用戶列表 (共 {{ users.total }} 個用戶)</h5>
+        <h5>{{ _('User List') }} ({{ _('Total') }} {{ users.total }} {{ _('users') }})</h5>
     </div>
     <div class="card-body">
         {% if users.items %}
@@ -46,13 +46,13 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>用戶名</th>
+                        <th>{{ _('Username') }}</th>
                         <th>UID</th>
-                        <th>家目錄</th>
-                        <th>群組</th>
-                        <th>狀態</th>
-                        <th>創建時間</th>
-                        <th>操作</th>
+                        <th>{{ _('Home Directory') }}</th>
+                        <th>{{ _('Groups') }}</th>
+                        <th>{{ _('Status') }}</th>
+                        <th>{{ _('Created Time') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,24 +75,24 @@
                         </td>
                         <td>
                             {% if user.is_enabled %}
-                            <span class="badge bg-success">啟用</span>
+                            <span class="badge bg-success">{{ _('Enabled') }}</span>
                             {% else %}
-                            <span class="badge bg-danger">停用</span>
+                            <span class="badge bg-danger">{{ _('Disabled') }}</span>
                             {% endif %}
                         </td>
                         <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a href="{{ url_for('users.detail', id=user.id) }}" 
-                                   class="btn btn-outline-info" title="詳情">
+                                   class="btn btn-outline-info" title="{{ _('Details') }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 <a href="{{ url_for('users.edit', id=user.id) }}" 
-                                   class="btn btn-outline-primary" title="編輯">
+                                   class="btn btn-outline-primary" title="{{ _('Edit') }}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <a href="{{ url_for('users.manage_groups', id=user.id) }}" 
-                                   class="btn btn-outline-secondary" title="群組">
+                                   class="btn btn-outline-secondary" title="{{ _('Groups') }}">
                                     <i class="bi bi-collection"></i>
                                 </a>
                             </div>
@@ -105,11 +105,11 @@
         
         <!-- 分頁 -->
         {% if users.pages > 1 %}
-        <nav aria-label="用戶分頁">
+        <nav aria-label="{{ _('User Pagination') }}">
             <ul class="pagination justify-content-center">
                 {% if users.has_prev %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('users.list', page=users.prev_num, **request.args) }}">上一頁</a>
+                    <a class="page-link" href="{{ url_for('users.list', page=users.prev_num, **request.args) }}">{{ _('Previous') }}</a>
                 </li>
                 {% endif %}
                 
@@ -133,7 +133,7 @@
                 
                 {% if users.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('users.list', page=users.next_num, **request.args) }}">下一頁</a>
+                    <a class="page-link" href="{{ url_for('users.list', page=users.next_num, **request.args) }}">{{ _('Next') }}</a>
                 </li>
                 {% endif %}
             </ul>
@@ -143,9 +143,9 @@
         {% else %}
         <div class="text-center py-4">
             <i class="bi bi-person-x fs-1 text-muted"></i>
-            <p class="text-muted mt-2">尚未建立任何用戶</p>
+            <p class="text-muted mt-2">{{ _('No users created yet') }}</p>
             <a href="{{ url_for('users.create') }}" class="btn btn-primary">
-                <i class="bi bi-person-plus"></i> 立即新增用戶
+                <i class="bi bi-person-plus"></i> {{ _('Add User Now') }}
             </a>
         </div>
         {% endif %}

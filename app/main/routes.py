@@ -36,3 +36,21 @@ def index():
 def profile():
     """用戶個人資料頁面"""
     return render_template('main/profile.html')
+
+@bp.route('/debug-lang')
+@login_required
+def debug_lang():
+    """調試語言設定"""
+    from flask import session, request, current_app
+    from flask_babel import get_locale, _
+    
+    debug_info = {
+        'request_args': dict(request.args),
+        'session_lang': session.get('lang'),
+        'current_locale': str(get_locale()),
+        'config_languages': current_app.config.get('LANGUAGES'),
+        'test_translation': _('Dashboard'),
+        'accept_languages': str(request.accept_languages)
+    }
+    
+    return f"<pre>{debug_info}</pre>"

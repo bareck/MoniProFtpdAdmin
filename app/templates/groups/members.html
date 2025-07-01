@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}管理群組成員: {{ group.groupname }} - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Manage Group Members') }}: {{ group.groupname }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h4><i class="bi bi-people"></i> 管理群組成員: {{ group.groupname }}</h4>
+                <h4><i class="bi bi-people"></i> {{ _('Manage Group Members') }}: {{ group.groupname }}</h4>
             </div>
             <div class="card-body">
                 <form method="POST" class="needs-validation" novalidate>
@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
-                                    <h6 class="text-muted mb-3">可用用戶</h6>
+                                    <h6 class="text-muted mb-3">{{ _('Available Users') }}</h6>
                                     <div id="available-users">
                                         {% for choice_value, choice_label in form.members.choices %}
                                         <div class="form-check mb-2">
@@ -35,7 +35,7 @@
                                         {% if not form.members.choices %}
                                         <div class="text-muted text-center py-3">
                                             <i class="bi bi-info-circle"></i>
-                                            目前沒有可用的用戶
+                                            {{ _('No available users currently') }}
                                         </div>
                                         {% endif %}
                                     </div>
@@ -44,7 +44,7 @@
                             
                             <div class="col-md-6">
                                 <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;">
-                                    <h6 class="text-muted mb-3">目前成員 <span id="current-count" class="badge bg-primary">{{ group.members|length }}</span></h6>
+                                    <h6 class="text-muted mb-3">{{ _('Current Members') }} <span id="current-count" class="badge bg-primary">{{ group.members|length }}</span></h6>
                                     <div id="current-members">
                                         {% for membership in group.members %}
                                         <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
@@ -62,7 +62,7 @@
                                         {% if not group.members %}
                                         <div class="text-muted text-center py-3">
                                             <i class="bi bi-person-x"></i>
-                                            目前沒有成員
+                                            {{ _('No members currently') }}
                                         </div>
                                         {% endif %}
                                     </div>
@@ -76,7 +76,7 @@
                         
                         <div class="form-text mt-2">
                             <i class="bi bi-info-circle"></i>
-                            選擇要加入此群組的用戶。取消選擇將從群組中移除用戶。
+                            {{ _('Select users to add to this group. Deselect to remove users from the group.') }}
                         </div>
                     </div>
                     
@@ -84,15 +84,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="select-all">
-                                    <i class="bi bi-check-all"></i> 全選
+                                    <i class="bi bi-check-all"></i> {{ _('Select All') }}
                                 </button>
                                 <button type="button" class="btn btn-outline-secondary btn-sm" id="clear-all">
-                                    <i class="bi bi-x-lg"></i> 清除
+                                    <i class="bi bi-x-lg"></i> {{ _('Clear All') }}
                                 </button>
                             </div>
                             <div class="col-md-6 text-end">
                                 <span class="text-muted small">
-                                    已選擇 <span id="selected-count">{{ form.members.data|length }}</span> 個用戶
+                                    {{ _('Selected') }} <span id="selected-count">{{ form.members.data|length }}</span> {{ _('users') }}
                                 </span>
                             </div>
                         </div>
@@ -100,8 +100,8 @@
                     
                     <div class="d-flex gap-2">
                         {{ form.submit(class="btn btn-primary") }}
-                        <a href="{{ url_for('groups.detail', id=group.id) }}" class="btn btn-secondary">取消</a>
-                        <a href="{{ url_for('groups.list') }}" class="btn btn-outline-secondary">返回列表</a>
+                        <a href="{{ url_for('groups.detail', id=group.id) }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
+                        <a href="{{ url_for('groups.list') }}" class="btn btn-outline-secondary">{{ _('Back to List') }}</a>
                     </div>
                 </form>
             </div>
@@ -111,75 +111,75 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 群組資訊</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Group Information') }}</h5>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled small">
-                    <li><strong>群組名稱:</strong> {{ group.groupname }}</li>
+                    <li><strong>{{ _('Group Name') }}:</strong> {{ group.groupname }}</li>
                     <li><strong>GID:</strong> {{ group.gid }}</li>
-                    <li><strong>描述:</strong> {{ group.description or '無描述' }}</li>
-                    <li><strong>目前成員數:</strong> {{ group.members|length }}</li>
-                    <li><strong>建立時間:</strong> {{ group.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+                    <li><strong>{{ _('Description') }}:</strong> {{ group.description or _('No description') }}</li>
+                    <li><strong>{{ _('Current Member Count') }}:</strong> {{ group.members|length }}</li>
+                    <li><strong>{{ _('Created Time') }}:</strong> {{ group.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
                 </ul>
             </div>
         </div>
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-shield-check"></i> 權限說明</h5>
+                <h5><i class="bi bi-shield-check"></i> {{ _('Permission Description') }}</h5>
             </div>
             <div class="card-body">
                 {% if group.groupname == 'admins' %}
                 <div class="alert alert-danger">
-                    <strong>管理員群組</strong><br>
-                    擁有所有目錄的完整權限
+                    <strong>{{ _('Administrator Group') }}</strong><br>
+                    {{ _('Has complete permissions for all directories') }}
                 </div>
                 {% elif group.groupname == 'users' %}
                 <div class="alert alert-info">
-                    <strong>一般用戶群組</strong><br>
-                    受限的目錄權限，依設定而定
+                    <strong>{{ _('Regular User Group') }}</strong><br>
+                    {{ _('Limited directory permissions, depends on settings') }}
                 </div>
                 {% else %}
                 <div class="alert alert-secondary">
-                    <strong>自定義群組</strong><br>
-                    權限依目錄設定而定
+                    <strong>{{ _('Custom Group') }}</strong><br>
+                    {{ _('Permissions depend on directory settings') }}
                 </div>
                 {% endif %}
                 
                 <small class="text-muted">
-                    群組權限可在「目錄權限」頁面中設定
+                    {{ _('Group permissions can be set on the Directory Permissions page') }}
                 </small>
             </div>
         </div>
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-exclamation-triangle"></i> 注意事項</h5>
+                <h5><i class="bi bi-exclamation-triangle"></i> {{ _('Important Notes') }}</h5>
             </div>
             <div class="card-body">
                 <ul class="small">
-                    <li><strong>同步更新:</strong> 成員變更會立即同步到 ProFTPD 配置</li>
-                    <li><strong>權限生效:</strong> 變更後會自動重新載入 FTP 服務</li>
-                    <li><strong>登入影響:</strong> 移除成員可能影響正在進行的 FTP 連線</li>
-                    <li><strong>批量操作:</strong> 可同時新增或移除多個成員</li>
+                    <li><strong>{{ _('Sync Updates') }}:</strong> {{ _('Member changes will be immediately synchronized to ProFTPD configuration') }}</li>
+                    <li><strong>{{ _('Permission Effective') }}:</strong> {{ _('FTP service will be automatically reloaded after changes') }}</li>
+                    <li><strong>{{ _('Login Impact') }}:</strong> {{ _('Removing members may affect ongoing FTP connections') }}</li>
+                    <li><strong>{{ _('Batch Operations') }}:</strong> {{ _('Can add or remove multiple members simultaneously') }}</li>
                 </ul>
             </div>
         </div>
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-gear"></i> 其他操作</h5>
+                <h5><i class="bi bi-gear"></i> {{ _('Other Actions') }}</h5>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
                     <a href="{{ url_for('groups.edit', id=group.id) }}" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-pencil"></i> 編輯群組
+                        <i class="bi bi-pencil"></i> {{ _('Edit Group') }}
                     </a>
                     <a href="{{ url_for('users.list') }}" class="btn btn-outline-info btn-sm">
-                        <i class="bi bi-person-plus"></i> 管理用戶
+                        <i class="bi bi-person-plus"></i> {{ _('Manage Users') }}
                     </a>
                     <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-shield-lock"></i> 目錄權限
+                        <i class="bi bi-shield-lock"></i> {{ _('Directory Permissions') }}
                     </a>
                 </div>
             </div>
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentCount = {{ group.members|length }};
         
         if (checkedCount === 0 && currentCount > 0) {
-            if (!confirm('確定要移除所有成員嗎？')) {
+            if (!confirm('{{ _('Are you sure you want to remove all members?') }}')) {
                 e.preventDefault();
                 return false;
             }
@@ -241,13 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (checkedCount !== currentCount) {
             const addCount = Math.max(0, checkedCount - currentCount);
             const removeCount = Math.max(0, currentCount - checkedCount);
-            let message = '確定要執行以下變更嗎？\n';
+            let message = '{{ _('Are you sure you want to make the following changes?') }}\n';
             
             if (addCount > 0) {
-                message += `新增 ${addCount} 個成員\n`;
+                message += `{{ _('Add %(count)s members', count='${addCount}') }}\n`;
             }
             if (removeCount > 0) {
-                message += `移除 ${removeCount} 個成員\n`;
+                message += `{{ _('Remove %(count)s members', count='${removeCount}') }}\n`;
             }
             
             if (!confirm(message)) {

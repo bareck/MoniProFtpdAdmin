@@ -89,7 +89,7 @@ def create():
                 else:
                     flash('用戶創建成功', 'success')
             
-            log_action('create_user', 'user', user.id, f'創建用戶: {user.username}')
+            log_action('create_user', 'user', user.id, description_key='user_created', username=user.username)
             return redirect(url_for('users.list'))
             
         except Exception as e:
@@ -134,7 +134,7 @@ def edit(id):
             else:
                 flash(f'用戶更新成功，但同步失敗: {message}', 'warning')
             
-            log_action('edit_user', 'user', user.id, f'編輯用戶: {user.username}')
+            log_action('edit_user', 'user', user.id, description_key='user_edited', username=user.username)
             return redirect(url_for('users.detail', id=user.id))
             
         except Exception as e:
@@ -162,7 +162,7 @@ def delete(id):
         else:
             flash(f'用戶已刪除，但同步失敗: {message}', 'warning')
         
-        log_action('delete_user', 'user', id, f'刪除用戶: {username}')
+        log_action('delete_user', 'user', id, description_key='user_deleted', username=username)
         
     except Exception as e:
         db.session.rollback()
@@ -189,7 +189,8 @@ def toggle_status(id):
             reload_proftpd()
         
         log_action('toggle_user_status', 'user', user.id, 
-                  f'{status}用戶: {user.username}')
+                  description_key='user_status_toggled', username=user.username, 
+                  status='enabled' if user.is_enabled else 'disabled')
         
     except Exception as e:
         db.session.rollback()
@@ -221,7 +222,7 @@ def manage_groups(id):
                 
                 flash(f'已將用戶加入 {group.groupname} 群組', 'success')
                 log_action('add_user_to_group', 'user', user.id, 
-                          f'將用戶 {user.username} 加入群組 {group.groupname}')
+                          description_key='user_added_to_group', username=user.username, groupname=group.groupname)
                 
                 # 同步檔案
                 sync_proftpd_files()
@@ -246,7 +247,7 @@ def remove_from_group(user_id, group_id):
         
         flash(f'已將用戶 {user_name} 從群組 {group_name} 中移除', 'success')
         log_action('remove_user_from_group', 'user', user_id, 
-                  f'將用戶 {user_name} 從群組 {group_name} 中移除')
+                  description_key='user_removed_from_group', username=user_name, groupname=group_name)
         
         # 同步檔案
         sync_proftpd_files()

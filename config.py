@@ -9,6 +9,11 @@ class Config:
     # Session configuration
     PERMANENT_SESSION_LIFETIME = timedelta(hours=2)
     
+    # Babel configuration
+    LANGUAGES = ['zh_Hant_TW', 'en']
+    BABEL_DEFAULT_LOCALE = 'zh_Hant_TW'
+    BABEL_DEFAULT_TIMEZONE = 'Asia/Taipei'
+    
     # ProFTPD configuration - auto-detect config path
     PROFTPD_BASE_DIR = os.environ.get('PROFTPD_BASE_DIR') or '/backup/ftpdata'
     

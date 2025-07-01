@@ -4,15 +4,34 @@ from .models import AccessLog, db
 import subprocess
 import os
 
-def log_action(action, target_type=None, target_id=None, description=None):
-    """記錄管理操作"""
+def log_action(action, target_type=None, target_id=None, description=None, description_key=None, **params):
+    """記錄管理操作
+    
+    Args:
+        action: 操作類型
+        target_type: 目標類型 (user, group, directory, setting)
+        target_id: 目標ID
+        description: 傳統描述文字（向後兼容）
+        description_key: 翻譯鍵值
+        **params: 翻譯參數
+    """
     try:
+        import json
+        
+        # 如果提供了翻譯鍵值，優先使用
+        if description_key:
+            description_params = json.dumps(params, ensure_ascii=False) if params else None
+        else:
+            description_params = None
+            
         log = AccessLog(
             admin_user_id=current_user.id if current_user.is_authenticated else None,
             action=action,
             target_type=target_type,
             target_id=str(target_id) if target_id else None,
             description=description,
+            description_key=description_key,
+            description_params=description_params,
             ip_address=request.remote_addr,
             user_agent=request.headers.get('User-Agent')
         )

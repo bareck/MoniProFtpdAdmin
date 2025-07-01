@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}新增權限設定 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Add Permission Setting') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h4><i class="bi bi-plus-circle"></i> 新增權限設定</h4>
+                <h4><i class="bi bi-plus-circle"></i> {{ _('Add Permission Setting') }}</h4>
             </div>
             <div class="card-body">
                 <form method="POST" class="needs-validation" novalidate>
@@ -16,7 +16,7 @@
                     <div class="mb-3">
                         {{ form.directory_id.label(class="form-label required") }}
                         {{ form.directory_id(class="form-select", required=True) }}
-                        <div class="invalid-feedback">請選擇目錄</div>
+                        <div class="invalid-feedback">{{ _('Please select directory') }}</div>
                         {% for error in form.directory_id.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -32,12 +32,12 @@
                     
                     <!-- 用戶選擇區域 -->
                     <div class="mb-3" id="users_section" style="display: none;">
-                        <label class="form-label required">選擇用戶</label>
+                        <label class="form-label required">{{ _('Select Users') }}</label>
                         {{ form.selected_users(style="display: none;") }}
                         <div id="users_list" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
-                            <!-- 用戶列表將由 JavaScript 動態載入 -->
+                            <!-- {{ _('User list will be loaded dynamically by JavaScript') }} -->
                         </div>
-                        <div class="form-text">選擇一個或多個用戶進行權限設定</div>
+                        <div class="form-text">{{ _('Select one or more users for permission settings') }}</div>
                         {% for error in form.selected_users.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -45,26 +45,26 @@
                     
                     <!-- 群組選擇區域 -->
                     <div class="mb-3" id="groups_section" style="display: none;">
-                        <label class="form-label required">選擇群組</label>
+                        <label class="form-label required">{{ _('Select Groups') }}</label>
                         {{ form.selected_groups(style="display: none;") }}
                         <div id="groups_list" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;">
-                            <!-- 群組列表將由 JavaScript 動態載入 -->
+                            <!-- {{ _('Group list will be loaded dynamically by JavaScript') }} -->
                         </div>
-                        <div class="form-text">選擇一個或多個群組進行權限設定</div>
+                        <div class="form-text">{{ _('Select one or more groups for permission settings') }}</div>
                         {% for error in form.selected_groups.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label">權限設定</label>
+                        <label class="form-label">{{ _('Permission Settings') }}</label>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-check">
                                     {{ form.can_read(class="form-check-input") }}
                                     {{ form.can_read.label(class="form-check-label") }}
                                     <div class="form-text small">
-                                        允許讀取檔案和列出目錄
+                                        {{ _('Allow reading files and listing directories') }}
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                     {{ form.can_write(class="form-check-input") }}
                                     {{ form.can_write.label(class="form-check-label") }}
                                     <div class="form-text small">
-                                        允許上傳和修改檔案
+                                        {{ _('Allow uploading and modifying files') }}
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
                                     {{ form.can_delete(class="form-check-input") }}
                                     {{ form.can_delete.label(class="form-check-label") }}
                                     <div class="form-text small">
-                                        允許刪除檔案和目錄操作
+                                        {{ _('Allow deleting files and directory operations') }}
                                     </div>
                                 </div>
                             </div>
@@ -95,14 +95,14 @@
                             {{ form.sync_config.label(class="form-check-label") }}
                             <div class="form-text">
                                 <i class="bi bi-info-circle text-info"></i>
-                                權限設定完成後自動同步配置檔案並重新載入 ProFTPD 服務，確保變更立即生效
+                                {{ _('Automatically sync configuration files and reload ProFTPD service after permission settings are completed, ensuring changes take effect immediately') }}
                             </div>
                         </div>
                     </div>
                     
                     <div class="d-flex gap-2">
                         {{ form.submit(class="btn btn-primary", onclick="return validateForm()") }}
-                        <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">取消</a>
+                        <a href="{{ url_for('permissions.list') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
                     </div>
                 </form>
             </div>
@@ -112,26 +112,26 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 權限設定說明</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Permission Settings Instructions') }}</h5>
             </div>
             <div class="card-body">
-                <h6>權限類型</h6>
+                <h6>{{ _('Permission Types') }}</h6>
                 <ul class="small">
-                    <li><strong>讀取權限</strong>: LIST, CWD, PWD, NLST, STAT, MLSD</li>
-                    <li><strong>寫入權限</strong>: STOR, STOU, APPE</li>
-                    <li><strong>刪除權限</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
+                    <li><strong>{{ _('Read Permission') }}</strong>: LIST, CWD, PWD, NLST, STAT, MLSD</li>
+                    <li><strong>{{ _('Write Permission') }}</strong>: STOR, STOU, APPE</li>
+                    <li><strong>{{ _('Delete Permission') }}</strong>: DELE, MKD, RMD, RNFR, RNTO, SITE_CHMOD</li>
                 </ul>
                 
-                <h6 class="mt-3">權限目標</h6>
+                <h6 class="mt-3">{{ _('Permission Targets') }}</h6>
                 <ul class="small">
-                    <li><strong>用戶權限</strong>: 針對特定用戶的權限設定</li>
-                    <li><strong>群組權限</strong>: 針對整個群組的權限設定</li>
+                    <li><strong>{{ _('User Permissions') }}</strong>: {{ _('Permission settings for specific users') }}</li>
+                    <li><strong>{{ _('Group Permissions') }}</strong>: {{ _('Permission settings for entire groups') }}</li>
                 </ul>
                 
                 <div class="alert alert-warning mt-3">
                     <small>
                         <i class="bi bi-exclamation-triangle"></i>
-                        用戶的最終權限是其群組權限與用戶特定權限的聯集
+                        {{ _('The final permissions for a user are the union of their group permissions and user-specific permissions') }}
                     </small>
                 </div>
             </div>
@@ -139,27 +139,27 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-lightbulb"></i> 常用權限組合</h5>
+                <h5><i class="bi bi-lightbulb"></i> {{ _('Common Permission Combinations') }}</h5>
             </div>
             <div class="card-body">
                 <div class="mb-2">
                     <button type="button" class="btn btn-outline-success btn-sm w-100" onclick="setPermissions(true, true, true)">
-                        完整權限 (讀寫刪)
+                        {{ _('Full Permissions (Read/Write/Delete)') }}
                     </button>
                 </div>
                 <div class="mb-2">
                     <button type="button" class="btn btn-outline-primary btn-sm w-100" onclick="setPermissions(true, true, false)">
-                        讀寫權限
+                        {{ _('Read/Write Permissions') }}
                     </button>
                 </div>
                 <div class="mb-2">
                     <button type="button" class="btn btn-outline-info btn-sm w-100" onclick="setPermissions(true, false, false)">
-                        僅讀取權限
+                        {{ _('Read Only Permissions') }}
                     </button>
                 </div>
                 <div class="mb-2">
                     <button type="button" class="btn btn-outline-secondary btn-sm w-100" onclick="setPermissions(false, false, false)">
-                        無權限
+                        {{ _('No Permissions') }}
                     </button>
                 </div>
             </div>
@@ -167,15 +167,15 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-check2-square"></i> 批量操作</h5>
+                <h5><i class="bi bi-check2-square"></i> {{ _('Batch Operations') }}</h5>
             </div>
             <div class="card-body">
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectAllTargets()">
-                        <i class="bi bi-check-all"></i> 全選
+                        <i class="bi bi-check-all"></i> {{ _('Select All') }}
                     </button>
                     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="clearAllTargets()">
-                        <i class="bi bi-x-square"></i> 清除選擇
+                        <i class="bi bi-x-square"></i> {{ _('Clear Selection') }}
                     </button>
                 </div>
             </div>

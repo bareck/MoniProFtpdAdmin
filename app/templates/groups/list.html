@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}群組管理 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Group Management') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-collection"></i> FTP 群組管理</h1>
+    <h1><i class="bi bi-collection"></i> {{ _('FTP Group Management') }}</h1>
     <a href="{{ url_for('groups.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> 新增群組
+        <i class="bi bi-plus-circle"></i> {{ _('Add Group') }}
     </a>
 </div>
 
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4 d-flex align-items-end">
                 <button type="submit" class="btn btn-outline-primary w-100">
-                    <i class="bi bi-search"></i> 搜尋
+                    <i class="bi bi-search"></i> {{ _('Search') }}
                 </button>
             </div>
         </form>
@@ -30,7 +30,7 @@
 <!-- 群組列表 -->
 <div class="card">
     <div class="card-header">
-        <h5>群組列表 (共 {{ groups.total }} 個群組)</h5>
+        <h5>{{ _('Group List') }} ({{ _('Total') }} {{ groups.total }} {{ _('groups') }})</h5>
     </div>
     <div class="card-body">
         {% if groups.items %}
@@ -38,12 +38,12 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>群組名稱</th>
+                        <th>{{ _('Group Name') }}</th>
                         <th>GID</th>
-                        <th>描述</th>
-                        <th>成員數量</th>
-                        <th>創建時間</th>
-                        <th>操作</th>
+                        <th>{{ _('Description') }}</th>
+                        <th>{{ _('Member Count') }}</th>
+                        <th>{{ _('Created Time') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,9 +52,9 @@
                         <td>
                             <strong>{{ group.groupname }}</strong>
                             {% if group.gid == 5000 %}
-                            <span class="badge bg-danger ms-2">管理員</span>
+                            <span class="badge bg-danger ms-2">{{ _('Administrator') }}</span>
                             {% elif group.gid == 5001 %}
-                            <span class="badge bg-info ms-2">一般用戶</span>
+                            <span class="badge bg-info ms-2">{{ _('Regular User') }}</span>
                             {% endif %}
                         </td>
                         <td>{{ group.gid }}</td>
@@ -63,7 +63,7 @@
                             {{ group.description[:100] }}
                             {% if group.description|length > 100 %}...{% endif %}
                             {% else %}
-                            <span class="text-muted">無描述</span>
+                            <span class="text-muted">{{ _('No description') }}</span>
                             {% endif %}
                         </td>
                         <td>
@@ -73,15 +73,15 @@
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a href="{{ url_for('groups.detail', id=group.id) }}" 
-                                   class="btn btn-outline-info" title="詳情">
+                                   class="btn btn-outline-info" title="{{ _('Details') }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 <a href="{{ url_for('groups.edit', id=group.id) }}" 
-                                   class="btn btn-outline-primary" title="編輯">
+                                   class="btn btn-outline-primary" title="{{ _('Edit') }}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <a href="{{ url_for('groups.manage_members', id=group.id) }}" 
-                                   class="btn btn-outline-secondary" title="成員">
+                                   class="btn btn-outline-secondary" title="{{ _('Members') }}">
                                     <i class="bi bi-people"></i>
                                 </a>
                             </div>
@@ -94,11 +94,11 @@
         
         <!-- 分頁 -->
         {% if groups.pages > 1 %}
-        <nav aria-label="群組分頁">
+        <nav aria-label="{{ _('Group Pagination') }}">
             <ul class="pagination justify-content-center">
                 {% if groups.has_prev %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('groups.list', page=groups.prev_num, **request.args) }}">上一頁</a>
+                    <a class="page-link" href="{{ url_for('groups.list', page=groups.prev_num, **request.args) }}">{{ _('Previous') }}</a>
                 </li>
                 {% endif %}
                 
@@ -122,7 +122,7 @@
                 
                 {% if groups.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('groups.list', page=groups.next_num, **request.args) }}">下一頁</a>
+                    <a class="page-link" href="{{ url_for('groups.list', page=groups.next_num, **request.args) }}">{{ _('Next') }}</a>
                 </li>
                 {% endif %}
             </ul>
@@ -132,9 +132,9 @@
         {% else %}
         <div class="text-center py-4">
             <i class="bi bi-collection fs-1 text-muted"></i>
-            <p class="text-muted mt-2">尚未建立任何群組</p>
+            <p class="text-muted mt-2">{{ _('No groups created yet') }}</p>
             <a href="{{ url_for('groups.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> 立即新增群組
+                <i class="bi bi-plus-circle"></i> {{ _('Add Group Now') }}
             </a>
         </div>
         {% endif %}
@@ -144,26 +144,26 @@
 <!-- 預設群組說明 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-info-circle"></i> 預設群組說明</h5>
+        <h5><i class="bi bi-info-circle"></i> {{ _('Default Groups Description') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
                 <h6><span class="badge bg-danger">admins (GID: 5000)</span></h6>
                 <ul class="small">
-                    <li>系統管理員群組</li>
-                    <li>擁有完整的檔案和目錄權限</li>
-                    <li>可以存取所有 FTP 目錄</li>
-                    <li>可以執行所有 FTP 操作</li>
+                    <li>{{ _('System administrator group') }}</li>
+                    <li>{{ _('Has complete file and directory permissions') }}</li>
+                    <li>{{ _('Can access all FTP directories') }}</li>
+                    <li>{{ _('Can perform all FTP operations') }}</li>
                 </ul>
             </div>
             <div class="col-md-6">
                 <h6><span class="badge bg-info">users (GID: 5001)</span></h6>
                 <ul class="small">
-                    <li>一般用戶群組</li>
-                    <li>受限的檔案權限</li>
-                    <li>存取權限依目錄設定而定</li>
-                    <li>通常無法刪除檔案或建立目錄</li>
+                    <li>{{ _('Regular user group') }}</li>
+                    <li>{{ _('Limited file permissions') }}</li>
+                    <li>{{ _('Access permissions depend on directory settings') }}</li>
+                    <li>{{ _('Usually cannot delete files or create directories') }}</li>
                 </ul>
             </div>
         </div>

@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}FTP 連線監控 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('FTP Connection Monitoring') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-wifi"></i> FTP 連線監控</h1>
+    <h1><i class="bi bi-wifi"></i> {{ _('FTP Connection Monitoring') }}</h1>
     <div class="btn-group" role="group">
         <button type="button" class="btn btn-outline-primary" onclick="refreshConnections()">
-            <i class="bi bi-arrow-clockwise"></i> 重新整理
+            <i class="bi bi-arrow-clockwise"></i> {{ _('Refresh') }}
         </button>
         <a href="{{ url_for('monitoring.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回監控中心
+            <i class="bi bi-arrow-left"></i> {{ _('Back to Monitoring Center') }}
         </a>
     </div>
 </div>
@@ -21,7 +21,7 @@
         <div class="card bg-primary text-white">
             <div class="card-body text-center">
                 <h3 id="total-connections">{{ stats.total }}</h3>
-                <small>總連線數</small>
+                <small>{{ _('Total Connections') }}</small>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="card bg-success text-white">
             <div class="card-body text-center">
                 <h3 id="unique-users">{{ stats.unique_users }}</h3>
-                <small>連線用戶數</small>
+                <small>{{ _('Connected Users') }}</small>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="card bg-info text-white">
             <div class="card-body text-center">
                 <h3 id="unique-ips">{{ stats.unique_ips }}</h3>
-                <small>來源 IP 數</small>
+                <small>{{ _('Source IPs') }}</small>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="card bg-warning text-white">
             <div class="card-body text-center">
                 <h3 id="last-update">-</h3>
-                <small>最後更新</small>
+                <small>{{ _('Last Updated') }}</small>
             </div>
         </div>
     </div>
@@ -54,10 +54,10 @@
 <!-- 即時連線列表 -->
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-list"></i> 即時連線列表</h5>
+        <h5><i class="bi bi-list"></i> {{ _('Real-time Connection List') }}</h5>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="autoRefresh" checked>
-            <label class="form-check-label" for="autoRefresh">自動重新整理</label>
+            <label class="form-check-label" for="autoRefresh">{{ _('Auto Refresh') }}</label>
         </div>
     </div>
     <div class="card-body">
@@ -68,11 +68,11 @@
                     <thead>
                         <tr>
                             <th>PID</th>
-                            <th>用戶名</th>
-                            <th>客戶端 IP</th>
-                            <th>狀態</th>
-                            <th>連線時間</th>
-                            <th>操作</th>
+                            <th>{{ _('Username') }}</th>
+                            <th>{{ _('Client IP') }}</th>
+                            <th>{{ _('Status') }}</th>
+                            <th>{{ _('Connection Time') }}</th>
+                            <th>{{ _('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,12 +90,12 @@
                             <td>
                                 <span class="badge bg-success">{{ conn.status }}</span>
                             </td>
-                            <td>{{ conn.connect_time.strftime('%H:%M:%S') if conn.connect_time else 'N/A' }}</td>
+                            <td>{{ conn.connect_time.strftime('%H:%M:%S') if conn.connect_time else _('N/A') }}</td>
                             <td>
                                 {% if conn.pid != 'unknown' %}
                                 <button type="button" class="btn btn-outline-danger btn-sm" 
                                         onclick="disconnectUser('{{ conn.pid }}')"
-                                        title="中斷連線">
+                                        title="{{ _('Disconnect') }}">
                                     <i class="bi bi-x-circle"></i>
                                 </button>
                                 {% endif %}
@@ -108,7 +108,7 @@
             {% else %}
             <div class="text-center py-4">
                 <i class="bi bi-wifi-off fs-1 text-muted"></i>
-                <p class="text-muted mt-2">目前沒有 FTP 連線</p>
+                <p class="text-muted mt-2">{{ _('No FTP connections currently') }}</p>
             </div>
             {% endif %}
         </div>
@@ -120,7 +120,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-person-fill"></i> 用戶連線分布</h5>
+                <h5><i class="bi bi-person-fill"></i> {{ _('User Connection Distribution') }}</h5>
             </div>
             <div class="card-body">
                 {% if stats.by_user %}
@@ -128,9 +128,9 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>用戶名</th>
-                                <th>連線數</th>
-                                <th>比例</th>
+                                <th>{{ _('Username') }}</th>
+                                <th>{{ _('Connections') }}</th>
+                                <th>{{ _('Ratio') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -152,7 +152,7 @@
                     </table>
                 </div>
                 {% else %}
-                <p class="text-muted text-center">無連線數據</p>
+                <p class="text-muted text-center">{{ _('No connection data') }}</p>
                 {% endif %}
             </div>
         </div>
@@ -161,7 +161,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-geo-alt-fill"></i> IP 位址分布</h5>
+                <h5><i class="bi bi-geo-alt-fill"></i> {{ _('IP Address Distribution') }}</h5>
             </div>
             <div class="card-body">
                 {% if stats.by_ip %}
@@ -169,9 +169,9 @@
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>IP 位址</th>
-                                <th>連線數</th>
-                                <th>比例</th>
+                                <th>{{ _('IP Address') }}</th>
+                                <th>{{ _('Connections') }}</th>
+                                <th>{{ _('Ratio') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,7 +193,7 @@
                     </table>
                 </div>
                 {% else %}
-                <p class="text-muted text-center">無連線數據</p>
+                <p class="text-muted text-center">{{ _('No connection data') }}</p>
                 {% endif %}
             </div>
         </div>
@@ -203,18 +203,18 @@
 <!-- 連線歷史 (模擬數據) -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-graph-up"></i> 連線趨勢 (最近24小時)</h5>
+        <h5><i class="bi bi-graph-up"></i> {{ _('Connection Trends (Last 24 Hours)') }}</h5>
     </div>
     <div class="card-body">
         <div class="alert alert-info">
             <i class="bi bi-info-circle"></i>
-            <strong>功能開發中:</strong> 連線歷史圖表功能正在開發中，將從 ProFTPD 日誌中解析歷史連線數據。
+            <strong>{{ _('Feature Under Development') }}:</strong> {{ _('Connection history chart feature is under development, will parse historical connection data from ProFTPD logs.') }}
         </div>
         
         <!-- 這裡將來可以添加圖表庫如 Chart.js -->
         <div style="height: 200px; background-color: #f8f9fa; border: 2px dashed #dee2e6; 
                     display: flex; align-items: center; justify-content: center;">
-            <span class="text-muted">連線趨勢圖表區域</span>
+            <span class="text-muted">{{ _('Connection Trends Chart Area') }}</span>
         </div>
     </div>
 </div>
@@ -262,8 +262,8 @@ function refreshConnections() {
             updateLastRefreshTime();
         })
         .catch(error => {
-            console.error('重新整理連線失敗:', error);
-            showToast('重新整理連線失敗', 'error');
+            console.error('{{ _('Refresh connections failed') }}:', error);
+            showToast('{{ _('Refresh connections failed') }}', 'error');
         });
 }
 
@@ -274,7 +274,7 @@ function updateConnectionsTable(connections) {
         container.innerHTML = `
             <div class="text-center py-4">
                 <i class="bi bi-wifi-off fs-1 text-muted"></i>
-                <p class="text-muted mt-2">目前沒有 FTP 連線</p>
+                <p class="text-muted mt-2">{{ _('No FTP connections currently') }}</p>
             </div>
         `;
         return;
@@ -286,24 +286,24 @@ function updateConnectionsTable(connections) {
                 <thead>
                     <tr>
                         <th>PID</th>
-                        <th>用戶名</th>
-                        <th>客戶端 IP</th>
-                        <th>狀態</th>
-                        <th>連線時間</th>
-                        <th>操作</th>
+                        <th>{{ _('Username') }}</th>
+                        <th>{{ _('Client IP') }}</th>
+                        <th>{{ _('Status') }}</th>
+                        <th>{{ _('Connection Time') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
     `;
     
     connections.forEach(function(conn) {
-        const connectTime = conn.connect_time ? new Date(conn.connect_time).toLocaleTimeString() : 'N/A';
+        const connectTime = conn.connect_time ? new Date(conn.connect_time).toLocaleTimeString() : '{{ _('N/A') }}';
         const userBadge = conn.user !== 'unknown' ? 
             `<span class="badge bg-primary">${conn.user}</span>` : 
             `<span class="text-muted">${conn.user}</span>`;
         const disconnectBtn = conn.pid !== 'unknown' ? 
             `<button type="button" class="btn btn-outline-danger btn-sm" 
-                     onclick="disconnectUser('${conn.pid}')" title="中斷連線">
+                     onclick="disconnectUser('${conn.pid}')" title="{{ _('Disconnect') }}">
                 <i class="bi bi-x-circle"></i>
              </button>` : '';
         
@@ -352,9 +352,9 @@ function updateLastRefreshTime() {
 }
 
 function disconnectUser(pid) {
-    if (confirm('確定要中斷此連線嗎？')) {
+    if (confirm('{{ _('Are you sure you want to disconnect this connection?') }}')) {
         // 這裡應該調用後端 API 來中斷連線
-        showToast('連線中斷功能正在開發中', 'info');
+        showToast('{{ _('Connection disconnect feature is under development') }}', 'info');
     }
 }
 

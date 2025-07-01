@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}監控中心 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Monitoring Center') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-graph-up"></i> 監控中心</h1>
+    <h1><i class="bi bi-graph-up"></i> {{ _('Monitoring Center') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('monitoring.connections') }}" class="btn btn-outline-primary">
-            <i class="bi bi-wifi"></i> 連線監控
+            <i class="bi bi-wifi"></i> {{ _('Connection Monitoring') }}
         </a>
         <a href="{{ url_for('monitoring.logs') }}" class="btn btn-outline-info">
-            <i class="bi bi-file-text"></i> 日誌監控
+            <i class="bi bi-file-text"></i> {{ _('Log Monitoring') }}
         </a>
         <a href="{{ url_for('monitoring.statistics') }}" class="btn btn-outline-success">
-            <i class="bi bi-bar-chart"></i> 統計報表
+            <i class="bi bi-bar-chart"></i> {{ _('Statistics Report') }}
         </a>
         <a href="{{ url_for('monitoring.system') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-cpu"></i> 系統監控
+            <i class="bi bi-cpu"></i> {{ _('System Monitoring') }}
         </a>
     </div>
 </div>
@@ -29,9 +29,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>FTP 用戶</h5>
+                            <h5>{{ _('FTP Users') }}</h5>
                             <h3>{{ stats.active_users }}/{{ stats.total_users }}</h3>
-                            <small>啟用/總數</small>
+                            <small>{{ _('Active/Total') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="bi bi-people fs-1"></i>
@@ -48,9 +48,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>FTP 連線</h5>
+                            <h5>{{ _('FTP Connections') }}</h5>
                             <h3 id="connection-count">-</h3>
-                            <small>目前連線數</small>
+                            <small>{{ _('Current Connections') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="bi bi-wifi fs-1"></i>
@@ -67,9 +67,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>CPU 使用率</h5>
+                            <h5>{{ _('CPU Usage') }}</h5>
                             <h3 id="cpu-usage">{{ "%.1f"|format(system_info.cpu_percent) }}%</h3>
-                            <small>{{ system_info.cpu_count }} 核心</small>
+                            <small>{{ system_info.cpu_count }} {{ _('cores') }}</small>
                         </div>
                         <div class="align-self-center">
                             <i class="bi bi-cpu fs-1"></i>
@@ -86,7 +86,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>記憶體使用率</h5>
+                            <h5>{{ _('Memory Usage') }}</h5>
                             <h3 id="memory-usage">{{ "%.1f"|format(system_info.memory_percent) }}%</h3>
                             <small>{{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB</small>
                         </div>
@@ -100,39 +100,39 @@
     </div>
 </div>
 
-<!-- 服務狀態和磁碟使用量 -->
+<!-- {{ _('Service Status and Disk Usage') }} -->
 <div class="row mb-4">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-server"></i> ProFTPD 服務狀態</h5>
+                <h5><i class="bi bi-server"></i> {{ _('ProFTPD Service Status') }}</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <strong>服務狀態:</strong>
+                        <strong>{{ _('Service Status') }}:</strong>
                         {% if service_status.status == 'active' %}
-                        <span class="badge bg-success">運行中</span>
+                        <span class="badge bg-success">{{ _('Running') }}</span>
                         {% else %}
-                        <span class="badge bg-danger">已停止</span>
+                        <span class="badge bg-danger">{{ _('Stopped') }}</span>
                         {% endif %}
                     </div>
                     <div class="col-6">
-                        <strong>進程 PID:</strong>
-                        <span class="text-muted">{{ service_status.pid or 'N/A' }}</span>
+                        <strong>{{ _('Process PID') }}:</strong>
+                        <span class="text-muted">{{ service_status.pid or _('N/A') }}</span>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        <strong>啟動時間:</strong>
-                        <span class="text-muted">{{ service_status.since or 'N/A' }}</span>
+                        <strong>{{ _('Start Time') }}:</strong>
+                        <span class="text-muted">{{ service_status.since or _('N/A') }}</span>
                     </div>
                 </div>
                 
                 {% if service_status.status != 'active' %}
                 <div class="alert alert-danger mt-3">
                     <i class="bi bi-exclamation-triangle"></i>
-                    ProFTPD 服務未運行，請檢查服務狀態或聯繫系統管理員。
+                    {{ _('ProFTPD service is not running, please check service status or contact system administrator.') }}
                 </div>
                 {% endif %}
             </div>
@@ -142,11 +142,11 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-hdd"></i> 磁碟使用量</h5>
+                <h5><i class="bi bi-hdd"></i> {{ _('Disk Usage') }}</h5>
             </div>
             <div class="card-body">
                 <div class="mb-2">
-                    <strong>FTP 根目錄:</strong>
+                    <strong>{{ _('FTP Root Directory') }}:</strong>
                     <code>{{ disk_usage.path }}</code>
                 </div>
                 
@@ -161,19 +161,19 @@
                     <div class="col-4">
                         <div class="border rounded p-2">
                             <strong>{{ "%.1f"|format(disk_usage.used / 1024**3) }} GB</strong>
-                            <br><small class="text-muted">已使用</small>
+                            <br><small class="text-muted">{{ _('Used') }}</small>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="border rounded p-2">
                             <strong>{{ "%.1f"|format(disk_usage.free / 1024**3) }} GB</strong>
-                            <br><small class="text-muted">可用</small>
+                            <br><small class="text-muted">{{ _('Available') }}</small>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="border rounded p-2">
                             <strong>{{ "%.1f"|format(disk_usage.total / 1024**3) }} GB</strong>
-                            <br><small class="text-muted">總容量</small>
+                            <br><small class="text-muted">{{ _('Total Capacity') }}</small>
                         </div>
                     </div>
                 </div>
@@ -182,48 +182,48 @@
     </div>
 </div>
 
-<!-- 系統資源使用量 -->
+<!-- {{ _('System Resource Usage') }} -->
 <div class="row mb-4">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-speedometer2"></i> 系統資源使用量</h5>
+                <h5><i class="bi bi-speedometer2"></i> {{ _('System Resource Usage') }}</h5>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="text-center">
-                            <h6>CPU 使用率</h6>
+                            <h6>{{ _('CPU Usage') }}</h6>
                             <div class="progress mx-auto" style="width: 120px; height: 120px; border-radius: 50%; position: relative;">
                                 <div class="progress-bar bg-info" style="width: {{ system_info.cpu_percent }}%; height: 100%; border-radius: 50%;"></div>
                                 <div class="position-absolute top-50 start-50 translate-middle">
                                     <strong>{{ "%.1f"|format(system_info.cpu_percent) }}%</strong>
                                 </div>
                             </div>
-                            <small class="text-muted">{{ system_info.cpu_count }} 核心處理器</small>
+                            <small class="text-muted">{{ system_info.cpu_count }} {{ _('core processor') }}</small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="text-center">
-                            <h6>記憶體使用率</h6>
+                            <h6>{{ _('Memory Usage') }}</h6>
                             <div class="progress mx-auto" style="width: 120px; height: 120px; border-radius: 50%; position: relative;">
                                 <div class="progress-bar bg-warning" style="width: {{ system_info.memory_percent }}%; height: 100%; border-radius: 50%;"></div>
                                 <div class="position-absolute top-50 start-50 translate-middle">
                                     <strong>{{ "%.1f"|format(system_info.memory_percent) }}%</strong>
                                 </div>
                             </div>
-                            <small class="text-muted">{{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB 總記憶體</small>
+                            <small class="text-muted">{{ "%.1f"|format(system_info.memory_total / 1024**3) }} GB {{ _('Total Memory') }}</small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="text-center">
-                            <h6>系統負載</h6>
+                            <h6>{{ _('System Load') }}</h6>
                             <div class="border rounded p-3">
-                                <div><strong>1分鐘:</strong> {{ "%.2f"|format(system_info.load_average[0]) }}</div>
-                                <div><strong>5分鐘:</strong> {{ "%.2f"|format(system_info.load_average[1]) }}</div>
-                                <div><strong>15分鐘:</strong> {{ "%.2f"|format(system_info.load_average[2]) }}</div>
+                                <div><strong>{{ _('1 minute') }}:</strong> {{ "%.2f"|format(system_info.load_average[0]) }}</div>
+                                <div><strong>{{ _('5 minutes') }}:</strong> {{ "%.2f"|format(system_info.load_average[1]) }}</div>
+                                <div><strong>{{ _('15 minutes') }}:</strong> {{ "%.2f"|format(system_info.load_average[2]) }}</div>
                             </div>
-                            <small class="text-muted">系統運行時間: {{ system_info.uptime.days }}天</small>
+                            <small class="text-muted">{{ _('System Uptime') }}: {{ system_info.uptime.days }} {{ _('days') }}</small>
                         </div>
                     </div>
                 </div>
@@ -235,13 +235,13 @@
 <!-- ProFTPD 日誌區塊 -->
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-file-text"></i> ProFTPD 即時日誌</h5>
+        <h5><i class="bi bi-file-text"></i> {{ _('ProFTPD Real-time Logs') }}</h5>
         <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-outline-primary" onclick="switchLogType('main')" id="btn-main" title="/var/log/proftpd/proftpd.log">系統日誌</button>
-            <button type="button" class="btn btn-outline-info" onclick="switchLogType('access')" id="btn-access" title="/var/log/proftpd/access.log">存取日誌</button>
-            <button type="button" class="btn btn-outline-warning" onclick="switchLogType('auth')" id="btn-auth" title="/var/log/proftpd/auth.log">認證日誌</button>
+            <button type="button" class="btn btn-outline-primary" onclick="switchLogType('main')" id="btn-main" title="/var/log/proftpd/proftpd.log">{{ _('System Log') }}</button>
+            <button type="button" class="btn btn-outline-info" onclick="switchLogType('access')" id="btn-access" title="/var/log/proftpd/access.log">{{ _('Access Log') }}</button>
+            <button type="button" class="btn btn-outline-warning" onclick="switchLogType('auth')" id="btn-auth" title="/var/log/proftpd/auth.log">{{ _('Authentication Log') }}</button>
             <a href="{{ url_for('monitoring.logs') }}" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-right"></i> 更多
+                <i class="bi bi-arrow-right"></i> {{ _('More') }}
             </a>
         </div>
     </div>
@@ -249,20 +249,20 @@
         <div id="log-content" class="border rounded p-3" style="height: 300px; overflow-y: auto; background-color: #f8f9fa; font-family: 'Courier New', monospace; font-size: 0.875rem;">
             <div class="text-center text-muted">
                 <i class="bi bi-arrow-clockwise spinner-border spinner-border-sm"></i>
-                載入日誌中...
+                {{ _('Loading logs...') }}
             </div>
         </div>
         <div class="mt-2 d-flex justify-content-between align-items-center">
             <small class="text-muted">
-                最後更新: <span id="log-updated">-</span> | 
-                日誌類型: <span id="current-log-type">系統日誌</span>
+                {{ _('Last updated') }}: <span id="log-updated">-</span> | 
+                {{ _('Log type') }}: <span id="current-log-type">{{ _('System Log') }}</span>
             </small>
             <div class="btn-group btn-group-sm">
                 <button type="button" class="btn btn-outline-secondary" onclick="refreshLogs()">
-                    <i class="bi bi-arrow-clockwise"></i> 重新整理
+                    <i class="bi bi-arrow-clockwise"></i> {{ _('Refresh') }}
                 </button>
                 <button type="button" class="btn btn-outline-secondary" onclick="clearLogDisplay()">
-                    <i class="bi bi-x"></i> 清除
+                    <i class="bi bi-x"></i> {{ _('Clear') }}
                 </button>
             </div>
         </div>
@@ -272,7 +272,7 @@
 <!-- 最近活動 -->
 <div class="card">
     <div class="card-header">
-        <h5><i class="bi bi-clock-history"></i> 最近管理活動</h5>
+        <h5><i class="bi bi-clock-history"></i> {{ _('Recent Management Activity') }}</h5>
     </div>
     <div class="card-body">
         {% if recent_activities %}
@@ -280,11 +280,11 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>時間</th>
-                        <th>操作</th>
-                        <th>描述</th>
-                        <th>管理員</th>
-                        <th>IP 地址</th>
+                        <th>{{ _('Time') }}</th>
+                        <th>{{ _('Action') }}</th>
+                        <th>{{ _('Description') }}</th>
+                        <th>{{ _('Administrator') }}</th>
+                        <th>{{ _('IP Address') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -294,7 +294,7 @@
                         <td>
                             <span class="badge bg-secondary">{{ activity.action }}</span>
                         </td>
-                        <td>{{ activity.description or '-' }}</td>
+                        <td>{{ activity.get_localized_description() }}</td>
                         <td>{{ activity.admin_user.username if activity.admin_user else 'System' }}</td>
                         <td>{{ activity.ip_address or '-' }}</td>
                     </tr>
@@ -305,7 +305,7 @@
         {% else %}
         <div class="text-center py-3">
             <i class="bi bi-clock-history fs-1 text-muted"></i>
-            <p class="text-muted mt-2">尚無管理活動記錄</p>
+            <p class="text-muted mt-2">{{ _('No activity log yet') }}</p>
         </div>
         {% endif %}
     </div>
@@ -349,7 +349,7 @@ function updateStats() {
             document.getElementById('memory-usage').textContent = data.memory_usage.toFixed(1) + '%';
         })
         .catch(error => {
-            console.error('更新統計失敗:', error);
+            console.error('{{ _('Update statistics failed') }}:', error);
         });
 }
 
@@ -379,9 +379,9 @@ function switchLogType(logType) {
     
     // 更新日誌類型顯示
     const logTypeNames = {
-        'main': '系統日誌 (/var/log/proftpd/proftpd.log)',
-        'access': '存取日誌 (/var/log/proftpd/access.log)',
-        'auth': '認證日誌 (/var/log/proftpd/auth.log)'
+        'main': '{{ _('System Log') }} (/var/log/proftpd/proftpd.log)',
+        'access': '{{ _('Access Log') }} (/var/log/proftpd/access.log)',
+        'auth': '{{ _('Authentication Log') }} (/var/log/proftpd/auth.log)'
     };
     document.getElementById('current-log-type').textContent = logTypeNames[logType];
     
@@ -391,7 +391,7 @@ function switchLogType(logType) {
 
 function loadLogs() {
     const logContent = document.getElementById('log-content');
-    logContent.innerHTML = '<div class="text-center text-muted"><i class="bi bi-arrow-clockwise spinner-border spinner-border-sm"></i> 載入中...</div>';
+    logContent.innerHTML = '<div class="text-center text-muted"><i class="bi bi-arrow-clockwise spinner-border spinner-border-sm"></i> {{ _('Loading') }}...</div>';
     
     fetch(`{{ url_for("monitoring.api_logs") }}?type=${currentLogType}&lines=20`)
         .then(response => {
@@ -411,15 +411,15 @@ function loadLogs() {
                     logContent.scrollTop = 0;
                 }, 50);
             } else {
-                logContent.innerHTML = '<div class="text-center text-muted">暫無日誌資料</div>';
+                logContent.innerHTML = '<div class="text-center text-muted">{{ _('No log data available') }}</div>';
             }
             
             // 更新時間
             document.getElementById('log-updated').textContent = new Date().toLocaleTimeString();
         })
         .catch(error => {
-            console.error('載入日誌失敗:', error);
-            logContent.innerHTML = '<div class="text-center text-danger">載入日誌失敗: ' + error.message + '</div>';
+            console.error('{{ _('Load logs failed') }}:', error);
+            logContent.innerHTML = '<div class="text-center text-danger">{{ _('Load logs failed') }}: ' + error.message + '</div>';
         });
 }
 
@@ -428,7 +428,7 @@ function refreshLogs() {
 }
 
 function clearLogDisplay() {
-    document.getElementById('log-content').innerHTML = '<div class="text-center text-muted">日誌已清除</div>';
+    document.getElementById('log-content').innerHTML = '<div class="text-center text-muted">{{ _('Logs cleared') }}</div>';
 }
 
 // 頁面載入完成後開始更新

@@ -208,13 +208,33 @@ class AccessLog(db.Model):
     action = db.Column(db.String(100), nullable=False)
     target_type = db.Column(db.String(50))  # user, group, directory, setting
     target_id = db.Column(db.String(100))
-    description = db.Column(db.Text)
+    description = db.Column(db.Text)  # 保留原有描述欄位用於向後兼容
+    description_key = db.Column(db.String(200))  # 翻譯鍵值
+    description_params = db.Column(db.Text)  # JSON格式的翻譯參數
     ip_address = db.Column(db.String(45))
     user_agent = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
     admin_user = db.relationship('AdminUser', backref='access_logs')
+    
+    def get_description_params_dict(self):
+        """取得翻譯參數字典"""
+        if not self.description_params:
+            return {}
+        try:
+            import json
+            return json.loads(self.description_params)
+        except:
+            return {}
+    
+    def get_localized_description(self):
+        """取得本地化描述"""
+        from flask_babel import gettext
+        if self.description_key:
+            params = self.get_description_params_dict()
+            return gettext(self.description_key, **params)
+        return self.description or self.action
     
     def __repr__(self):
         return f'<AccessLog {self.action}>'

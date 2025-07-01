@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}新增群組 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Add Group') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h4><i class="bi bi-plus-circle"></i> 新增 FTP 群組</h4>
+                <h4><i class="bi bi-plus-circle"></i> {{ _('Add FTP Group') }}</h4>
             </div>
             <div class="card-body">
                 <form method="POST" class="needs-validation" novalidate>
@@ -17,7 +17,7 @@
                         <div class="col-md-6">
                             {{ form.groupname.label(class="form-label required") }}
                             {{ form.groupname(class="form-control", required=True) }}
-                            <div class="invalid-feedback">請輸入群組名稱</div>
+                            <div class="invalid-feedback">{{ _('Please enter group name') }}</div>
                             {% for error in form.groupname.errors %}
                                 <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
@@ -31,7 +31,7 @@
                                     <i class="bi bi-arrow-clockwise"></i>
                                 </button>
                             </div>
-                            <div class="form-text">建議使用 5000 以上的 GID</div>
+                            <div class="form-text">{{ _('Recommend using GID above 5000') }}</div>
                             {% for error in form.gid.errors %}
                                 <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
@@ -41,7 +41,7 @@
                     <div class="mb-3">
                         {{ form.description.label(class="form-label") }}
                         {{ form.description(class="form-control", rows="3") }}
-                        <div class="form-text">可選的群組描述</div>
+                        <div class="form-text">{{ _('Optional group description') }}</div>
                         {% for error in form.description.errors %}
                             <div class="text-danger small">{{ error }}</div>
                         {% endfor %}
@@ -49,7 +49,7 @@
                     
                     <div class="d-flex gap-2">
                         {{ form.submit(class="btn btn-primary") }}
-                        <a href="{{ url_for('groups.list') }}" class="btn btn-secondary">取消</a>
+                        <a href="{{ url_for('groups.list') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
                     </div>
                 </form>
             </div>
@@ -59,27 +59,27 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-info-circle"></i> 群組建立說明</h5>
+                <h5><i class="bi bi-info-circle"></i> {{ _('Group Creation Instructions') }}</h5>
             </div>
             <div class="card-body">
-                <h6>GID 分配建議</h6>
+                <h6>{{ _('GID Allocation Recommendations') }}</h6>
                 <ul class="small">
-                    <li><strong>5000</strong>: 管理員群組</li>
-                    <li><strong>5001</strong>: 一般用戶群組</li>
-                    <li><strong>5002+</strong>: 自定義群組</li>
+                    <li><strong>5000</strong>: {{ _('Admin group') }}</li>
+                    <li><strong>5001</strong>: {{ _('Regular user group') }}</li>
+                    <li><strong>5002+</strong>: {{ _('Custom groups') }}</li>
                 </ul>
                 
-                <h6 class="mt-3">群組類型</h6>
+                <h6 class="mt-3">{{ _('Group Types') }}</h6>
                 <ul class="small">
-                    <li><strong>管理員群組</strong>: 完整權限，可存取所有目錄</li>
-                    <li><strong>用戶群組</strong>: 受限權限，依目錄設定</li>
-                    <li><strong>專案群組</strong>: 特定專案或部門使用</li>
+                    <li><strong>{{ _('Admin Group') }}</strong>: {{ _('Full permissions, can access all directories') }}</li>
+                    <li><strong>{{ _('User Group') }}</strong>: {{ _('Limited permissions, depends on directory settings') }}</li>
+                    <li><strong>{{ _('Project Group') }}</strong>: {{ _('For specific projects or departments') }}</li>
                 </ul>
                 
                 <div class="alert alert-info mt-3">
                     <small>
                         <i class="bi bi-lightbulb"></i>
-                        建立群組後可以在群組詳情頁面管理成員
+                        {{ _('After creating group, you can manage members on the group details page') }}
                     </small>
                 </div>
             </div>
@@ -87,20 +87,20 @@
         
         <div class="card mt-3">
             <div class="card-header">
-                <h5><i class="bi bi-list-ul"></i> 預設群組</h5>
+                <h5><i class="bi bi-list-ul"></i> {{ _('Default Groups') }}</h5>
             </div>
             <div class="card-body">
                 <div class="mb-2">
                     <span class="badge bg-danger">admins (5000)</span>
-                    <small class="text-muted d-block">系統管理員群組</small>
+                    <small class="text-muted d-block">{{ _('System administrator group') }}</small>
                 </div>
                 <div class="mb-2">
                     <span class="badge bg-info">users (5001)</span>
-                    <small class="text-muted d-block">一般用戶群組</small>
+                    <small class="text-muted d-block">{{ _('Regular user group') }}</small>
                 </div>
                 
                 <small class="text-muted">
-                    這些群組通常在系統初始化時創建，建議不要刪除
+                    {{ _('These groups are usually created during system initialization, not recommended to delete') }}
                 </small>
             </div>
         </div>

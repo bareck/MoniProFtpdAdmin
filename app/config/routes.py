@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request, make_response, jsonify
 from flask_login import login_required
+from flask_babel import _
 from . import bp
 from ..proftpd import ProFTPDConfigGenerator, validate_proftpd_config, backup_proftpd_config
 from ..utils import log_action, sync_proftpd_files, reload_proftpd
@@ -8,7 +9,7 @@ import os
 @bp.route('/')
 @login_required
 def index():
-    """配置管理首頁"""
+    """Configuration management homepage"""
     generator = ProFTPDConfigGenerator()
     
     # 檢查配置檔狀態
@@ -30,7 +31,7 @@ def index():
 @bp.route('/preview', methods=['GET', 'POST'])
 @login_required
 def preview():
-    """預覽配置檔內容"""
+    """Preview configuration file content"""
     generator = ProFTPDConfigGenerator()
     try:
         from ..models import SystemSetting, db
@@ -108,19 +109,19 @@ def preview():
         return render_template('config/preview.html', config_content=config_content)
     except Exception as e:
         if request.method == 'POST':
-            return f'生成配置預覽失敗: {str(e)}', 500, {'Content-Type': 'text/plain; charset=utf-8'}
-        flash(f'生成配置預覽失敗: {str(e)}', 'error')
+            return f"{_('Failed to generate configuration preview')}: {str(e)}", 500, {'Content-Type': 'text/plain; charset=utf-8'}
+        flash(f"{_('Failed to generate configuration preview')}: {str(e)}", 'error')
         return redirect(url_for('config.index'))
 
 @bp.route('/generate', methods=['POST'])
 @login_required
 def generate():
-    """生成配置檔"""
+    """Generate configuration file"""
     try:
         # 備份現有配置
         backup_success, backup_message = backup_proftpd_config()
         if not backup_success:
-            flash(f'備份失敗: {backup_message}', 'warning')
+            flash(f"{_('Backup failed')}: {backup_message}", 'warning')
         
         # 生成新配置
         generator = ProFTPDConfigGenerator()
@@ -130,23 +131,23 @@ def generate():
             # 驗證配置檔語法
             validate_success, validate_message = validate_proftpd_config()
             if validate_success:
-                flash('配置檔生成成功並通過語法驗證', 'success')
+                flash(_('Configuration file generated successfully and passed syntax validation'), 'success')
             else:
-                flash(f'配置檔生成成功，但語法驗證失敗: {validate_message}', 'warning')
+                flash(f"{_('Configuration file generated successfully, but syntax validation failed')}: {validate_message}", 'warning')
             
-            log_action('generate_config', 'config', None, '生成 ProFTPD 配置檔')
+            log_action('generate_config', 'config', None, description_key='config_generated')
         else:
-            flash(f'配置檔生成失敗: {message}', 'error')
+            flash(f"{_('Configuration file generation failed')}: {message}", 'error')
     
     except Exception as e:
-        flash(f'配置檔生成失敗: {str(e)}', 'error')
+        flash(f"{_('Configuration file generation failed')}: {str(e)}", 'error')
     
     return redirect(url_for('config.index'))
 
 @bp.route('/validate', methods=['POST'])
 @login_required
 def validate():
-    """驗證配置檔"""
+    """Validate configuration file"""
     try:
         success, message = validate_proftpd_config()
         
@@ -158,14 +159,14 @@ def validate():
             })
         
         if success:
-            flash(f'配置檔驗證成功: {message}', 'success')
+            flash(f"{_('Configuration file validation successful')}: {message}", 'success')
         else:
-            flash(f'配置檔驗證失敗: {message}', 'error')
+            flash(f"{_('Configuration file validation failed')}: {message}", 'error')
         
-        log_action('validate_config', 'config', None, '驗證 ProFTPD 配置檔')
+        log_action('validate_config', 'config', None, description_key='config_validated')
         
     except Exception as e:
-        error_message = f'配置檔驗證失敗: {str(e)}'
+        error_message = f"{_('Configuration file validation failed')}: {str(e)}"
         
         # 檢查是否為 AJAX 請求
         if request.headers.get('Content-Type') == 'application/json' or request.args.get('format') == 'json':
@@ -181,43 +182,43 @@ def validate():
 @bp.route('/reload', methods=['POST'])
 @login_required
 def reload():
-    """重新載入 ProFTPD 服務"""
+    """Reload ProFTPD service"""
     try:
         success, message = reload_proftpd()
         if success:
-            flash('ProFTPD 服務重新載入成功', 'success')
+            flash(_('ProFTPD service reloaded successfully'), 'success')
         else:
-            flash(f'ProFTPD 服務重新載入失敗: {message}', 'error')
+            flash(f"{_('ProFTPD service reload failed')}: {message}", 'error')
         
-        log_action('reload_proftpd', 'service', None, '重新載入 ProFTPD 服務')
+        log_action('reload_proftpd', 'service', None, description_key='proftpd_reloaded')
         
     except Exception as e:
-        flash(f'服務重新載入失敗: {str(e)}', 'error')
+        flash(f"{_('Service reload failed')}: {str(e)}", 'error')
     
     return redirect(url_for('config.index'))
 
 @bp.route('/backup', methods=['POST'])
 @login_required
 def backup():
-    """手動備份配置檔"""
+    """Manual backup configuration file"""
     try:
         success, message = backup_proftpd_config()
         if success:
-            flash(f'配置檔備份成功: {message}', 'success')
+            flash(f"{_('Configuration file backup successful')}: {message}", 'success')
         else:
-            flash(f'配置檔備份失敗: {message}', 'error')
+            flash(f"{_('Configuration file backup failed')}: {message}", 'error')
         
-        log_action('backup_config', 'config', None, '手動備份 ProFTPD 配置檔')
+        log_action('backup_config', 'config', None, description_key='config_backed_up')
         
     except Exception as e:
-        flash(f'配置檔備份失敗: {str(e)}', 'error')
+        flash(f"{_('Configuration file backup failed')}: {str(e)}", 'error')
     
     return redirect(url_for('config.index'))
 
 @bp.route('/download')
 @login_required
 def download():
-    """下載配置檔"""
+    """Download configuration file"""
     try:
         generator = ProFTPDConfigGenerator()
         config_content = generator.get_config_preview()
@@ -226,17 +227,17 @@ def download():
         response.headers['Content-Type'] = 'text/plain'
         response.headers['Content-Disposition'] = 'attachment; filename=dynamic.conf'
         
-        log_action('download_config', 'config', None, '下載 ProFTPD 配置檔')
+        log_action('download_config', 'config', None, description_key='config_downloaded')
         return response
         
     except Exception as e:
-        flash(f'下載配置檔失敗: {str(e)}', 'error')
+        flash(f"{_('Download configuration file failed')}: {str(e)}", 'error')
         return redirect(url_for('config.index'))
 
 @bp.route('/sync_all', methods=['POST'])
 @login_required
 def sync_all():
-    """同步所有配置檔案（用戶、群組、權限）"""
+    """Sync all configuration files (users, groups, permissions)"""
     try:
         # 同步用戶和群組檔案以及動態配置
         success, message = sync_proftpd_files()
@@ -248,25 +249,25 @@ def sync_all():
                 # 重新載入服務
                 reload_success, reload_message = reload_proftpd()
                 if reload_success:
-                    flash('所有配置已同步並重新載入服務', 'success')
+                    flash(_('All configurations synced and service reloaded'), 'success')
                 else:
-                    flash(f'配置同步成功，但服務重新載入失敗: {reload_message}', 'warning')
+                    flash(f"{_('Configuration synced successfully, but service reload failed')}: {reload_message}", 'warning')
             else:
-                flash(f'配置同步成功，但驗證失敗: {validate_message}', 'warning')
+                flash(f"{_('Configuration synced successfully, but validation failed')}: {validate_message}", 'warning')
         else:
-            flash(f'配置同步失敗: {message}', 'error')
+            flash(f"{_('Configuration sync failed')}: {message}", 'error')
         
-        log_action('sync_all_config', 'config', None, '同步所有 ProFTPD 配置')
+        log_action('sync_all_config', 'config', None, description_key='all_config_synced')
         
     except Exception as e:
-        flash(f'配置同步失敗: {str(e)}', 'error')
+        flash(f"{_('Configuration sync failed')}: {str(e)}", 'error')
     
     return redirect(url_for('config.index'))
 
 @bp.route('/view')
 @login_required
 def view():
-    """檢視配置檔內容"""
+    """View configuration file content"""
     from flask import current_app
     filename = request.args.get('file', 'main')
     
@@ -280,14 +281,14 @@ def view():
             
             # 確保檔案路徑在允許的目錄內
             if not config_file.startswith(config_dir):
-                return "不允許存取此檔案", 403
+                return _('Access to this file is not allowed'), 403
         
         if os.path.exists(config_file):
             with open(config_file, 'r', encoding='utf-8') as f:
                 content = f.read()
             return content, 200, {'Content-Type': 'text/plain; charset=utf-8'}
         else:
-            return "檔案不存在", 404
+            return _('File does not exist'), 404
             
     except Exception as e:
-        return f"讀取檔案失敗: {str(e)}", 500
+        return f"{_('Failed to read file')}: {str(e)}", 500

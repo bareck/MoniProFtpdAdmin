@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}權限管理 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Permission Management') }} - ProFTPD {{ _('Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-shield-lock"></i> 目錄權限管理</h1>
+    <h1><i class="bi bi-shield-lock"></i> {{ _('Directory Permissions Management') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('permissions.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> 新增權限
+            <i class="bi bi-plus-circle"></i> {{ _('Add Permission') }}
         </a>
         <a href="{{ url_for('permissions.matrix') }}" class="btn btn-outline-info">
-            <i class="bi bi-grid-3x3"></i> 權限矩陣
+            <i class="bi bi-grid-3x3"></i> {{ _('Permission Matrix') }}
         </a>
         <a href="{{ url_for('permissions.directories') }}" class="btn btn-outline-secondary">
-            <i class="bi bi-folder"></i> 目錄管理
+            <i class="bi bi-folder"></i> {{ _('Directory Management') }}
         </a>
     </div>
 </div>
@@ -41,10 +41,10 @@
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-outline-primary">
-                    <i class="bi bi-search"></i> 篩選
+                    <i class="bi bi-search"></i> {{ _('Filter') }}
                 </button>
                 <a href="{{ url_for('permissions.list') }}" class="btn btn-outline-secondary ms-2">
-                    <i class="bi bi-arrow-clockwise"></i> 重置
+                    <i class="bi bi-arrow-clockwise"></i> {{ _('Reset') }}
                 </a>
             </div>
         </form>
@@ -54,9 +54,9 @@
 <!-- 權限列表 -->
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>權限設定列表 (共 {{ permissions.total }} 個設定)</h5>
+        <h5>{{ _('Permission Settings List') }} ({{ _('Total') }} {{ permissions.total }} {{ _('settings') }})</h5>
         <button type="button" class="btn btn-outline-success btn-sm" onclick="syncConfig()">
-            <i class="bi bi-arrow-repeat"></i> 同步配置
+            <i class="bi bi-arrow-repeat"></i> {{ _('Sync Configuration') }}
         </button>
     </div>
     <div class="card-body">
@@ -65,14 +65,14 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>目錄</th>
-                        <th>目標</th>
-                        <th>類型</th>
-                        <th>讀取</th>
-                        <th>寫入</th>
-                        <th>刪除</th>
-                        <th>設定時間</th>
-                        <th>操作</th>
+                        <th>{{ _('Directory') }}</th>
+                        <th>{{ _('Target') }}</th>
+                        <th>{{ _('Type') }}</th>
+                        <th>{{ _('Read') }}</th>
+                        <th>{{ _('Write') }}</th>
+                        <th>{{ _('Delete') }}</th>
+                        <th>{{ _('Created Time') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,43 +93,43 @@
                         </td>
                         <td>
                             {% if permission.user %}
-                            <span class="badge bg-info">用戶</span>
+                            <span class="badge bg-info">{{ _('User') }}</span>
                             {% else %}
-                            <span class="badge bg-warning">群組</span>
+                            <span class="badge bg-warning">{{ _('Group') }}</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if permission.can_read %}
-                            <i class="bi bi-check-circle text-success" title="允許讀取"></i>
+                            <i class="bi bi-check-circle text-success" title="{{ _('Allow Read') }}"></i>
                             {% else %}
-                            <i class="bi bi-x-circle text-danger" title="禁止讀取"></i>
+                            <i class="bi bi-x-circle text-danger" title="{{ _('Deny Read') }}"></i>
                             {% endif %}
                         </td>
                         <td>
                             {% if permission.can_write %}
-                            <i class="bi bi-check-circle text-success" title="允許寫入"></i>
+                            <i class="bi bi-check-circle text-success" title="{{ _('Allow Write') }}"></i>
                             {% else %}
-                            <i class="bi bi-x-circle text-danger" title="禁止寫入"></i>
+                            <i class="bi bi-x-circle text-danger" title="{{ _('Deny Write') }}"></i>
                             {% endif %}
                         </td>
                         <td>
                             {% if permission.can_delete %}
-                            <i class="bi bi-check-circle text-success" title="允許刪除"></i>
+                            <i class="bi bi-check-circle text-success" title="{{ _('Allow Delete') }}"></i>
                             {% else %}
-                            <i class="bi bi-x-circle text-danger" title="禁止刪除"></i>
+                            <i class="bi bi-x-circle text-danger" title="{{ _('Deny Delete') }}"></i>
                             {% endif %}
                         </td>
                         <td>{{ permission.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a href="{{ url_for('permissions.edit', id=permission.id) }}" 
-                                   class="btn btn-outline-primary" title="編輯">
+                                   class="btn btn-outline-primary" title="{{ _('Edit') }}">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 <form method="POST" action="{{ url_for('permissions.delete', id=permission.id) }}" class="d-inline">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                     <button type="submit" class="btn btn-outline-danger" 
-                                            onclick="return confirm('確定要刪除此權限設定嗎？')" title="刪除">
+                                            onclick="return confirm('{{ _('Are you sure you want to delete this permission setting?') }}')" title="{{ _('Delete') }}">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
@@ -143,11 +143,11 @@
         
         <!-- 分頁 -->
         {% if permissions.pages > 1 %}
-        <nav aria-label="權限分頁">
+        <nav aria-label="{{ _('Permission Pagination') }}">
             <ul class="pagination justify-content-center">
                 {% if permissions.has_prev %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.prev_num, **request.args) }}">上一頁</a>
+                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.prev_num, **request.args) }}">{{ _('Previous') }}</a>
                 </li>
                 {% endif %}
                 
@@ -171,7 +171,7 @@
                 
                 {% if permissions.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.next_num, **request.args) }}">下一頁</a>
+                    <a class="page-link" href="{{ url_for('permissions.list', page=permissions.next_num, **request.args) }}">{{ _('Next') }}</a>
                 </li>
                 {% endif %}
             </ul>
@@ -181,13 +181,13 @@
         {% else %}
         <div class="text-center py-4">
             <i class="bi bi-shield-lock fs-1 text-muted"></i>
-            <p class="text-muted mt-2">尚未設定任何權限</p>
+            <p class="text-muted mt-2">{{ _('No permissions have been set yet') }}</p>
             <div class="d-flex gap-2 justify-content-center">
                 <a href="{{ url_for('permissions.create') }}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> 新增權限設定
+                    <i class="bi bi-plus-circle"></i> {{ _('Add Permission Setting') }}
                 </a>
                 <a href="{{ url_for('permissions.directories') }}" class="btn btn-outline-secondary">
-                    <i class="bi bi-folder"></i> 管理目錄
+                    <i class="bi bi-folder"></i> {{ _('Manage Directories') }}
                 </a>
             </div>
         </div>
@@ -198,37 +198,37 @@
 <!-- 權限說明 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-info-circle"></i> 權限說明</h5>
+        <h5><i class="bi bi-info-circle"></i> {{ _('Permission Description') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <h6><i class="bi bi-eye text-info"></i> 讀取權限</h6>
+                <h6><i class="bi bi-eye text-info"></i> {{ _('Read Permission') }}</h6>
                 <ul class="small">
-                    <li>LIST - 列出目錄內容</li>
-                    <li>CWD - 變更目錄</li>
-                    <li>PWD - 顯示目前目錄</li>
-                    <li>NLST - 列出檔案名稱</li>
-                    <li>STAT - 顯示檔案狀態</li>
-                    <li>MLSD - 機器列表目錄</li>
+                    <li>LIST - {{ _('List directory contents') }}</li>
+                    <li>CWD - {{ _('Change directory') }}</li>
+                    <li>PWD - {{ _('Show current directory') }}</li>
+                    <li>NLST - {{ _('List file names') }}</li>
+                    <li>STAT - {{ _('Show file status') }}</li>
+                    <li>MLSD - {{ _('Machine list directory') }}</li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <h6><i class="bi bi-pencil text-warning"></i> 寫入權限</h6>
+                <h6><i class="bi bi-pencil text-warning"></i> {{ _('Write Permission') }}</h6>
                 <ul class="small">
-                    <li>STOR - 儲存檔案</li>
-                    <li>STOU - 儲存唯一檔案</li>
-                    <li>APPE - 附加到檔案</li>
+                    <li>STOR - {{ _('Store file') }}</li>
+                    <li>STOU - {{ _('Store unique file') }}</li>
+                    <li>APPE - {{ _('Append to file') }}</li>
                 </ul>
             </div>
             <div class="col-md-4">
-                <h6><i class="bi bi-trash text-danger"></i> 刪除權限</h6>
+                <h6><i class="bi bi-trash text-danger"></i> {{ _('Delete Permission') }}</h6>
                 <ul class="small">
-                    <li>DELE - 刪除檔案</li>
-                    <li>MKD - 建立目錄</li>
-                    <li>RMD - 移除目錄</li>
-                    <li>RNFR/RNTO - 重新命名</li>
-                    <li>SITE_CHMOD - 更改權限</li>
+                    <li>DELE - {{ _('Delete file') }}</li>
+                    <li>MKD - {{ _('Make directory') }}</li>
+                    <li>RMD - {{ _('Remove directory') }}</li>
+                    <li>RNFR/RNTO - {{ _('Rename') }}</li>
+                    <li>SITE_CHMOD - {{ _('Change permissions') }}</li>
                 </ul>
             </div>
         </div>
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function syncConfig() {
-    if (confirm('確定要同步配置到 ProFTPD 嗎？')) {
+    if (confirm('{{ _('Are you sure you want to sync configuration to ProFTPD?') }}')) {
         fetch('{{ url_for("permissions.sync_config") }}', {
             method: 'POST',
             headers: {
@@ -265,8 +265,8 @@ function syncConfig() {
             }
         })
         .catch(error => {
-            console.error('同步失敗:', error);
-            alert('同步失敗，請稍後再試');
+            console.error('{{ _('Sync failed') }}:', error);
+            alert('{{ _('Sync failed, please try again later') }}');
         });
     }
 }

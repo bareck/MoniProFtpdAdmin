@@ -121,7 +121,7 @@ def create_directory():
             if form.sync_config.data:
                 sync_all_configs()
             
-            log_action('create_directory', 'directory', directory.id, f'創建目錄: {directory.name}')
+            log_action('create_directory', 'directory', directory.id, description_key='directory_created', name=directory.name)
             return redirect(url_for('permissions.directories'))
             
         except Exception as e:
@@ -151,7 +151,7 @@ def edit_directory(id):
                 sync_all_configs()
             
             flash('目錄更新成功', 'success')
-            log_action('edit_directory', 'directory', directory.id, f'編輯目錄: {directory.name}')
+            log_action('edit_directory', 'directory', directory.id, description_key='directory_edited', name=directory.name)
             return redirect(url_for('permissions.directories'))
             
         except Exception as e:
@@ -202,7 +202,8 @@ def delete_directory(id):
         else:
             flash(f'目錄 {name} 已刪除（實體目錄保留）', 'success')
         
-        log_action('delete_directory', 'directory', id, f'刪除目錄: {name} (刪除實體目錄: {delete_physical})')
+        log_action('delete_directory', 'directory', id, description_key='directory_deleted', 
+                  name=name, delete_physical=delete_physical)
         
     except Exception as e:
         db.session.rollback()
@@ -314,7 +315,8 @@ def create():
                 generate_and_reload_config()
             
             log_action('create_permission', 'permission', form.directory_id.data, 
-                      f'設定權限: {form.target_type.data} 數量: {created_count + updated_count}')
+                      description_key='permission_created', target_type=form.target_type.data, 
+                      count=created_count + updated_count)
             return redirect(url_for('permissions.list'))
             
         except Exception as e:
@@ -355,7 +357,7 @@ def edit(id):
                 generate_and_reload_config()
             
             flash('權限設定已更新', 'success')
-            log_action('edit_permission', 'permission', permission.id, '編輯權限設定')
+            log_action('edit_permission', 'permission', permission.id, description_key='permission_edited')
             return redirect(url_for('permissions.list'))
             
         except Exception as e:
@@ -378,7 +380,7 @@ def delete(id):
         generate_and_reload_config()
         
         flash('權限設定已刪除', 'success')
-        log_action('delete_permission', 'permission', id, '刪除權限設定')
+        log_action('delete_permission', 'permission', id, description_key='permission_deleted')
         
     except Exception as e:
         db.session.rollback()
@@ -520,7 +522,7 @@ def sync_config():
         # 生成並重新載入配置
         generate_and_reload_config()
         flash('配置已同步', 'success')
-        log_action('sync_config', 'system', None, '手動同步配置')
+        log_action('sync_config', 'system', None, description_key='config_synced_manually')
     except Exception as e:
         flash(f'同步失敗: {str(e)}', 'error')
     
@@ -549,7 +551,7 @@ def sync_all_configs():
         else:
             flash(f'配置同步失敗: {message}', 'error')
         
-        log_action('sync_all_config', 'config', None, '同步所有 ProFTPD 配置')
+        log_action('sync_all_config', 'config', None, description_key='all_config_synced')
         
     except Exception as e:
         flash(f'配置同步失敗: {str(e)}', 'error')

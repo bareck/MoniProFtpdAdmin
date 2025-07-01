@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}儀表板 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Dashboard') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block styles %}
 <style>
@@ -27,8 +27,8 @@ a.text-decoration-none:hover .card-hover * {
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1><i class="bi bi-speedometer2"></i> 儀表板</h1>
-        <p class="text-muted">ProFTPD 虛擬用戶管理系統</p>
+        <h1><i class="bi bi-speedometer2"></i> {{ _('Dashboard') }}</h1>
+        <p class="text-muted">{{ _('ProFTPD Virtual User Management System') }}</p>
     </div>
 </div>
 
@@ -39,7 +39,7 @@ a.text-decoration-none:hover .card-hover * {
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>總用戶數</h5>
+                            <h5>{{ _('Total Users') }}</h5>
                             <h3>{{ stats.total_users }}</h3>
                         </div>
                         <div class="align-self-center">
@@ -57,7 +57,7 @@ a.text-decoration-none:hover .card-hover * {
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>啟用用戶</h5>
+                            <h5>{{ _('Active Users') }}</h5>
                             <h3>{{ stats.active_users }}</h3>
                         </div>
                         <div class="align-self-center">
@@ -75,7 +75,7 @@ a.text-decoration-none:hover .card-hover * {
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>群組數量</h5>
+                            <h5>{{ _('Total Groups') }}</h5>
                             <h3>{{ stats.total_groups }}</h3>
                         </div>
                         <div class="align-self-center">
@@ -93,7 +93,7 @@ a.text-decoration-none:hover .card-hover * {
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5>目錄數量</h5>
+                            <h5>{{ _('Total Directories') }}</h5>
                             <h3>{{ stats.total_directories }}</h3>
                         </div>
                         <div class="align-self-center">
@@ -110,7 +110,7 @@ a.text-decoration-none:hover .card-hover * {
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-clock-history"></i> 最近操作記錄</h5>
+                <h5><i class="bi bi-clock-history"></i> {{ _('Recent Activity Log') }}</h5>
             </div>
             <div class="card-body">
                 {% if recent_logs %}
@@ -118,10 +118,10 @@ a.text-decoration-none:hover .card-hover * {
                     <table class="table table-sm">
                         <thead>
                             <tr>
-                                <th>時間</th>
-                                <th>操作</th>
-                                <th>描述</th>
-                                <th>管理員</th>
+                                <th>{{ _('Time') }}</th>
+                                <th>{{ _('Action') }}</th>
+                                <th>{{ _('Description') }}</th>
+                                <th>{{ _('Administrator') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,7 +139,7 @@ a.text-decoration-none:hover .card-hover * {
                     </table>
                 </div>
                 {% else %}
-                <p class="text-muted">尚無操作記錄</p>
+                <p class="text-muted">{{ _('No activity log yet') }}</p>
                 {% endif %}
             </div>
         </div>
@@ -148,26 +148,26 @@ a.text-decoration-none:hover .card-hover * {
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
-                <h5><i class="bi bi-hdd"></i> 系統資訊</h5>
+                <h5><i class="bi bi-hdd"></i> {{ _('System Information') }}</h5>
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <strong>磁碟使用量:</strong><br>
+                    <strong>{{ _('Disk Usage') }}:</strong><br>
                     <span class="text-muted">{{ disk_usage }}</span>
                 </div>
                 
                 <div class="mb-3">
-                    <strong>當前管理員:</strong><br>
+                    <strong>{{ _('Current Administrator') }}:</strong><br>
                     <span class="text-info">{{ current_user.username }}</span>
                 </div>
                 
                 <div class="mb-3">
-                    <strong>上次登入:</strong><br>
+                    <strong>{{ _('Last Login') }}:</strong><br>
                     <span class="text-muted">
                         {% if current_user.last_login %}
                             {{ current_user.last_login.strftime('%Y-%m-%d %H:%M') }}
                         {% else %}
-                            首次登入
+                            {{ _('First Login') }}
                         {% endif %}
                     </span>
                 </div>
@@ -175,13 +175,13 @@ a.text-decoration-none:hover .card-hover * {
                 <hr>
                 <div class="d-grid gap-2">
                     <a href="{{ url_for('users.list') }}" class="btn btn-outline-primary btn-sm">
-                        <i class="bi bi-people"></i> 管理用戶
+                        <i class="bi bi-people"></i> {{ _('Manage Users') }}
                     </a>
                     <a href="{{ url_for('monitoring.index') }}" class="btn btn-outline-info btn-sm">
-                        <i class="bi bi-graph-up"></i> 查看監控
+                        <i class="bi bi-graph-up"></i> {{ _('View Monitoring') }}
                     </a>
                     <a href="{{ url_for('settings.index') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-gear"></i> 系統設定
+                        <i class="bi bi-gear"></i> {{ _('System Settings') }}
                     </a>
                 </div>
             </div>
