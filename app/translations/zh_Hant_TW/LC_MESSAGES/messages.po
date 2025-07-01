@@ -1066,6 +1066,138 @@ msgstr "複製失敗"
 msgid "Are you sure you want to clear the log display? This will not delete the actual log files."
 msgstr "確定要清除日誌顯示嗎？這不會刪除實際的日誌檔案。"
 
+msgid "FTP Statistics Report"
+msgstr "FTP 統計報表"
+
+msgid "day"
+msgstr "天"
+
+msgid "days"
+msgstr "天"
+
+msgid "Total Logins"
+msgstr "總登入次數"
+
+msgid "File Transfers"
+msgstr "檔案傳輸"
+
+msgid "Total Transfer Volume"
+msgstr "總傳輸量"
+
+msgid "Error Count"
+msgstr "錯誤次數"
+
+msgid "Most Active Users"
+msgstr "最活躍用戶"
+
+msgid "Login Count"
+msgstr "登入次數"
+
+msgid "Uploaded Files"
+msgstr "上傳檔案"
+
+msgid "Downloaded Files"
+msgstr "下載檔案"
+
+msgid "Transfer Volume"
+msgstr "傳輸量"
+
+msgid "No user activity data"
+msgstr "無用戶活動資料"
+
+msgid "Data will be generated from ProFTPD log analysis"
+msgstr "資料將從 ProFTPD 日誌分析產生"
+
+msgid "Activity Time Distribution"
+msgstr "活動時間分布"
+
+msgid "Activity time distribution chart is under development"
+msgstr "活動時間分布圖表正在開發中"
+
+msgid "0-8 hours"
+msgstr "0-8 時"
+
+msgid "8-16 hours"
+msgstr "8-16 時"
+
+msgid "16-24 hours"
+msgstr "16-24 時"
+
+msgid "Directory Usage Statistics"
+msgstr "目錄使用統計"
+
+msgid "File Count"
+msgstr "檔案數量"
+
+msgid "Used Space"
+msgstr "使用空間"
+
+msgid "Usage Rate"
+msgstr "使用率"
+
+msgid "No directory statistics data"
+msgstr "無目錄統計資料"
+
+msgid "Transfer Statistics"
+msgstr "傳輸統計"
+
+msgid "Upload Count"
+msgstr "上傳次數"
+
+msgid "Download Count"
+msgstr "下載次數"
+
+msgid "Average Transfer Speed"
+msgstr "平均傳輸速度"
+
+msgid "Upload Ratio"
+msgstr "上傳比例"
+
+msgid "Download Ratio"
+msgstr "下載比例"
+
+msgid "Upload"
+msgstr "上傳"
+
+msgid "Download"
+msgstr "下載"
+
+msgid "Transfer Trends"
+msgstr "傳輸趨勢"
+
+msgid "Transfer trends chart is under development"
+msgstr "傳輸趨勢圖表正在開發中"
+
+msgid "Transfer Trends Chart Area"
+msgstr "傳輸趨勢圖表區域"
+
+msgid "Report Export"
+msgstr "報表匯出"
+
+msgid "Export statistics reports in different formats for further analysis or archiving. Reports include user activity, directory usage, transfer statistics and other information."
+msgstr "匯出不同格式的統計報表供進一步分析或存檔。報表包含用戶活動、目錄使用、傳輸統計等資訊。"
+
+msgid "PDF export feature is under development"
+msgstr "PDF 匯出功能正在開發中"
+
+msgid "Directory Statistics"
+msgstr "目錄統計"
+
+msgid "Used Space (MB)"
+msgstr "使用空間 (MB)"
+
+msgid "Permission Settings Count"
+msgstr "權限設定數量"
+
+msgid "Total Transfer Volume (GB)"
+msgstr "總傳輸量 (GB)"
+
+msgid "Average Speed (KB/s)"
+msgstr "平均速度 (KB/s)"
+
+msgid "Report exported"
+msgstr "報表已匯出"
+
 #: app/templates/groups/members.html:121
 msgid "Current Member Count"
 msgstr "目前成員數"
