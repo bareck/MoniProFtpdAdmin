@@ -1306,6 +1306,258 @@ msgstr "系統資訊已更新"
 msgid "Update system information failed"
 msgstr "更新系統資訊失敗"
 
+msgid "Configuration Management"
+msgstr "配置管理"
+
+msgid "Management System"
+msgstr "管理系統"
+
+msgid "Configuration Preview"
+msgstr "配置預覽"
+
+msgid "Download Configuration"
+msgstr "下載配置"
+
+msgid "Configuration File Status"
+msgstr "配置檔案狀態"
+
+msgid "Configuration File Path"
+msgstr "配置檔案路徑"
+
+msgid "File Status"
+msgstr "檔案狀態"
+
+msgid "Exists"
+msgstr "存在"
+
+msgid "Does not exist"
+msgstr "不存在"
+
+msgid "File Size"
+msgstr "檔案大小"
+
+msgid "Last Modified"
+msgstr "最後修改"
+
+msgid "Configuration Description"
+msgstr "配置說明"
+
+msgid "Dynamic Configuration File"
+msgstr "動態配置檔案"
+
+msgid "This file contains directory permission configurations automatically generated based on database settings."
+msgstr "此檔案包含基於資料庫設定自動產生的目錄權限配置。"
+
+msgid "Auto-generated"
+msgstr "自動產生"
+
+msgid "Based on user, group and permission settings"
+msgstr "基於用戶、群組和權限設定"
+
+msgid "Include File"
+msgstr "包含檔案"
+
+msgid "Use Include directive in main configuration file"
+msgstr "在主配置檔案中使用 Include 指令"
+
+msgid "Real-time Update"
+msgstr "即時更新"
+
+msgid "Automatically regenerated when permissions change"
+msgstr "權限變更時自動重新產生"
+
+msgid "Syntax Validation"
+msgstr "語法驗證"
+
+msgid "Automatically check syntax correctness after generation"
+msgstr "產生後自動檢查語法正確性"
+
+msgid "Configuration Operations"
+msgstr "配置操作"
+
+msgid "Are you sure you want to regenerate the configuration file?"
+msgstr "確定要重新產生配置檔案嗎？"
+
+msgid "Generate Config"
+msgstr "產生配置"
+
+msgid "Validate Syntax"
+msgstr "驗證語法"
+
+msgid "Are you sure you want to reload the ProFTPD service?"
+msgstr "確定要重新載入 ProFTPD 服務嗎？"
+
+msgid "Reload Service"
+msgstr "重新載入服務"
+
+msgid "Backup Config"
+msgstr "備份配置"
+
+msgid "This will sync all configuration files and reload the service. Are you sure you want to continue?"
+msgstr "這將同步所有配置檔案並重新載入服務。確定要繼續嗎？"
+
+msgid "Sync All Configs and Reload"
+msgstr "同步所有配置並重新載入"
+
+msgid "Configuration Management Process"
+msgstr "配置管理流程"
+
+msgid "Automatic Configuration Process"
+msgstr "自動配置流程"
+
+msgid "Data Changes"
+msgstr "資料變更"
+
+msgid "Modify users, groups or permissions"
+msgstr "修改用戶、群組或權限"
+
+msgid "File Sync"
+msgstr "檔案同步"
+
+msgid "Auto-update ftpd.passwd and ftpd.group"
+msgstr "自動更新 ftpd.passwd 和 ftpd.group"
+
+msgid "Config Generation"
+msgstr "配置產生"
+
+msgid "Auto-generate dynamic.conf"
+msgstr "自動產生 dynamic.conf"
+
+msgid "Service Reload"
+msgstr "服務重新載入"
+
+msgid "Reload ProFTPD service"
+msgstr "重新載入 ProFTPD 服務"
+
+msgid "Manual Configuration Process"
+msgstr "手動配置流程"
+
+msgid "Manually regenerate configuration file"
+msgstr "手動重新產生配置檔案"
+
+msgid "Check configuration file syntax"
+msgstr "檢查配置檔案語法"
+
+msgid "Backup Files"
+msgstr "備份檔案"
+
+msgid "Backup existing configuration"
+msgstr "備份現有配置"
+
+msgid "Apply new configuration"
+msgstr "套用新配置"
+
+msgid "Important Notes"
+msgstr "重要注意事項"
+
+msgid "After modifying permission settings, the system will automatically regenerate the configuration file"
+msgstr "修改權限設定後，系統將自動重新產生配置檔案"
+
+msgid "If automatic sync fails, please use the \"Sync All Configs\" button"
+msgstr "如果自動同步失敗，請使用「同步所有配置」按鈕"
+
+msgid "Configuration file syntax errors may cause ProFTPD to fail to start"
+msgstr "配置檔案語法錯誤可能導致 ProFTPD 啟動失敗"
+
+msgid "It is recommended to backup configuration files before making changes"
+msgstr "建議在進行變更前備份配置檔案"
+
+msgid "Related Configuration Files"
+msgstr "相關配置檔案"
+
+msgid "File"
+msgstr "檔案"
+
+msgid "Purpose"
+msgstr "用途"
+
+msgid "Main configuration file"
+msgstr "主配置檔案"
+
+msgid "Dynamic permission configuration"
+msgstr "動態權限配置"
+
+msgid "Auto"
+msgstr "自動"
+
+msgid "Manual"
+msgstr "手動"
+
+msgid "Virtual user authentication"
+msgstr "虛擬用戶認證"
+
+msgid "Virtual group definition"
+msgstr "虛擬群組定義"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Line Numbers"
+msgstr "行號"
+
+msgid "Configuration Structure"
+msgstr "配置結構"
+
+msgid "Directory Blocks"
+msgstr "目錄區塊"
+
+msgid "One configuration block per directory"
+msgstr "每個目錄一個配置區塊"
+
+msgid "Limit Blocks"
+msgstr "限制區塊"
+
+msgid "Restriction settings grouped by permission type"
+msgstr "按權限類型分組的限制設定"
+
+msgid "Allowed users and groups"
+msgstr "允許的用戶和群組"
+
+msgid "Default deny all other access"
+msgstr "預設拒絕所有其他存取"
+
+msgid "Permission Mapping"
+msgstr "權限對應"
+
+msgid "Read Permissions"
+msgstr "讀取權限"
+
+msgid "Write Permissions"
+msgstr "寫入權限"
+
+msgid "Delete Permissions"
+msgstr "刪除權限"
+
+msgid "Usage Instructions"
+msgstr "使用說明"
+
+msgid "This configuration file should be included in the main proftpd.conf using the"
+msgstr "此配置檔案應使用以下指令包含在主 proftpd.conf 中"
+
+msgid "directive"
+msgstr "指令"
+
+msgid "Configuration Statistics"
+msgstr "配置統計"
+
+msgid "Directory Count"
+msgstr "目錄數量"
+
+msgid "User Permissions"
+msgstr "用戶權限"
+
+msgid "Group Permissions"
+msgstr "群組權限"
+
+msgid "Configuration Lines"
+msgstr "配置行數"
+
+msgid "Configuration content copied to clipboard"
+msgstr "配置內容已複製到剪貼簿"
+
+msgid "Copy failed, please select and copy manually"
+msgstr "複製失敗，請手動選取並複製"
+
 #: app/templates/groups/members.html:121
 msgid "Current Member Count"
 msgstr "目前成員數"
@@ -2354,4 +2606,233 @@ msgstr "核心處理器"
 
 #~ msgid "Not a valid float value."
 #~ msgstr ""
+
+# Config management translations
+msgid "Configuration Management"
+msgstr "配置管理"
+
+msgid "Configuration Preview"
+msgstr "配置預覽"
+
+msgid "Download Configuration"
+msgstr "下載配置"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Copy"
+msgstr "複製"
+
+msgid "Line Numbers"
+msgstr "行號"
+
+msgid "Configuration Description"
+msgstr "配置說明"
+
+msgid "Configuration Structure"
+msgstr "配置結構"
+
+msgid "Directory Blocks"
+msgstr "目錄區塊"
+
+msgid "One configuration block per directory"
+msgstr "每個目錄一個配置區塊"
+
+msgid "Limit Blocks"
+msgstr "限制區塊"
+
+msgid "Restriction settings grouped by permission type"
+msgstr "按權限類型分組的限制設定"
+
+msgid "Allowed users and groups"
+msgstr "允許的用戶和群組"
+
+msgid "Default deny all other access"
+msgstr "預設拒絕所有其他存取"
+
+msgid "Permission Mapping"
+msgstr "權限映射"
+
+msgid "Configuration Statistics"
+msgstr "配置統計"
+
+msgid "Directory Count"
+msgstr "目錄數量"
+
+msgid "Configuration Lines"
+msgstr "配置行數"
+
+msgid "Configuration content copied to clipboard"
+msgstr "配置內容已複製到剪貼簿"
+
+msgid "Copy failed, please select and copy manually"
+msgstr "複製失敗，請手動選擇並複製"
+
+msgid "Configuration File Status"
+msgstr "配置檔案狀態"
+
+msgid "Configuration File Path"
+msgstr "配置檔案路徑"
+
+msgid "File Status"
+msgstr "檔案狀態"
+
+msgid "Exists"
+msgstr "存在"
+
+msgid "Does not exist"
+msgstr "不存在"
+
+msgid "File Size"
+msgstr "檔案大小"
+
+msgid "Last Modified"
+msgstr "最後修改"
+
+msgid "Dynamic Configuration File"
+msgstr "動態配置檔案"
+
+msgid "This file contains directory permission configurations automatically generated based on database settings."
+msgstr "此檔案包含基於資料庫設定自動產生的目錄權限配置。"
+
+msgid "Auto-generated"
+msgstr "自動產生"
+
+msgid "Based on user, group and permission settings"
+msgstr "基於用戶、群組和權限設定"
+
+msgid "Include File"
+msgstr "包含檔案"
+
+msgid "Use Include directive in main configuration file"
+msgstr "在主配置檔案中使用 Include 指令"
+
+msgid "Real-time Update"
+msgstr "即時更新"
+
+msgid "Automatically regenerated when permissions change"
+msgstr "權限變更時自動重新產生"
+
+msgid "Syntax Validation"
+msgstr "語法驗證"
+
+msgid "Automatically check syntax correctness after generation"
+msgstr "產生後自動檢查語法正確性"
+
+msgid "Configuration Operations"
+msgstr "配置操作"
+
+msgid "Are you sure you want to regenerate the configuration file?"
+msgstr "確定要重新產生配置檔案嗎？"
+
+msgid "Generate Config"
+msgstr "產生配置"
+
+msgid "Validate Syntax"
+msgstr "驗證語法"
+
+msgid "Are you sure you want to reload the ProFTPD service?"
+msgstr "確定要重新載入 ProFTPD 服務嗎？"
+
+msgid "Reload Service"
+msgstr "重新載入服務"
+
+msgid "Backup Config"
+msgstr "備份配置"
+
+msgid "This will sync all configuration files and reload the service. Are you sure you want to continue?"
+msgstr "這將同步所有配置檔案並重新載入服務。確定要繼續嗎？"
+
+msgid "Sync All Configs and Reload"
+msgstr "同步所有配置並重新載入"
+
+msgid "Configuration Management Process"
+msgstr "配置管理流程"
+
+msgid "Automatic Configuration Process"
+msgstr "自動配置流程"
+
+msgid "Data Changes"
+msgstr "資料變更"
+
+msgid "Modify users, groups or permissions"
+msgstr "修改用戶、群組或權限"
+
+msgid "File Sync"
+msgstr "檔案同步"
+
+msgid "Auto-update ftpd.passwd and ftpd.group"
+msgstr "自動更新 ftpd.passwd 和 ftpd.group"
+
+msgid "Config Generation"
+msgstr "配置產生"
+
+msgid "Auto-generate dynamic.conf"
+msgstr "自動產生 dynamic.conf"
+
+msgid "Service Reload"
+msgstr "服務重新載入"
+
+msgid "Reload ProFTPD service"
+msgstr "重新載入 ProFTPD 服務"
+
+msgid "Manual Configuration Process"
+msgstr "手動配置流程"
+
+msgid "Manually regenerate configuration file"
+msgstr "手動重新產生配置檔案"
+
+msgid "Check configuration file syntax"
+msgstr "檢查配置檔案語法"
+
+msgid "Backup Files"
+msgstr "備份檔案"
+
+msgid "Backup existing configuration"
+msgstr "備份現有配置"
+
+msgid "Apply new configuration"
+msgstr "套用新配置"
+
+msgid "Important Notes"
+msgstr "重要注意事項"
+
+msgid "After modifying permission settings, the system will automatically regenerate the configuration file"
+msgstr "修改權限設定後，系統將自動重新產生配置檔案"
+
+msgid "If automatic sync fails, please use the \"Sync All Configs\" button"
+msgstr "如果自動同步失敗，請使用「同步所有配置」按鈕"
+
+msgid "Configuration file syntax errors may cause ProFTPD to fail to start"
+msgstr "配置檔案語法錯誤可能導致 ProFTPD 無法啟動"
+
+msgid "It is recommended to backup configuration files before making changes"
+msgstr "建議在進行變更前備份配置檔案"
+
+msgid "Related Configuration Files"
+msgstr "相關配置檔案"
+
+msgid "File"
+msgstr "檔案"
+
+msgid "Purpose"
+msgstr "用途"
+
+msgid "Main configuration file"
+msgstr "主配置檔案"
+
+msgid "Manual"
+msgstr "手動"
+
+msgid "Dynamic permission configuration"
+msgstr "動態權限配置"
+
+msgid "Auto"
+msgstr "自動"
+
+msgid "Virtual user authentication"
+msgstr "虛擬用戶認證"
+
+msgid "Virtual group definition"
+msgstr "虛擬群組定義"
 
