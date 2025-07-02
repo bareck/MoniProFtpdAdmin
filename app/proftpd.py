@@ -252,7 +252,7 @@ class ProFTPDConfigGenerator:
             passive_ports = passive_ports.replace('-', ' ')
         timeout_idle = SystemSetting.get_value('ftp_timeout_idle', '600')
         timeout_transfer = SystemSetting.get_value('ftp_timeout_transfer', '300')
-        umask = SystemSetting.get_value('ftp_umask', '022')
+        umask = SystemSetting.get_value('ftp_umask', '000')
         
         # 日誌設定
         enable_access_log = SystemSetting.get_value('log_access_enabled', 'true') == 'true'
@@ -273,7 +273,6 @@ class ProFTPDConfigGenerator:
             'ServerType standalone',
             'DefaultServer on',
             'Port 21',
-            f'Umask {umask}',
             f'MaxInstances {max_clients}',
             '',
             '# PID 檔案設定',
@@ -393,6 +392,9 @@ class ProFTPDConfigGenerator:
             '',
             '  # 隱藏伺服器版本',
             '  ServerIdent off',
+            '',
+            '  # Umask 設定',
+            f'  Umask {umask}',
             '',
         ])
         
