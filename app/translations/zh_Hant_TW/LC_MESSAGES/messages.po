@@ -3265,3 +3265,193 @@ msgstr "刪除備份失敗:"
 
 msgid "Failed to delete backup"
 msgstr "刪除備份失敗"
+
+# Administrator Settings page translations
+msgid "Administrator Settings"
+msgstr "管理員設定"
+
+msgid "Current Administrator Information"
+msgstr "目前管理員資訊"
+
+msgid "Username:"
+msgstr "用戶名稱:"
+
+msgid "Email:"
+msgstr "電子郵件:"
+
+msgid "Not Set"
+msgstr "未設定"
+
+msgid "Created Time:"
+msgstr "建立時間:"
+
+msgid "Last Login:"
+msgstr "最後登入:"
+
+msgid "First Login"
+msgstr "首次登入"
+
+msgid "Account Status:"
+msgstr "帳號狀態:"
+
+msgid "Active"
+msgstr "啟用"
+
+msgid "Disabled"
+msgstr "停用"
+
+msgid "Security Settings"
+msgstr "安全設定"
+
+msgid "Password Strength"
+msgstr "密碼強度"
+
+msgid "Password security level assessment"
+msgstr "密碼安全等級評估"
+
+msgid "Medium"
+msgstr "中等"
+
+msgid "Session Timeout"
+msgstr "會話超時"
+
+msgid "Automatic logout time"
+msgstr "自動登出時間"
+
+msgid "30 minutes"
+msgstr "30 分鐘"
+
+msgid "IP Restriction"
+msgstr "IP 限制"
+
+msgid "Login IP whitelist"
+msgstr "登入 IP 白名單"
+
+msgid "Two-Factor Authentication"
+msgstr "雙因子認證"
+
+msgid "Additional security verification"
+msgstr "額外安全驗證"
+
+msgid "Not Enabled"
+msgstr "未啟用"
+
+msgid "Change Password"
+msgstr "變更密碼"
+
+msgid "Current Password"
+msgstr "目前密碼"
+
+msgid "New Password"
+msgstr "新密碼"
+
+msgid "Confirm New Password"
+msgstr "確認新密碼"
+
+msgid "Password Security Tips"
+msgstr "密碼安全建議"
+
+msgid "Password length at least 8 characters"
+msgstr "密碼長度至少 8 個字元"
+
+msgid "Include uppercase letters (A-Z)"
+msgstr "包含大寫字母 (A-Z)"
+
+msgid "Include lowercase letters (a-z)"
+msgstr "包含小寫字母 (a-z)"
+
+msgid "Include numbers (0-9)"
+msgstr "包含數字 (0-9)"
+
+msgid "Include special symbols (!@#$%%^&*)"
+msgstr "包含特殊符號 (!@#$%%^&*)"
+
+msgid "Avoid using common passwords or personal information"
+msgstr "避免使用常見密碼或個人資訊"
+
+msgid "Change passwords regularly"
+msgstr "定期更換密碼"
+
+msgid "Recent Login Records"
+msgstr "最近登入記錄"
+
+msgid "Login Time"
+msgstr "登入時間"
+
+msgid "IP Address"
+msgstr "IP 位址"
+
+msgid "User Agent"
+msgstr "用戶代理"
+
+msgid "Status"
+msgstr "狀態"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "Detailed login record functionality is under development"
+msgstr "詳細的登入記錄功能正在開發中"
+
+msgid "System Maintenance Operations"
+msgstr "系統維護操作"
+
+msgid "Clear System Cache"
+msgstr "清理系統快取"
+
+msgid "Reset Session"
+msgstr "重設會話"
+
+msgid "Export System Logs"
+msgstr "匯出系統日誌"
+
+msgid "Note: Maintenance operations may affect system operation, please use with caution."
+msgstr "注意: 維護操作可能會影響系統運行，請謹慎使用。"
+
+msgid "Password length insufficient 8 characters"
+msgstr "密碼長度不足 8 個字元"
+
+msgid "Missing uppercase letters"
+msgstr "缺少大寫字母"
+
+msgid "Missing lowercase letters"
+msgstr "缺少小寫字母"
+
+msgid "Missing numbers"
+msgstr "缺少數字"
+
+msgid "Missing special symbols"
+msgstr "缺少特殊符號"
+
+msgid "Password strength: Weak"
+msgstr "密碼強度: 弱"
+
+msgid "Password strength: Medium"
+msgstr "密碼強度: 中等"
+
+msgid "Password strength: Strong"
+msgstr "密碼強度: 強"
+
+msgid "Password confirmation matches"
+msgstr "密碼確認一致"
+
+msgid "Password confirmation does not match"
+msgstr "密碼確認不一致"
+
+msgid "Are you sure you want to clear system cache?"
+msgstr "確定要清理系統快取嗎？"
+
+msgid "System cache cleared"
+msgstr "系統快取已清理"
+
+msgid "Failed to clear cache"
+msgstr "清理快取失敗"
+
+msgid "Are you sure you want to reset session? This will log out all users."
+msgstr "確定要重設會話嗎？這將登出所有用戶。"
+
+msgid "Session has been reset"
+msgstr "會話已重設"
+
+msgid "Failed to reset session"
+msgstr "重設會話失敗"

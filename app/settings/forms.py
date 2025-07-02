@@ -105,20 +105,20 @@ class ConfigGenerateForm(FlaskForm):
 class AdminPasswordForm(FlaskForm):
     """管理員密碼變更表單"""
     
-    current_password = StringField('目前密碼', 
+    current_password = StringField(_l('Current Password'), 
                                   validators=[DataRequired()],
                                   render_kw={'type': 'password'})
     
-    new_password = StringField('新密碼', 
+    new_password = StringField(_l('New Password'), 
                               validators=[DataRequired(), Length(8, 50)],
                               render_kw={'type': 'password'})
     
-    confirm_password = StringField('確認新密碼', 
+    confirm_password = StringField(_l('Confirm New Password'), 
                                   validators=[DataRequired()],
                                   render_kw={'type': 'password'})
     
-    change_password = SubmitField('變更密碼')
+    change_password = SubmitField(_l('Change Password'))
     
     def validate_confirm_password(self, field):
         if field.data != self.new_password.data:
-            raise ValidationError('密碼確認不一致')
+            raise ValidationError(_l('Password confirmation does not match'))

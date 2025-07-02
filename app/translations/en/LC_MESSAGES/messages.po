@@ -2693,3 +2693,193 @@ msgstr "Failed to delete backup:"
 
 msgid "Failed to delete backup"
 msgstr "Failed to delete backup"
+
+# Administrator Settings page translations
+msgid "Administrator Settings"
+msgstr "Administrator Settings"
+
+msgid "Current Administrator Information"
+msgstr "Current Administrator Information"
+
+msgid "Username:"
+msgstr "Username:"
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Not Set"
+msgstr "Not Set"
+
+msgid "Created Time:"
+msgstr "Created Time:"
+
+msgid "Last Login:"
+msgstr "Last Login:"
+
+msgid "First Login"
+msgstr "First Login"
+
+msgid "Account Status:"
+msgstr "Account Status:"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "Security Settings"
+msgstr "Security Settings"
+
+msgid "Password Strength"
+msgstr "Password Strength"
+
+msgid "Password security level assessment"
+msgstr "Password security level assessment"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Session Timeout"
+msgstr "Session Timeout"
+
+msgid "Automatic logout time"
+msgstr "Automatic logout time"
+
+msgid "30 minutes"
+msgstr "30 minutes"
+
+msgid "IP Restriction"
+msgstr "IP Restriction"
+
+msgid "Login IP whitelist"
+msgstr "Login IP whitelist"
+
+msgid "Two-Factor Authentication"
+msgstr "Two-Factor Authentication"
+
+msgid "Additional security verification"
+msgstr "Additional security verification"
+
+msgid "Not Enabled"
+msgstr "Not Enabled"
+
+msgid "Change Password"
+msgstr "Change Password"
+
+msgid "Current Password"
+msgstr "Current Password"
+
+msgid "New Password"
+msgstr "New Password"
+
+msgid "Confirm New Password"
+msgstr "Confirm New Password"
+
+msgid "Password Security Tips"
+msgstr "Password Security Tips"
+
+msgid "Password length at least 8 characters"
+msgstr "Password length at least 8 characters"
+
+msgid "Include uppercase letters (A-Z)"
+msgstr "Include uppercase letters (A-Z)"
+
+msgid "Include lowercase letters (a-z)"
+msgstr "Include lowercase letters (a-z)"
+
+msgid "Include numbers (0-9)"
+msgstr "Include numbers (0-9)"
+
+msgid "Include special symbols (!@#$%%^&*)"
+msgstr "Include special symbols (!@#$%%^&*)"
+
+msgid "Avoid using common passwords or personal information"
+msgstr "Avoid using common passwords or personal information"
+
+msgid "Change passwords regularly"
+msgstr "Change passwords regularly"
+
+msgid "Recent Login Records"
+msgstr "Recent Login Records"
+
+msgid "Login Time"
+msgstr "Login Time"
+
+msgid "IP Address"
+msgstr "IP Address"
+
+msgid "User Agent"
+msgstr "User Agent"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Success"
+msgstr "Success"
+
+msgid "Detailed login record functionality is under development"
+msgstr "Detailed login record functionality is under development"
+
+msgid "System Maintenance Operations"
+msgstr "System Maintenance Operations"
+
+msgid "Clear System Cache"
+msgstr "Clear System Cache"
+
+msgid "Reset Session"
+msgstr "Reset Session"
+
+msgid "Export System Logs"
+msgstr "Export System Logs"
+
+msgid "Note: Maintenance operations may affect system operation, please use with caution."
+msgstr "Note: Maintenance operations may affect system operation, please use with caution."
+
+msgid "Password length insufficient 8 characters"
+msgstr "Password length insufficient 8 characters"
+
+msgid "Missing uppercase letters"
+msgstr "Missing uppercase letters"
+
+msgid "Missing lowercase letters"
+msgstr "Missing lowercase letters"
+
+msgid "Missing numbers"
+msgstr "Missing numbers"
+
+msgid "Missing special symbols"
+msgstr "Missing special symbols"
+
+msgid "Password strength: Weak"
+msgstr "Password strength: Weak"
+
+msgid "Password strength: Medium"
+msgstr "Password strength: Medium"
+
+msgid "Password strength: Strong"
+msgstr "Password strength: Strong"
+
+msgid "Password confirmation matches"
+msgstr "Password confirmation matches"
+
+msgid "Password confirmation does not match"
+msgstr "Password confirmation does not match"
+
+msgid "Are you sure you want to clear system cache?"
+msgstr "Are you sure you want to clear system cache?"
+
+msgid "System cache cleared"
+msgstr "System cache cleared"
+
+msgid "Failed to clear cache"
+msgstr "Failed to clear cache"
+
+msgid "Are you sure you want to reset session? This will log out all users."
+msgstr "Are you sure you want to reset session? This will log out all users."
+
+msgid "Session has been reset"
+msgstr "Session has been reset"
+
+msgid "Failed to reset session"
+msgstr "Failed to reset session"
