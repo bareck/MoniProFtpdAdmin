@@ -2521,3 +2521,175 @@ msgstr "Configuration operation failed:"
 
 msgid "Automatically reload ProFTPD service after generation"
 msgstr "Automatically reload ProFTPD service after generation"
+
+# Backup & Restore page translations
+msgid "Backup & Restore"
+msgstr "Backup & Restore"
+
+msgid "Create New Backup"
+msgstr "Create New Backup"
+
+msgid "Backup Description"
+msgstr "Backup Description"
+
+msgid "Description of this backup or notes"
+msgstr "Description of this backup or notes"
+
+msgid "Include Log Files"
+msgstr "Include Log Files"
+
+msgid "Whether to include system logs when backing up"
+msgstr "Whether to include system logs when backing up"
+
+msgid "Include User Data"
+msgstr "Include User Data"
+
+msgid "Whether to include FTP user files when backing up"
+msgstr "Whether to include FTP user files when backing up"
+
+msgid "Create Backup"
+msgstr "Create Backup"
+
+msgid "Backup Content"
+msgstr "Backup Content"
+
+msgid "Database Files"
+msgstr "Database Files"
+
+msgid "Configuration Files"
+msgstr "Configuration Files"
+
+msgid "Log Files"
+msgstr "Log Files"
+
+msgid "User Data"
+msgstr "User Data"
+
+msgid "Existing Backups"
+msgstr "Existing Backups"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "Backup File"
+msgstr "Backup File"
+
+msgid "Created Time"
+msgstr "Created Time"
+
+msgid "File Size"
+msgstr "File Size"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "Download Backup"
+msgstr "Download Backup"
+
+msgid "View Info"
+msgstr "View Info"
+
+msgid "Delete Backup"
+msgstr "Delete Backup"
+
+msgid "No backup files currently"
+msgstr "No backup files currently"
+
+msgid "Please create the first backup to protect your data"
+msgstr "Please create the first backup to protect your data"
+
+msgid "Backup Information"
+msgstr "Backup Information"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Backup & Restore Instructions"
+msgstr "Backup & Restore Instructions"
+
+msgid "Backup Content:"
+msgstr "Backup Content:"
+
+msgid "Contains all users, groups, and permission settings"
+msgstr "Contains all users, groups, and permission settings"
+
+msgid "ProFTPD main configuration and related setting files"
+msgstr "ProFTPD main configuration and related setting files"
+
+msgid "System operation logs (optional)"
+msgstr "System operation logs (optional)"
+
+msgid "FTP user file data (optional)"
+msgstr "FTP user file data (optional)"
+
+msgid "Restore Steps"
+msgstr "Restore Steps"
+
+msgid "Download the required backup file"
+msgstr "Download the required backup file"
+
+msgid "Extract backup file to specified location"
+msgstr "Extract backup file to specified location"
+
+msgid "Stop ProFTPD service"
+msgstr "Stop ProFTPD service"
+
+msgid "Restore database and configuration files"
+msgstr "Restore database and configuration files"
+
+msgid "Restart ProFTPD service"
+msgstr "Restart ProFTPD service"
+
+msgid "Note: Restore operation will overwrite existing data, please operate with caution."
+msgstr "Note: Restore operation will overwrite existing data, please operate with caution."
+
+msgid "Backup ID:"
+msgstr "Backup ID:"
+
+msgid "File Name:"
+msgstr "File Name:"
+
+msgid "Creator:"
+msgstr "Creator:"
+
+msgid "Contains:"
+msgstr "Contains:"
+
+msgid "Database"
+msgstr "Database"
+
+msgid "Config Files"
+msgstr "Config Files"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "Unknown"
+msgstr "Unknown"
+
+msgid "No description"
+msgstr "No description"
+
+msgid "Failed to load backup information:"
+msgstr "Failed to load backup information:"
+
+msgid "Failed to load backup information"
+msgstr "Failed to load backup information"
+
+msgid "Are you sure you want to delete this backup file? This operation cannot be undone."
+msgstr "Are you sure you want to delete this backup file? This operation cannot be undone."
+
+msgid "Backup deleted"
+msgstr "Backup deleted"
+
+msgid "Failed to delete backup:"
+msgstr "Failed to delete backup:"
+
+msgid "Failed to delete backup"
+msgstr "Failed to delete backup"

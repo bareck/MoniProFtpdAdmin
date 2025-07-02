@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}備份還原 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('Backup & Restore') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-hdd"></i> 備份還原</h1>
+    <h1><i class="bi bi-hdd"></i> {{ _('Backup & Restore') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回設定首頁
+            <i class="bi bi-arrow-left"></i> {{ _('返回設定首頁') }}
         </a>
     </div>
 </div>
@@ -15,7 +15,7 @@
 <!-- 建立新備份 -->
 <div class="card mb-4">
     <div class="card-header">
-        <h5><i class="bi bi-plus-circle"></i> 建立新備份</h5>
+        <h5><i class="bi bi-plus-circle"></i> {{ _('Create New Backup') }}</h5>
     </div>
     <div class="card-body">
         <form method="POST">
@@ -57,12 +57,12 @@
                     <div class="card bg-light">
                         <div class="card-body text-center">
                             <i class="bi bi-info-circle fs-2 text-info mb-2"></i>
-                            <h6>備份內容</h6>
+                            <h6>{{ _('Backup Content') }}</h6>
                             <ul class="list-unstyled small">
-                                <li><i class="bi bi-check text-success"></i> 資料庫檔案</li>
-                                <li><i class="bi bi-check text-success"></i> 配置檔案</li>
-                                <li id="logs-include"><i class="bi bi-x text-muted"></i> 日誌檔案</li>
-                                <li id="data-include"><i class="bi bi-check text-success"></i> 用戶資料</li>
+                                <li><i class="bi bi-check text-success"></i> {{ _('Database Files') }}</li>
+                                <li><i class="bi bi-check text-success"></i> {{ _('Configuration Files') }}</li>
+                                <li id="logs-include"><i class="bi bi-x text-muted"></i> {{ _('Log Files') }}</li>
+                                <li id="data-include"><i class="bi bi-check text-success"></i> {{ _('User Data') }}</li>
                             </ul>
                             
                             {{ backup_form.create_backup(class="btn btn-primary btn-lg w-100 mt-3") }}
@@ -77,9 +77,9 @@
 <!-- 現有備份列表 -->
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-archive"></i> 現有備份</h5>
+        <h5><i class="bi bi-archive"></i> {{ _('Existing Backups') }}</h5>
         <button type="button" class="btn btn-outline-primary btn-sm" onclick="refreshBackupList()">
-            <i class="bi bi-arrow-clockwise"></i> 重新整理
+            <i class="bi bi-arrow-clockwise"></i> {{ _('Refresh') }}
         </button>
     </div>
     <div class="card-body">
@@ -88,11 +88,11 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>備份檔案</th>
-                        <th>建立時間</th>
-                        <th>檔案大小</th>
-                        <th>描述</th>
-                        <th>操作</th>
+                        <th>{{ _('Backup File') }}</th>
+                        <th>{{ _('Created Time') }}</th>
+                        <th>{{ _('File Size') }}</th>
+                        <th>{{ _('Description') }}</th>
+                        <th>{{ _('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody id="backup-table-body">
@@ -107,15 +107,15 @@
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a href="{{ url_for('settings.download_backup', backup_id=backup.id) }}" 
-                                   class="btn btn-outline-primary" title="下載備份">
+                                   class="btn btn-outline-primary" title="{{ _('Download Backup') }}">
                                     <i class="bi bi-download"></i>
                                 </a>
                                 <button type="button" class="btn btn-outline-info" 
-                                        onclick="showBackupInfo('{{ backup.id }}')" title="檢視資訊">
+                                        onclick="showBackupInfo('{{ backup.id }}')" title="{{ _('View Info') }}">
                                     <i class="bi bi-info-circle"></i>
                                 </button>
                                 <button type="button" class="btn btn-outline-danger" 
-                                        onclick="deleteBackup('{{ backup.id }}')" title="刪除備份">
+                                        onclick="deleteBackup('{{ backup.id }}')" title="{{ _('Delete Backup') }}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -128,8 +128,8 @@
         {% else %}
         <div class="text-center py-5" id="no-backups">
             <i class="bi bi-archive fs-1 text-muted"></i>
-            <p class="text-muted mt-2">目前沒有備份檔案</p>
-            <p class="text-muted">請建立第一個備份以保護您的資料</p>
+            <p class="text-muted mt-2">{{ _('No backup files currently') }}</p>
+            <p class="text-muted">{{ _('Please create the first backup to protect your data') }}</p>
         </div>
         {% endif %}
     </div>
@@ -140,20 +140,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">備份資訊</h5>
+                <h5 class="modal-title">{{ _('Backup Information') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="backup-info-content">
                     <div class="text-center">
                         <div class="spinner-border" role="status">
-                            <span class="visually-hidden">載入中...</span>
+                            <span class="visually-hidden">{{ _('Loading...') }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
             </div>
         </div>
     </div>
@@ -162,32 +162,32 @@
 <!-- 還原說明 -->
 <div class="card mt-4">
     <div class="card-header">
-        <h5><i class="bi bi-question-circle"></i> 備份還原說明</h5>
+        <h5><i class="bi bi-question-circle"></i> {{ _('Backup & Restore Instructions') }}</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <h6>備份內容</h6>
+                <h6>{{ _('Backup Content:') }}</h6>
                 <ul>
-                    <li><strong>資料庫檔案:</strong> 包含所有用戶、群組、權限設定</li>
-                    <li><strong>配置檔案:</strong> ProFTPD 主配置檔和相關設定檔</li>
-                    <li><strong>日誌檔案:</strong> 系統運行記錄（可選）</li>
-                    <li><strong>用戶資料:</strong> FTP 用戶的檔案資料（可選）</li>
+                    <li><strong>{{ _('Database Files') }}:</strong> {{ _('Contains all users, groups, and permission settings') }}</li>
+                    <li><strong>{{ _('Configuration Files') }}:</strong> {{ _('ProFTPD main configuration and related setting files') }}</li>
+                    <li><strong>{{ _('Log Files') }}:</strong> {{ _('System operation logs (optional)') }}</li>
+                    <li><strong>{{ _('User Data') }}:</strong> {{ _('FTP user file data (optional)') }}</li>
                 </ul>
             </div>
             <div class="col-md-6">
-                <h6>還原步驟</h6>
+                <h6>{{ _('Restore Steps') }}</h6>
                 <ol>
-                    <li>下載所需的備份檔案</li>
-                    <li>解壓縮備份檔案到指定位置</li>
-                    <li>停止 ProFTPD 服務</li>
-                    <li>還原資料庫和配置檔案</li>
-                    <li>重新啟動 ProFTPD 服務</li>
+                    <li>{{ _('Download the required backup file') }}</li>
+                    <li>{{ _('Extract backup file to specified location') }}</li>
+                    <li>{{ _('Stop ProFTPD service') }}</li>
+                    <li>{{ _('Restore database and configuration files') }}</li>
+                    <li>{{ _('Restart ProFTPD service') }}</li>
                 </ol>
                 
                 <div class="alert alert-warning mt-3">
                     <i class="bi bi-exclamation-triangle"></i>
-                    <strong>注意:</strong> 還原操作會覆蓋現有資料，請謹慎操作。
+                    <strong>{{ _('Note: Restore operation will overwrite existing data, please operate with caution.') }}</strong>
                 </div>
             </div>
         </div>
@@ -217,15 +217,15 @@ function updateBackupPreview() {
     const dataInclude = document.getElementById('data-include');
     
     if (includeLogsChecked) {
-        logsInclude.innerHTML = '<i class="bi bi-check text-success"></i> 日誌檔案';
+        logsInclude.innerHTML = '<i class="bi bi-check text-success"></i> {{ _('Log Files') }}';
     } else {
-        logsInclude.innerHTML = '<i class="bi bi-x text-muted"></i> 日誌檔案';
+        logsInclude.innerHTML = '<i class="bi bi-x text-muted"></i> {{ _('Log Files') }}';
     }
     
     if (includeDataChecked) {
-        dataInclude.innerHTML = '<i class="bi bi-check text-success"></i> 用戶資料';
+        dataInclude.innerHTML = '<i class="bi bi-check text-success"></i> {{ _('User Data') }}';
     } else {
-        dataInclude.innerHTML = '<i class="bi bi-x text-muted"></i> 用戶資料';
+        dataInclude.innerHTML = '<i class="bi bi-x text-muted"></i> {{ _('User Data') }}';
     }
 }
 
@@ -255,7 +255,7 @@ function showBackupInfo(backupId) {
             // 從表格中獲取檔案名稱和大小
             const row = document.querySelector(`tr[data-backup-id="${backupId}"]`);
             let filename = `${backupId}.tar.gz`;
-            let fileSize = '未知';
+            let fileSize = '{{ _('Unknown') }}';
             
             if (row) {
                 const cells = row.getElementsByTagName('td');
@@ -265,46 +265,46 @@ function showBackupInfo(backupId) {
             
             // 根據實際包含內容生成徽章
             let contentBadges = `
-                <span class="badge bg-primary me-1">資料庫</span>
-                <span class="badge bg-secondary me-1">配置檔</span>
+                <span class="badge bg-primary me-1">{{ _('Database') }}</span>
+                <span class="badge bg-secondary me-1">{{ _('Config Files') }}</span>
             `;
             
             if (info.include_logs) {
-                contentBadges += `<span class="badge bg-info me-1">日誌</span>`;
+                contentBadges += `<span class="badge bg-info me-1">{{ _('Logs') }}</span>`;
             }
             
             if (info.include_data) {
-                contentBadges += `<span class="badge bg-success">用戶資料</span>`;
+                contentBadges += `<span class="badge bg-success">{{ _('User Data') }}</span>`;
             }
             
             document.getElementById('backup-info-content').innerHTML = `
                 <table class="table table-borderless">
                     <tr>
-                        <td><strong>備份 ID:</strong></td>
+                        <td><strong>{{ _('Backup ID:') }}</strong></td>
                         <td><code>${backupId}</code></td>
                     </tr>
                     <tr>
-                        <td><strong>檔案名稱:</strong></td>
+                        <td><strong>{{ _('File Name:') }}</strong></td>
                         <td><code>${filename}</code></td>
                     </tr>
                     <tr>
-                        <td><strong>建立時間:</strong></td>
+                        <td><strong>{{ _('Created Time') }}:</strong></td>
                         <td>${createdAt}</td>
                     </tr>
                     <tr>
-                        <td><strong>檔案大小:</strong></td>
+                        <td><strong>{{ _('File Size') }}:</strong></td>
                         <td>${fileSize}</td>
                     </tr>
                     <tr>
-                        <td><strong>建立者:</strong></td>
+                        <td><strong>{{ _('Creator:') }}</strong></td>
                         <td>${info.created_by || 'unknown'}</td>
                     </tr>
                     <tr>
-                        <td><strong>描述:</strong></td>
-                        <td>${info.description || '無描述'}</td>
+                        <td><strong>{{ _('Description') }}:</strong></td>
+                        <td>${info.description || '{{ _('No description') }}'}</td>
                     </tr>
                     <tr>
-                        <td><strong>包含內容:</strong></td>
+                        <td><strong>{{ _('Contains:') }}</strong></td>
                         <td>${contentBadges}</td>
                     </tr>
                 </table>
@@ -313,24 +313,24 @@ function showBackupInfo(backupId) {
             document.getElementById('backup-info-content').innerHTML = `
                 <div class="alert alert-danger">
                     <i class="bi bi-exclamation-triangle"></i>
-                    載入備份資訊失敗: ${data.error}
+                    {{ _('Failed to load backup information:') }} ${data.error}
                 </div>
             `;
         }
     })
     .catch(error => {
-        console.error('載入備份資訊失敗:', error);
+        console.error('{{ _('Failed to load backup information:') }}', error);
         document.getElementById('backup-info-content').innerHTML = `
             <div class="alert alert-danger">
                 <i class="bi bi-exclamation-triangle"></i>
-                載入備份資訊失敗
+                {{ _('Failed to load backup information') }}
             </div>
         `;
     });
 }
 
 function deleteBackup(backupId) {
-    if (confirm('確定要刪除此備份檔案嗎？此操作無法復原。')) {
+    if (confirm('{{ _('Are you sure you want to delete this backup file? This operation cannot be undone.') }}')) {
         // 取得 CSRF token
         const csrfToken = document.querySelector('meta[name=csrf-token]')?.getAttribute('content') || 
                          document.querySelector('input[name=csrf_token]')?.value;
@@ -358,14 +358,14 @@ function deleteBackup(backupId) {
                     location.reload();
                 }
                 
-                showToast('備份已刪除', 'success');
+                showToast('{{ _('Backup deleted') }}', 'success');
             } else {
-                showToast('刪除備份失敗: ' + data.error, 'error');
+                showToast('{{ _('Failed to delete backup:') }} ' + data.error, 'error');
             }
         })
         .catch(error => {
-            console.error('刪除備份失敗:', error);
-            showToast('刪除備份失敗', 'error');
+            console.error('{{ _('Failed to delete backup:') }}', error);
+            showToast('{{ _('Failed to delete backup') }}', 'error');
         });
     }
 }

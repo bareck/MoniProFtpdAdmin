@@ -81,18 +81,18 @@ class SystemSettingsForm(FlaskForm):
 class BackupRestoreForm(FlaskForm):
     """備份還原表單"""
     
-    backup_description = TextAreaField('備份描述', 
+    backup_description = TextAreaField(_l('Backup Description'), 
                                       validators=[Optional(), Length(0, 200)],
-                                      description='此次備份的說明或備註')
+                                      description=_l('Description of this backup or notes'))
     
-    backup_include_logs = BooleanField('包含日誌檔案', 
-                                      description='備份時是否包含系統日誌')
+    backup_include_logs = BooleanField(_l('Include Log Files'), 
+                                      description=_l('Whether to include system logs when backing up'))
     
-    backup_include_data = BooleanField('包含用戶資料', 
-                                      description='備份時是否包含 FTP 用戶檔案',
+    backup_include_data = BooleanField(_l('Include User Data'), 
+                                      description=_l('Whether to include FTP user files when backing up'),
                                       default=True)
     
-    create_backup = SubmitField('建立備份')
+    create_backup = SubmitField(_l('Create Backup'))
 
 class ConfigGenerateForm(FlaskForm):
     """配置生成表單"""
