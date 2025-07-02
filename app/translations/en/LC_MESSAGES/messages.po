@@ -2178,3 +2178,186 @@ msgstr "Settings update failed"
 
 msgid "Quick settings update failed"
 msgstr "Quick settings update failed"
+
+# System Settings page translations
+msgid "系統設定"
+msgstr "System Settings"
+
+msgid "返回設定首頁"
+msgstr "Back to Settings"
+
+msgid "FTP 伺服器設定"
+msgstr "FTP Server Settings"
+
+msgid "日誌設定"
+msgstr "Log Settings"
+
+msgid "安全設定"
+msgstr "Security Settings"
+
+msgid "取消"
+msgstr "Cancel"
+
+msgid "預覽配置"
+msgstr "Preview Configuration"
+
+msgid "儲存設定"
+msgstr "Save Settings"
+
+msgid "ProFTPD 配置預覽"
+msgstr "ProFTPD Configuration Preview"
+
+msgid "關閉"
+msgstr "Close"
+
+msgid "複製配置"
+msgstr "Copy Configuration"
+
+msgid "注意:"
+msgstr "Note:"
+
+msgid "啟用 SSL/TLS 要求後，所有連線都必須使用加密。請確保已正確設定 SSL 憑證。"
+msgstr "After enabling SSL/TLS requirement, all connections must use encryption. Please ensure SSL certificates are properly configured."
+
+msgid "維護模式已啟用:"
+msgstr "Maintenance Mode Enabled:"
+
+msgid "目前所有 FTP 連線都會被拒絕。"
+msgstr "All FTP connections are currently being rejected."
+
+# Form field labels and descriptions
+msgid "FTP 伺服器名稱"
+msgstr "FTP Server Name"
+
+msgid "顯示在 FTP 連線時的伺服器名稱"
+msgstr "Server name displayed during FTP connections"
+
+msgid "最大連線數"
+msgstr "Max Connections"
+
+msgid "同時允許的最大 FTP 連線數"
+msgstr "Maximum number of simultaneous FTP connections allowed"
+
+msgid "每個 IP 最大連線數"
+msgstr "Max Connections Per IP"
+
+msgid "單一 IP 位址允許的最大連線數"
+msgstr "Maximum connections allowed per IP address"
+
+msgid "被動模式連接埠範圍"
+msgstr "Passive Port Range"
+
+msgid "格式: 60000-65000"
+msgstr "Format: 60000-65000"
+
+msgid "檔案權限遮罩"
+msgstr "File Permission Mask"
+
+msgid "預設檔案權限遮罩，例如: 000"
+msgstr "Default file permission mask, e.g.: 000"
+
+msgid "FTP 根目錄路徑"
+msgstr "FTP Root Directory Path"
+
+msgid "FTP 伺服器的根目錄路徑，例如: /backup/ftpdata"
+msgstr "Root directory path for FTP server, e.g.: /backup/ftpdata"
+
+msgid "啟用存取日誌"
+msgstr "Enable Access Logging"
+
+msgid "記錄所有 FTP 存取活動"
+msgstr "Record all FTP access activities"
+
+msgid "啟用認證日誌"
+msgstr "Enable Authentication Logging"
+
+msgid "記錄登入和認證活動"
+msgstr "Record login and authentication activities"
+
+msgid "日誌等級"
+msgstr "Log Level"
+
+msgid "設定日誌記錄的詳細程度"
+msgstr "Set the verbosity level of log recording"
+
+msgid "日誌保留天數"
+msgstr "Log Retention Days"
+
+msgid "自動刪除超過指定天數的日誌"
+msgstr "Automatically delete logs older than specified days"
+
+msgid "最大登入嘗試次數"
+msgstr "Max Login Attempts"
+
+msgid "達到次數後暫時封鎖 IP"
+msgstr "Temporarily block IP after reaching this number"
+
+msgid "封鎖時間（分鐘）"
+msgstr "Ban Duration (Minutes)"
+
+msgid "IP 被封鎖的時間長度"
+msgstr "Duration for which IP is blocked"
+
+msgid "允許 root 登入"
+msgstr "Allow Root Login"
+
+msgid "是否允許 root 用戶進行 FTP 登入"
+msgstr "Whether to allow root user FTP login"
+
+msgid "強制使用 SSL/TLS"
+msgstr "Require SSL/TLS"
+
+msgid "要求所有連線使用加密"
+msgstr "Require all connections to use encryption"
+
+msgid "啟用自動備份"
+msgstr "Enable Auto Backup"
+
+msgid "定期備份配置檔和用戶資料"
+msgstr "Regularly backup configuration files and user data"
+
+msgid "備份頻率"
+msgstr "Backup Frequency"
+
+msgid "自動備份的執行頻率"
+msgstr "Frequency of automatic backup execution"
+
+msgid "維護模式"
+msgstr "Maintenance Mode"
+
+msgid "啟用後將拒絕所有 FTP 連線"
+msgstr "Will reject all FTP connections after enabling"
+
+msgid "通知電子郵件"
+msgstr "Notification Email"
+
+msgid "接收系統警告的電子郵件地址"
+msgstr "Email address to receive system warnings"
+
+msgid "每日"
+msgstr "Daily"
+
+msgid "每週"
+msgstr "Weekly"
+
+msgid "每月"
+msgstr "Monthly"
+
+# JavaScript messages
+msgid "配置預覽失敗:"
+msgstr "Configuration preview failed:"
+
+msgid "配置預覽失敗"
+msgstr "Configuration preview failed"
+
+msgid "配置已複製到剪貼簿"
+msgstr "Configuration copied to clipboard"
+
+msgid "複製失敗"
+msgstr "Copy failed"
+
+msgid "每個 IP 的最大連線數不能超過總最大連線數"
+msgstr "Max connections per IP cannot exceed total max connections"
+
+msgid "被動模式連接埠範圍格式應為: 起始埠-結束埠 (例如: 60000-65000)"
+msgstr "Passive port range format should be: start-port-end-port (e.g.: 60000-65000)"

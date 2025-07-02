@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}系統設定 - ProFTPD 管理系統{% endblock %}
+{% block title %}{{ _('系統設定') }} - {{ _('ProFTPD Management System') }}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1><i class="bi bi-sliders"></i> 系統設定</h1>
+    <h1><i class="bi bi-sliders"></i> {{ _('系統設定') }}</h1>
     <div class="btn-group" role="group">
         <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> 返回設定首頁
+            <i class="bi bi-arrow-left"></i> {{ _('返回設定首頁') }}
         </a>
     </div>
 </div>
@@ -18,7 +18,7 @@
     <!-- FTP 伺服器設定 -->
     <div class="card mb-4">
         <div class="card-header">
-            <h5><i class="bi bi-server"></i> FTP 伺服器設定</h5>
+            <h5><i class="bi bi-server"></i> {{ _('FTP 伺服器設定') }}</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -80,7 +80,7 @@
     <!-- 日誌設定 -->
     <div class="card mb-4">
         <div class="card-header">
-            <h5><i class="bi bi-file-text"></i> 日誌設定</h5>
+            <h5><i class="bi bi-file-text"></i> {{ _('日誌設定') }}</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -130,7 +130,7 @@
     <!-- 安全設定 -->
     <div class="card mb-4">
         <div class="card-header">
-            <h5><i class="bi bi-shield-check"></i> 安全設定</h5>
+            <h5><i class="bi bi-shield-check"></i> {{ _('安全設定') }}</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -175,7 +175,7 @@
                     
                     <div class="alert alert-warning">
                         <i class="bi bi-exclamation-triangle"></i>
-                        <strong>注意:</strong> 啟用 SSL/TLS 要求後，所有連線都必須使用加密。請確保已正確設定 SSL 憑證。
+                        <strong>{{ _('注意:') }}</strong> {{ _('啟用 SSL/TLS 要求後，所有連線都必須使用加密。請確保已正確設定 SSL 憑證。') }}
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@
     <!-- 系統設定 -->
     <div class="card mb-4">
         <div class="card-header">
-            <h5><i class="bi bi-gear"></i> 系統設定</h5>
+            <h5><i class="bi bi-gear"></i> {{ _('系統設定') }}</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -231,7 +231,7 @@
                     {% if form.system_maintenance_mode.data %}
                     <div class="alert alert-danger">
                         <i class="bi bi-exclamation-triangle"></i>
-                        <strong>維護模式已啟用:</strong> 目前所有 FTP 連線都會被拒絕。
+                        <strong>{{ _('維護模式已啟用:') }}</strong> {{ _('目前所有 FTP 連線都會被拒絕。') }}
                     </div>
                     {% endif %}
                 </div>
@@ -242,11 +242,11 @@
     <!-- 提交按鈕 -->
     <div class="d-flex justify-content-between">
         <a href="{{ url_for('settings.index') }}" class="btn btn-secondary">
-            <i class="bi bi-x-circle"></i> 取消
+            <i class="bi bi-x-circle"></i> {{ _('取消') }}
         </a>
         <div>
             <button type="button" class="btn btn-outline-info me-2" onclick="previewConfig()">
-                <i class="bi bi-eye"></i> 預覽配置
+                <i class="bi bi-eye"></i> {{ _('預覽配置') }}
             </button>
             {{ form.submit(class="btn btn-primary") }}
         </div>
@@ -258,15 +258,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">ProFTPD 配置預覽</h5>
+                <h5 class="modal-title">{{ _('ProFTPD 配置預覽') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <pre id="config-preview" class="bg-light p-3" style="max-height: 400px; overflow-y: auto;"></pre>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                <button type="button" class="btn btn-primary" onclick="copyConfig()">複製配置</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('關閉') }}</button>
+                <button type="button" class="btn btn-primary" onclick="copyConfig()">{{ _('複製配置') }}</button>
             </div>
         </div>
     </div>
@@ -298,17 +298,17 @@ function previewConfig() {
         configPreviewModal.show();
     })
     .catch(error => {
-        console.error('配置預覽失敗:', error);
-        alert('配置預覽失敗');
+        console.error('{{ _('配置預覽失敗:') }}', error);
+        alert('{{ _('配置預覽失敗') }}');
     });
 }
 
 function copyConfig() {
     const configText = document.getElementById('config-preview').textContent;
     navigator.clipboard.writeText(configText).then(function() {
-        alert('配置已複製到剪貼簿');
+        alert('{{ _('配置已複製到剪貼簿') }}');
     }).catch(function() {
-        alert('複製失敗');
+        alert('{{ _('複製失敗') }}');
     });
 }
 
@@ -319,14 +319,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
     
     if (maxPerIP > maxClients) {
         e.preventDefault();
-        alert('每個 IP 的最大連線數不能超過總最大連線數');
+        alert('{{ _('每個 IP 的最大連線數不能超過總最大連線數') }}');
         return false;
     }
     
     const passivePorts = document.getElementById('ftp_passive_ports').value;
     if (passivePorts && !passivePorts.match(/^\d+-\d+$/)) {
         e.preventDefault();
-        alert('被動模式連接埠範圍格式應為: 起始埠-結束埠 (例如: 60000-65000)');
+        alert('{{ _('被動模式連接埠範圍格式應為: 起始埠-結束埠 (例如: 60000-65000)') }}');
         return false;
     }
 });
