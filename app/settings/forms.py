@@ -24,7 +24,7 @@ class SystemSettingsForm(FlaskForm):
     
     ftp_umask = StringField('檔案權限遮罩', 
                            validators=[Optional(), Length(0, 10)],
-                           description='預設檔案權限遮罩，例如: 022')
+                           description='預設檔案權限遮罩，例如: 000')
     
     ftp_base_dir = StringField('FTP 根目錄路徑', 
                               validators=[DataRequired(), Length(1, 200)],

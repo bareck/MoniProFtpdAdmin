@@ -27,7 +27,7 @@ def index():
         'ftp_max_clients': '50',
         'ftp_max_per_ip': '5',
         'ftp_passive_ports': '60000-65000',
-        'ftp_umask': '022',
+        'ftp_umask': '000',
         'log_access_enabled': 'true',
         'log_auth_enabled': 'true',
         'log_level': 'info',
@@ -62,7 +62,7 @@ def system_settings():
             'ftp_max_clients': str(form.ftp_max_clients.data),
             'ftp_max_clients_per_host': str(form.ftp_max_per_ip.data),
             'ftp_passive_ports': form.ftp_passive_ports.data or '',
-            'ftp_umask': form.ftp_umask.data or '022',
+            'ftp_umask': form.ftp_umask.data or '000',
             'ftp_base_dir': form.ftp_base_dir.data or '/backup/ftpdata',
             'log_access_enabled': 'true' if form.log_access_enabled.data else 'false',
             'log_auth_enabled': 'true' if form.log_auth_enabled.data else 'false',
@@ -132,7 +132,7 @@ def system_settings():
         form.ftp_max_clients.data = int(settings.get('ftp_max_clients', 50))
         form.ftp_max_per_ip.data = int(settings.get('ftp_max_clients_per_host', 5))
         form.ftp_passive_ports.data = settings.get('ftp_passive_ports', '60000-65000')
-        form.ftp_umask.data = settings.get('ftp_umask', '022')
+        form.ftp_umask.data = settings.get('ftp_umask', '000')
         form.ftp_base_dir.data = settings.get('ftp_base_dir', '/backup/ftpdata')
         form.log_access_enabled.data = settings.get('log_access_enabled', 'true') == 'true'
         form.log_auth_enabled.data = settings.get('log_auth_enabled', 'true') == 'true'
