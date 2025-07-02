@@ -2361,3 +2361,163 @@ msgstr "Max connections per IP cannot exceed total max connections"
 
 msgid "被動模式連接埠範圍格式應為: 起始埠-結束埠 (例如: 60000-65000)"
 msgstr "Passive port range format should be: start-port-end-port (e.g.: 60000-65000)"
+
+# Configuration Management page translations
+msgid "Configuration Management"
+msgstr "Configuration Management"
+
+msgid "Main Config File"
+msgstr "Main Config File"
+
+msgid "Include Files"
+msgstr "Include Files"
+
+msgid "Config File Size"
+msgstr "Config File Size"
+
+msgid "Configuration Operations"
+msgstr "Configuration Operations"
+
+msgid "Configuration Generation Instructions:"
+msgstr "Configuration Generation Instructions:"
+
+msgid "Regenerate ProFTPD main configuration file"
+msgstr "Regenerate ProFTPD main configuration file"
+
+msgid "Generate user and group configurations based on current database settings"
+msgstr "Generate user and group configurations based on current database settings"
+
+msgid "Update directory permission settings"
+msgstr "Update directory permission settings"
+
+msgid "Apply system configuration parameters"
+msgstr "Apply system configuration parameters"
+
+msgid "Regenerate Configuration"
+msgstr "Regenerate Configuration"
+
+msgid "Preview Configuration"
+msgstr "Preview Configuration"
+
+msgid "Validate Configuration"
+msgstr "Validate Configuration"
+
+msgid "Configuration File Details"
+msgstr "Configuration File Details"
+
+msgid "View"
+msgstr "View"
+
+msgid "Main configuration file does not exist"
+msgstr "Main configuration file does not exist"
+
+msgid "Please click \"Regenerate Configuration\" to create configuration files"
+msgstr "Please click \"Regenerate Configuration\" to create configuration files"
+
+msgid "Configuration Templates"
+msgstr "Configuration Templates"
+
+msgid "The system uses the following template structure to generate ProFTPD configuration files:"
+msgstr "The system uses the following template structure to generate ProFTPD configuration files:"
+
+msgid "Basic Server Settings"
+msgstr "Basic Server Settings"
+
+msgid "Security Settings"
+msgstr "Security Settings"
+
+msgid "Log Settings"
+msgstr "Log Settings"
+
+msgid "Include Directives"
+msgstr "Include Directives"
+
+msgid "Core"
+msgstr "Core"
+
+msgid "Security"
+msgstr "Security"
+
+msgid "Log"
+msgstr "Log"
+
+msgid "Module"
+msgstr "Module"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "Groups"
+msgstr "Groups"
+
+msgid "Permissions"
+msgstr "Permissions"
+
+msgid "Virtual Users"
+msgstr "Virtual Users"
+
+msgid "Configuration Preview"
+msgstr "Configuration Preview"
+
+msgid "Main Config"
+msgstr "Main Config"
+
+msgid "User Configuration"
+msgstr "User Configuration"
+
+msgid "Directory Permissions"
+msgstr "Directory Permissions"
+
+msgid "Close"
+msgstr "Close"
+
+msgid "Download Configuration"
+msgstr "Download Configuration"
+
+msgid "Configuration File View"
+msgstr "Configuration File View"
+
+msgid "No main configuration content"
+msgstr "No main configuration content"
+
+msgid "No user configuration content"
+msgstr "No user configuration content"
+
+msgid "No directory permission configuration"
+msgstr "No directory permission configuration"
+
+msgid "Configuration preview failed:"
+msgstr "Configuration preview failed:"
+
+msgid "Configuration validation passed:"
+msgstr "Configuration validation passed:"
+
+msgid "Configuration validation failed:"
+msgstr "Configuration validation failed:"
+
+msgid "Configuration file loading failed:"
+msgstr "Configuration file loading failed:"
+
+msgid "Configuration file loading failed"
+msgstr "Configuration file loading failed"
+
+msgid "Loading..."
+msgstr "Loading..."
+
+msgid "ProFTPD configuration files have been regenerated"
+msgstr "ProFTPD configuration files have been regenerated"
+
+msgid "ProFTPD service has been reloaded"
+msgstr "ProFTPD service has been reloaded"
+
+msgid "ProFTPD service reload failed"
+msgstr "ProFTPD service reload failed"
+
+msgid "Configuration file generation failed"
+msgstr "Configuration file generation failed"
+
+msgid "Configuration operation failed:"
+msgstr "Configuration operation failed:"
+
+msgid "Automatically reload ProFTPD service after generation"
+msgstr "Automatically reload ProFTPD service after generation"

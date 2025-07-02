@@ -2933,3 +2933,163 @@ msgstr "設定更新失敗"
 
 msgid "Quick settings update failed"
 msgstr "快速設定更新失敗"
+
+# Configuration Management page translations
+msgid "Configuration Management"
+msgstr "配置管理"
+
+msgid "Main Config File"
+msgstr "主配置檔"
+
+msgid "Include Files"
+msgstr "Include 檔案"
+
+msgid "Config File Size"
+msgstr "配置檔大小"
+
+msgid "Configuration Operations"
+msgstr "配置檔操作"
+
+msgid "Configuration Generation Instructions:"
+msgstr "配置檔生成說明:"
+
+msgid "Regenerate ProFTPD main configuration file"
+msgstr "重新生成 ProFTPD 主配置檔"
+
+msgid "Generate user and group configurations based on current database settings"
+msgstr "根據目前資料庫設定產生用戶、群組配置"
+
+msgid "Update directory permission settings"
+msgstr "更新目錄權限設定"
+
+msgid "Apply system configuration parameters"
+msgstr "套用系統設定參數"
+
+msgid "Regenerate Configuration"
+msgstr "重新生成配置檔"
+
+msgid "Preview Configuration"
+msgstr "預覽配置"
+
+msgid "Validate Configuration"
+msgstr "驗證配置"
+
+msgid "Configuration File Details"
+msgstr "配置檔詳細資訊"
+
+msgid "View"
+msgstr "檢視"
+
+msgid "Main configuration file does not exist"
+msgstr "主配置檔不存在"
+
+msgid "Please click \"Regenerate Configuration\" to create configuration files"
+msgstr "請點擊「重新生成配置檔」來建立配置檔"
+
+msgid "Configuration Templates"
+msgstr "配置檔模板"
+
+msgid "The system uses the following template structure to generate ProFTPD configuration files:"
+msgstr "系統使用以下模板結構來生成 ProFTPD 配置檔："
+
+msgid "Basic Server Settings"
+msgstr "基本伺服器設定"
+
+msgid "Security Settings"
+msgstr "安全設定"
+
+msgid "Log Settings"
+msgstr "日誌設定"
+
+msgid "Include Directives"
+msgstr "Include 指令"
+
+msgid "Core"
+msgstr "核心"
+
+msgid "Security"
+msgstr "安全"
+
+msgid "Log"
+msgstr "日誌"
+
+msgid "Module"
+msgstr "模組"
+
+msgid "Users"
+msgstr "用戶"
+
+msgid "Groups"
+msgstr "群組"
+
+msgid "Permissions"
+msgstr "權限"
+
+msgid "Virtual Users"
+msgstr "虛擬用戶"
+
+msgid "Configuration Preview"
+msgstr "配置檔預覽"
+
+msgid "Main Config"
+msgstr "主配置檔"
+
+msgid "User Configuration"
+msgstr "用戶配置"
+
+msgid "Directory Permissions"
+msgstr "目錄權限"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Download Configuration"
+msgstr "下載配置"
+
+msgid "Configuration File View"
+msgstr "配置檔檢視"
+
+msgid "No main configuration content"
+msgstr "無主配置檔內容"
+
+msgid "No user configuration content"
+msgstr "無用戶配置內容"
+
+msgid "No directory permission configuration"
+msgstr "無目錄權限配置"
+
+msgid "Configuration preview failed:"
+msgstr "配置預覽失敗:"
+
+msgid "Configuration validation passed:"
+msgstr "配置檔驗證通過:"
+
+msgid "Configuration validation failed:"
+msgstr "配置檔驗證失敗:"
+
+msgid "Configuration file loading failed:"
+msgstr "配置檔載入失敗:"
+
+msgid "Configuration file loading failed"
+msgstr "配置檔載入失敗"
+
+msgid "Loading..."
+msgstr "載入中..."
+
+msgid "ProFTPD configuration files have been regenerated"
+msgstr "ProFTPD 配置檔已重新生成"
+
+msgid "ProFTPD service has been reloaded"
+msgstr "ProFTPD 服務已重新載入"
+
+msgid "ProFTPD service reload failed"
+msgstr "ProFTPD 服務重新載入失敗"
+
+msgid "Configuration file generation failed"
+msgstr "配置檔生成失敗"
+
+msgid "Configuration operation failed:"
+msgstr "配置檔操作失敗:"
+
+msgid "Automatically reload ProFTPD service after generation"
+msgstr "生成後自動重新載入 ProFTPD 服務"

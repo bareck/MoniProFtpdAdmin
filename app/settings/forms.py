@@ -97,9 +97,9 @@ class BackupRestoreForm(FlaskForm):
 class ConfigGenerateForm(FlaskForm):
     """配置生成表單"""
     
-    generate_config = SubmitField('重新生成配置檔')
-    reload_service = BooleanField('重新載入服務', 
-                                 description='生成後自動重新載入 ProFTPD 服務',
+    generate_config = SubmitField(_l('Regenerate Configuration'))
+    reload_service = BooleanField(_l('Reload Service'), 
+                                 description=_l('Automatically reload ProFTPD service after generation'),
                                  default=True)
     
 class AdminPasswordForm(FlaskForm):

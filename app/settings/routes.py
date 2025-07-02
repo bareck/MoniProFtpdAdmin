@@ -1,5 +1,6 @@
 from flask import render_template, request, flash, redirect, url_for, jsonify, current_app, send_file
 from flask_login import login_required, current_user
+from flask_babel import gettext as _
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 import os
@@ -185,18 +186,18 @@ def config_management():
             config_generator = ProFTPDConfigGenerator()
             success, message = config_generator.write_dynamic_config()
             if success:
-                flash('ProFTPD 配置檔已重新生成', 'success')
+                flash(_('ProFTPD configuration files have been regenerated'), 'success')
                 
                 if config_form.reload_service.data:
                     result = reload_proftpd_service()
                     if result:
-                        flash('ProFTPD 服務已重新載入', 'success')
+                        flash(_('ProFTPD service has been reloaded'), 'success')
                     else:
-                        flash('ProFTPD 服務重新載入失敗', 'warning')
+                        flash(_('ProFTPD service reload failed'), 'warning')
             else:
-                flash('配置檔生成失敗', 'error')
+                flash(_('Configuration file generation failed'), 'error')
         except Exception as e:
-            flash(f'配置檔操作失敗: {str(e)}', 'error')
+            flash(_('Configuration operation failed:') + f' {str(e)}', 'error')
     
     # 獲取配置檔狀態
     config_status = get_config_status()
