@@ -131,7 +131,7 @@ a.text-decoration-none:hover .card-hover * {
                                 <td>
                                     <span class="badge bg-secondary">{{ log.action }}</span>
                                 </td>
-                                <td>{{ log.description or '-' }}</td>
+                                <td>{{ log.get_localized_description() }}</td>
                                 <td>{{ log.admin_user.username if log.admin_user else 'System' }}</td>
                             </tr>
                             {% endfor %}
