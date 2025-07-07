@@ -1,4 +1,4 @@
-# ProFTPD 管理系統
+# ProFTPD Web 管理系統
 
 **[English](README.md) | 繁體中文**
 
