@@ -7,27 +7,27 @@ app = create_app()
 
 @app.cli.command()
 def init_db():
-    """初始化資料庫"""
+    """Initialize database"""
     db.create_all()
     print('Database initialized.')
 
 @app.cli.command()
 def create_admin():
-    """創建管理員用戶"""
+    """Create admin user"""
     from app.models import AdminUser
     
-    username = input('管理員用戶名: ')
-    email = input('電子郵件: ')
-    password = input('密碼: ')
+    username = input('Admin username: ')
+    email = input('Email: ')
+    password = input('Password: ')
     
     admin = AdminUser(username=username, email=email)
     admin.set_password(password)
     db.session.add(admin)
     db.session.commit()
-    print(f'管理員 {username} 已創建')
+    print(f'Admin {username} created')
 
 if __name__ == '__main__':
-    # 設定 user_loader
+    # Setup user_loader
     from app import login_manager
     from app.models import AdminUser
     
