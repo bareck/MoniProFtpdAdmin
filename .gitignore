@@ -74,9 +74,6 @@ logs/
 *.tmp
 *.temp
 
-# Claude specific
-.claude/
-
 # Generated files
 proftpd.conf
 

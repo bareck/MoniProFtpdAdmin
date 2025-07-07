@@ -1,135 +1,141 @@
-# ProFTPD 管理系統
+# ProFTPD Management System
 
-一個完整的 ProFTPD 虛擬用戶管理系統，提供 Web 介面管理 FTP 用戶、群組、權限和系統監控功能。
+**English | [繁體中文](README-tw.md)**
 
-## 📋 功能特色
+A comprehensive ProFTPD virtual user management system providing a web interface for managing FTP users, groups, permissions, and system monitoring.
 
-### 🔧 核心管理功能
-- ✅ **用戶管理**: 完整的 FTP 用戶 CRUD 操作，支援虛擬用戶
-- ✅ **群組管理**: 群組建立、成員管理、批次操作
-- ✅ **權限管理**: 目錄權限設定，即時權限矩陣介面
-- ✅ **配置生成**: 自動產生 ProFTPD 配置檔，支援模組化 Include
+Use case: I use this on a dedicated FTP server to provide internal file sharing for a company. In daily operations, departments need to share files or directories, but general members should be restricted from accessing other non-related departmental folders. As a supervisor, I need permissions to browse and manage certain folders. After research, it seems that only the veteran ProFTPD is suitable for achieving such complex management. To simplify daily operations that often require permission changes or account maintenance, I developed this project using AI tools.
 
-### 📊 監控與統計
-- ✅ **即時連線監控**: FTP 連線狀態、用戶活動追蹤
-- ✅ **系統資源監控**: CPU、記憶體、磁碟使用量
-- ✅ **日誌分析**: 存取日誌、認證日誌解析與統計
-- ✅ **報表匯出**: CSV、JSON 格式統計報表匯出
+This project uses ProFTPD's AuthUserFile/AuthGroupFile for user authentication, tested on AlmaLinux 9.6 with ProFTPD compiled from source code.
 
-### ⚙️ 系統管理
-- ✅ **系統設定**: FTP 伺服器參數、安全設定、日誌配置
-- ✅ **備份還原**: 系統資料備份、配置檔備份
-- ✅ **管理員管理**: 密碼變更、會話管理
-- ✅ **配置管理**: 配置檔預覽、驗證、重新載入
+## 📋 Features
 
-## 🏗️ 系統架構
+### 🔧 Core Management Functions
+- ✅ **User Management**: Complete FTP user CRUD operations with virtual user support
+- ✅ **Group Management**: Group creation, member management, batch operations
+- ✅ **Permission Management**: Directory permission settings with real-time permission matrix interface
+- ✅ **Configuration Generation**: Automatic ProFTPD configuration file generation with modular Include support
+
+### 📊 Monitoring and Statistics
+- ✅ **Real-time Connection Monitoring**: FTP connection status and user activity tracking
+- ✅ **System Resource Monitoring**: CPU, memory, disk usage monitoring
+- ✅ **Log Analysis**: Access log and authentication log parsing and statistics
+- ✅ **Report Export**: Statistical report export in CSV and JSON formats
+
+### ⚙️ System Administration
+- ✅ **System Settings**: FTP server parameters, security settings, log configuration
+- ✅ **Backup and Restore**: System data backup and configuration file backup
+- ✅ **Administrator Management**: Password changes and session management
+- ✅ **Configuration Management**: Configuration file preview, validation, and reload
+
+## 🏗️ System Architecture
 
 ```
 MoniProFtpdAdmin/
-├── app/                    # 應用程式核心
-│   ├── auth/              # 認證授權模組
-│   ├── users/             # 用戶管理模組
-│   ├── groups/            # 群組管理模組
-│   ├── permissions/       # 權限管理模組
-│   ├── monitoring/        # 監控功能模組
-│   ├── settings/          # 系統設定模組
-│   ├── config/            # 配置管理模組
-│   ├── main/              # 主頁面模組
-│   ├── models.py          # 資料庫模型
-│   ├── proftpd.py         # ProFTPD 整合類別
-│   └── utils.py           # 工具函數
-├── templates/             # Jinja2 HTML 模板
-├── static/                # 靜態檔案 (CSS/JS)
-├── config.py              # 應用程式配置
-├── run.py                 # 應用程式啟動檔
-├── requirements.txt       # Python 依賴套件
-├── CLAUDE.md             # 開發文件
-└── README.md             # 專案說明文件
+├── app/                    # Application core
+│   ├── auth/              # Authentication and authorization module
+│   ├── users/             # User management module
+│   ├── groups/            # Group management module
+│   ├── permissions/       # Permission management module
+│   ├── monitoring/        # Monitoring functionality module
+│   ├── settings/          # System settings module
+│   ├── config/            # Configuration management module
+│   ├── main/              # Main page module
+│   ├── models.py          # Database models
+│   ├── proftpd.py         # ProFTPD integration class
+│   └── utils.py           # Utility functions
+├── templates/             # Jinja2 HTML templates
+├── static/                # Static files (CSS/JS)
+├── config.py              # Application configuration
+├── run.py                 # Application startup file
+├── requirements.txt       # Python dependencies
+├── CLAUDE.md             # Development documentation
+└── README.md             # Project documentation
 ```
 
-## 🚀 安裝與設定
+## 🚀 Installation and Setup
 
-### 系統需求
+### System Requirements
 
 - Python 3.8+
 - ProFTPD 1.3.6+
-- Linux/Unix 系統（建議 Ubuntu 20.04+ 或 CentOS 8+）
-- 系統管理員權限（用於 ProFTPD 服務管理）
+- Linux/Unix system (recommended Ubuntu 20.04+ or CentOS 8+)
+- System administrator privileges (for ProFTPD service management)
 
-### 1. 下載專案
+### 1. Download Project
 
 ```bash
-# 下載專案檔案
+# Download project files
 cd /opt
-git clone <repository-url> proftpd-admin
+git clone https://github.com/bareck/MoniProFtpdAdmin.git proftpd-admin
 cd proftpd-admin
 ```
 
-### 2. 建立 Python 虛擬環境
+### 2. Create Python Virtual Environment
 
-建議使用 Python 虛擬環境來隔離專案依賴，避免與系統 Python 套件衝突。
+It's recommended to use a Python virtual environment to isolate project dependencies and avoid conflicts with system Python packages.
 
-#### 使用 venv（Python 3.3+ 內建）
+#### Using venv (built-in Python 3.3+)
 
 ```bash
-# 建立虛擬環境
+# Create virtual environment
 python3 -m venv venv
 
-# 啟用虛擬環境
+# Activate virtual environment
 source venv/bin/activate
 
-# 確認虛擬環境已啟用（命令提示符應顯示 (venv)）
+# Confirm virtual environment is active (command prompt should show (venv))
 which python
-# 應該顯示: /opt/proftpd-admin/venv/bin/python
+# Should display: /opt/proftpd-admin/venv/bin/python
 ```
 
-#### 使用 virtualenv（需額外安裝）
+#### Using virtualenv (requires separate installation)
 
 ```bash
-# 安裝 virtualenv（如果尚未安裝）
+# Install virtualenv (if not already installed)
 pip3 install virtualenv
 
-# 建立虛擬環境
+# Create virtual environment
 virtualenv venv
 
-# 啟用虛擬環境
+# Activate virtual environment
 source venv/bin/activate
 ```
 
-#### 虛擬環境管理指令
+#### Virtual Environment Management Commands
 
 ```bash
-# 啟用虛擬環境
+# Activate virtual environment
 source venv/bin/activate
 
-# 停用虛擬環境
+# Deactivate virtual environment
 deactivate
 
-# 刪除虛擬環境（如需重建）
+# Delete virtual environment (if rebuild needed)
 rm -rf venv
 ```
 
-### 3. 安裝 Python 依賴套件
+### 3. Install Python Dependencies
 
-確保虛擬環境已啟用，然後安裝所需套件：
+Ensure the virtual environment is activated, then install required packages:
 
 ```bash
-# 確認虛擬環境已啟用
+# Confirm virtual environment is activated
 source venv/bin/activate
 
-# 安裝依賴套件
+# Install dependencies
 pip install -r requirements.txt
 
-# 或手動安裝主要套件
+# Or manually install main packages
 pip install flask flask-login flask-wtf wtforms sqlalchemy psutil
 ```
 
-### 4. 環境變數設定
+### 4. Environment Variable Configuration
 
-建立環境變數檔案或在系統中設定：
+Create environment variable file or set in system:
 
 ```bash
-# 建立 .env 檔案（可選）
+# Create .env file (optional)
 cat > .env << EOF
 FLASK_CONFIG=production
 PROFTPD_BASE_DIR=/backup/ftpdata
@@ -139,25 +145,25 @@ BACKUP_DIR=/opt/proftpd-admin/backups
 SECRET_KEY=your-very-secure-secret-key-here
 EOF
 
-# 或直接設定環境變數
+# Or directly set environment variables
 export FLASK_CONFIG=production
 export PROFTPD_BASE_DIR=/backup/ftpdata
 export PROFTPD_CONFIG_DIR=/etc/proftpd
 ```
 
-### 5. 資料庫初始化
+### 5. Database Initialization
 
 ```bash
-# 啟用虛擬環境
+# Activate virtual environment
 source venv/bin/activate
 
-# 初始化資料庫（首次執行會自動建立）
+# Initialize database (automatically created on first run)
 python run.py
 ```
 
-### 6. ProFTPD 設定
+### 6. ProFTPD Configuration
 
-#### 安裝 ProFTPD
+#### Install ProFTPD
 
 ```bash
 # Ubuntu/Debian
@@ -166,61 +172,85 @@ sudo apt install proftpd-basic
 
 # CentOS/RHEL
 sudo yum install proftpd
-# 或
+# or
 sudo dnf install proftpd
 ```
 
-#### 設定 ProFTPD 目錄
+#### Compile Installation (Recommended)
 
 ```bash
-# 建立 FTP 根目錄
-sudo mkdir -p /backup/ftpdata
-sudo chown proftpd:proftpd /backup/ftpdata
-sudo chmod 755 /backup/ftpdata
+sudo dnf update
+sudo dnf install tar -y
+sudo dnf groupinstall "Development Tools" -y
 
-# 建立配置檔目錄
-sudo mkdir -p /etc/proftpd/conf.d
-sudo chown root:root /etc/proftpd/conf.d
-sudo chmod 755 /etc/proftpd/conf.d
+# 1. Download
+curl -O ftp://ftp.proftpd.org/distrib/source/proftpd-1.3.9.tar.gz
+
+# 2. Extract
+tar zxvf proftpd-1.3.9.tar.gz
+
+# 3. Enter directory
+cd proftpd-1.3.9
+
+# 4. Configure compilation options
+./configure
+
+# 5. Compile
+make
+
+# 6. Install
+sudo make install
+
+# Confirm installation success
+/usr/local/sbin/proftpd -v
 ```
 
-## 🔧 使用方式
-
-### 啟動應用程式
-
-#### 開發模式
+#### Configure ProFTPD Directory
 
 ```bash
-# 啟用虛擬環境
+# Create FTP root directory (customizable in UI)
+sudo mkdir -p /backup/ftpdata
+sudo chown nobody:nobody /backup/ftpdata
+sudo chmod 755 /backup/ftpdata
+```
+
+## 🔧 Usage
+
+### Start Application
+
+#### Development Mode
+
+```bash
+# Activate virtual environment
 source venv/bin/activate
 
-# 設定開發環境
+# Set development environment
 export FLASK_CONFIG=development
 
-# 啟動開發伺服器
+# Start development server
 python run.py
 ```
 
-#### 生產模式
+#### Production Mode
 
 ```bash
-# 啟用虛擬環境
+# Activate virtual environment
 source venv/bin/activate
 
-# 設定生產環境
+# Set production environment
 export FLASK_CONFIG=production
 
-# 使用 Gunicorn 啟動（建議）
+# Start with Gunicorn (recommended)
 pip install gunicorn
 gunicorn -w 4 -b 0.0.0.0:5000 run:app
 
-# 或直接啟動
+# Or start directly
 python run.py
 ```
 
-### 建立系統服務（可選）
+### Create System Service (Optional)
 
-建立 systemd 服務檔案以便系統啟動時自動運行：
+Create systemd service file for automatic startup:
 
 ```bash
 sudo cat > /etc/systemd/system/proftpd-admin.service << EOF
@@ -243,138 +273,139 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-# 啟用並啟動服務
+# Enable and start service
 sudo systemctl daemon-reload
 sudo systemctl enable proftpd-admin
 sudo systemctl start proftpd-admin
 ```
 
-### 存取 Web 介面
+### Access Web Interface
 
-開啟瀏覽器，訪問 `http://服務器IP:5000`
+Open browser and visit `http://server-ip:5000`
 
-預設管理員帳號：
-- 用戶名：`admin`
-- 密碼：`admin123`
+Default administrator account:
+- Username: `admin`
+- Password: `admin123`
 
-⚠️ **安全提醒**: 首次登入後請立即更改預設密碼！
+⚠️ **Security Alert**: Please change the default password immediately after first login!
 
-## 📖 功能說明
+## 📖 Feature Overview
 
-### 1. 用戶管理
-- 新增/編輯/刪除 FTP 用戶
-- 設定用戶家目錄、UID/GID
-- 群組成員管理
-- 批次操作支援
+### 1. User Management
+- Add/edit/delete FTP users
+- Set user home directories, UID/GID
+- Group membership management
+- Batch operation support
 
-### 2. 群組管理
-- 建立/編輯/刪除 FTP 群組
-- 成員批次添加/移除
-- 群組權限設定
+### 2. Group Management
+- Create/edit/delete FTP groups
+- Batch member addition/removal
+- Group permission settings
 
-### 3. 權限管理
-- 目錄權限設定（讀取、寫入、刪除）
-- 即時權限矩陣顯示
-- 權限繼承設定
+### 3. Permission Management
+- Directory permission settings (read, write, delete)
+- Real-time permission matrix display
+- Permission inheritance settings
 
-### 4. 監控功能
-- 即時 FTP 連線狀態
-- 系統資源使用情況
-- 日誌檔案分析
-- 統計報表生成
+### 4. Monitoring Features
+- Real-time FTP connection status
+- System resource usage
+- Log file analysis
+- Statistical report generation
 
-### 5. 系統設定
-- FTP 伺服器參數調整
-- 安全設定配置
-- 自動備份設定
-- 管理員帳號管理
+### 5. System Settings
+- FTP server parameter adjustment
+- Security configuration
+- Automatic backup settings
+- Administrator account management
 
-## ✅ 開發狀態
+## ✅ Development Status
 
-### 已完成功能
-- [x] 專案基礎結構（目錄、配置文件）
-- [x] SQLite 資料庫模型（用戶、群組、權限、設定）
-- [x] Flask Web 應用程式框架
-- [x] Web 管理者認證系統
-- [x] 用戶管理 CRUD 功能
-- [x] 群組管理 CRUD 功能
-- [x] 目錄權限管理功能
-- [x] ProFTPD 配置檔自動生成功能
-- [x] 監控功能（連線狀態、統計、磁碟使用量）
-- [x] 系統設定管理介面
-- [x] HTML 模板文件
+### Completed Features
+- [x] Project foundation structure (directories, configuration files)
+- [x] SQLite database models (users, groups, permissions, settings)
+- [x] Flask web application framework
+- [x] Web administrator authentication system
+- [x] User management CRUD functionality
+- [x] Group management CRUD functionality
+- [x] Directory permission management functionality
+- [x] ProFTPD configuration file auto-generation
+- [x] Monitoring features (connection status, statistics, disk usage)
+- [x] System settings management interface
+- [x] HTML template files
 
-### 系統整合狀態
-✅ **完整實作完成** - 所有規劃功能均已實現並可正常運作
+### System Integration Status
+✅ **Complete Implementation** - All planned features have been implemented and are functioning normally
 
-## 🔒 安全考量
+## 🔒 Security Considerations
 
-1. **密碼安全**: 使用強密碼，定期更換
-2. **檔案權限**: 確保配置檔案權限正確設定
-3. **網路安全**: 建議使用 HTTPS，限制存取 IP
-4. **備份策略**: 定期備份資料庫和配置檔
-5. **系統更新**: 保持系統和套件更新
+1. **Password Security**: Use strong passwords and change them regularly
+2. **File Permissions**: Ensure configuration files have correct permissions
+3. **Network Security**: Recommend using HTTPS and restricting access IPs
+4. **Backup Strategy**: Regularly backup database and configuration files
+5. **System Updates**: Keep system and packages updated
 
-## 🛠️ 開發說明
+## 🛠️ Development Guide
 
-### 開發環境設定
+### Development Environment Setup
 
 ```bash
-# 克隆專案
+# Clone project
 git clone <repository-url>
 cd proftpd-admin
 
-# 建立開發用虛擬環境
+# Create development virtual environment
 python3 -m venv venv-dev
 source venv-dev/bin/activate
 
-# 安裝開發依賴
+# Install development dependencies
 pip install -r requirements.txt
 pip install pytest flask-testing coverage
 
-# 設定開發環境變數
+# Set development environment variables
 export FLASK_CONFIG=development
 export FLASK_DEBUG=1
 
-# 啟動開發伺服器
+# Start development server
 python run.py
 ```
 
-### 技術架構
+### Technical Architecture
 
-- **後端**: Flask + SQLAlchemy + Flask-Login
-- **前端**: Bootstrap 5 + Vanilla JavaScript + AJAX
-- **資料庫**: SQLite (可擴展至 PostgreSQL/MySQL)
-- **認證**: Flask-Login + 密碼雜湊
-- **表單**: Flask-WTF + WTForms + CSRF 保護
-- **架構**: Blueprint 模組化設計
+- **Backend**: Flask + SQLAlchemy + Flask-Login
+- **Frontend**: Bootstrap 5 + Vanilla JavaScript + AJAX
+- **Database**: SQLite (expandable to PostgreSQL/MySQL)
+- **Authentication**: Flask-Login + password hashing
+- **Forms**: Flask-WTF + WTForms + CSRF protection
+- **Architecture**: Blueprint modular design
 
-## 📝 版本歷史
+## 📝 Version History
 
-- **v1.0.0** (2024-12): 初始完整版本
-  - 完整用戶/群組管理功能
-  - 權限管理系統
-  - 即時監控介面
-  - 系統設定功能
-  - 備份還原功能
+- **v1.0.0** (2025-7): Initial complete version
+  - Complete user/group management functionality
+  - Permission management system
+  - Real-time monitoring interface
+  - System settings functionality
+  - Backup functionality
+  - Multi-language support
 
-## 🤝 貢獻
+## 🤝 Contributing
 
-歡迎提交 Issue 和 Pull Request 來改善這個專案。
+Welcome to submit Issues and Pull Requests to improve this project.
 
-## 📄 授權
+## 📄 License
 
-本專案採用 MIT 授權條款。
+This project is licensed under the MIT License.
 
-## 📞 支援
+## 📞 Support
 
-如有問題或需要協助，請：
+For questions or assistance, please:
 
-1. 查閱 `CLAUDE.md` 開發文件
-2. 檢查系統日誌：`tail -f /var/log/proftpd/proftpd.log`
-3. 查看應用程式日誌：`journalctl -u proftpd-admin -f`
-4. 提交 Issue 到專案倉庫
+1. Review the `CLAUDE.md` development documentation
+2. Check system logs: `tail -f /var/log/proftpd/proftpd.log`
+3. View application logs: `journalctl -u proftpd-admin -f`
+4. Submit Issues to the project repository
 
 ---
 
-**注意**: 本系統需要適當的系統管理權限才能正常運作，請確保在安全的環境中部署使用。
+**Note**: This system requires appropriate system administrator privileges to function properly. Please ensure deployment in a secure environment.
